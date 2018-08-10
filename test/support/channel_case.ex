@@ -25,13 +25,13 @@ defmodule LocationiserWeb.ChannelCase do
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Locationiser.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Locationiser.Repo, {:shared, self()})
     end
+
     :ok
   end
-
 end

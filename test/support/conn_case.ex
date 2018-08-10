@@ -26,13 +26,13 @@ defmodule LocationiserWeb.ConnCase do
     end
   end
 
-
   setup tags do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Locationiser.Repo)
+
     unless tags[:async] do
       Ecto.Adapters.SQL.Sandbox.mode(Locationiser.Repo, {:shared, self()})
     end
+
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
-
 end
