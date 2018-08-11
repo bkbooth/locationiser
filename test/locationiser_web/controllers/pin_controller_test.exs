@@ -6,20 +6,36 @@ defmodule LocationiserWeb.PinControllerTest do
 
   @create_attrs %{
     description: "some description",
-    lat: "120.5",
-    lng: "120.5",
+    lat: "-34.423015",
+    lng: "150.907125",
     title: "some title"
   }
   @update_attrs %{
     description: "some updated description",
-    lat: "456.7",
-    lng: "456.7",
+    lat: "-33.820457",
+    lng: "151.297659",
     title: "some updated title"
   }
   @invalid_attrs %{description: nil, lat: nil, lng: nil, title: nil}
+  @valid_user %{
+    name: "some user",
+    email: "user@example.com",
+    password_hash: "abc123"
+  }
+
+  def user_fixture() do
+    {:ok, user} = Locationiser.Accounts.create_user(@valid_user)
+    user
+  end
 
   def fixture(:pin) do
-    {:ok, pin} = Locations.create_pin(@create_attrs)
+    user = user_fixture()
+
+    {ok, pin} =
+      %{user_id: user.id}
+      |> Enum.into(@create_attrs)
+      |> Locations.create_pin()
+
     pin
   end
 
@@ -36,7 +52,9 @@ defmodule LocationiserWeb.PinControllerTest do
 
   describe "create pin" do
     test "renders pin when data is valid", %{conn: conn} do
-      conn = post(conn, pin_path(conn, :create), pin: @create_attrs)
+      user = user_fixture()
+      attrs = Enum.into(%{user_id: user.id}, @create_attrs)
+      conn = post(conn, pin_path(conn, :create), pin: attrs)
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
       conn = get(conn, pin_path(conn, :show, id))
@@ -44,8 +62,8 @@ defmodule LocationiserWeb.PinControllerTest do
       assert json_response(conn, 200)["data"] == %{
                "id" => id,
                "description" => "some description",
-               "lat" => "120.5",
-               "lng" => "120.5",
+               "lat" => "-34.423015",
+               "lng" => "150.907125",
                "title" => "some title"
              }
     end
@@ -68,8 +86,8 @@ defmodule LocationiserWeb.PinControllerTest do
       assert json_response(conn, 200)["data"] == %{
                "id" => id,
                "description" => "some updated description",
-               "lat" => "456.7",
-               "lng" => "456.7",
+               "lat" => "-33.820457",
+               "lng" => "151.297659",
                "title" => "some updated title"
              }
     end

@@ -8,21 +8,34 @@ defmodule Locationiser.LocationsTest do
 
     @valid_attrs %{
       description: "some description",
-      lat: "120.5",
-      lng: "120.5",
+      lat: "-34.423015",
+      lng: "150.907125",
       title: "some title"
     }
     @update_attrs %{
       description: "some updated description",
-      lat: "456.7",
-      lng: "456.7",
+      lat: "-33.820457",
+      lng: "151.297659",
       title: "some updated title"
     }
     @invalid_attrs %{description: nil, lat: nil, lng: nil, title: nil}
+    @valid_user %{
+      name: "some user",
+      email: "user@example.com",
+      password_hash: "abc123"
+    }
+
+    def user_fixture() do
+      {:ok, user} = Locationiser.Accounts.create_user(@valid_user)
+      user
+    end
 
     def pin_fixture(attrs \\ %{}) do
+      user = user_fixture()
+
       {:ok, pin} =
-        attrs
+        %{user_id: user.id}
+        |> Enum.into(attrs)
         |> Enum.into(@valid_attrs)
         |> Locations.create_pin()
 
@@ -40,11 +53,14 @@ defmodule Locationiser.LocationsTest do
     end
 
     test "create_pin/1 with valid data creates a pin" do
-      assert {:ok, %Pin{} = pin} = Locations.create_pin(@valid_attrs)
+      user = user_fixture()
+      attrs = Enum.into(%{user_id: user.id}, @valid_attrs)
+      assert {:ok, %Pin{} = pin} = Locations.create_pin(attrs)
       assert pin.description == "some description"
-      assert pin.lat == Decimal.new("120.5")
-      assert pin.lng == Decimal.new("120.5")
+      assert pin.lat == Decimal.new("-34.423015")
+      assert pin.lng == Decimal.new("150.907125")
       assert pin.title == "some title"
+      assert pin.user_id == user.id
     end
 
     test "create_pin/1 with invalid data returns error changeset" do
@@ -56,8 +72,8 @@ defmodule Locationiser.LocationsTest do
       assert {:ok, pin} = Locations.update_pin(pin, @update_attrs)
       assert %Pin{} = pin
       assert pin.description == "some updated description"
-      assert pin.lat == Decimal.new("456.7")
-      assert pin.lng == Decimal.new("456.7")
+      assert pin.lat == Decimal.new("-33.820457")
+      assert pin.lng == Decimal.new("151.297659")
       assert pin.title == "some updated title"
     end
 

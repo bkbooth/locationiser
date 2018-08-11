@@ -17,7 +17,8 @@ defmodule Locationiser.Locations.Pin do
   @doc false
   def changeset(pin, attrs) do
     pin
-    |> cast(attrs, [:lat, :lng, :title, :description])
-    |> validate_required([:lat, :lng, :title, :description])
+    |> cast(attrs, [:lat, :lng, :title, :description, :user_id])
+    |> validate_required([:lat, :lng, :title, :description, :user_id])
+    |> cast_assoc(:user)
   end
 end
