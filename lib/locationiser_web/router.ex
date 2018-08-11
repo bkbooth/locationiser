@@ -7,5 +7,9 @@ defmodule LocationiserWeb.Router do
 
   scope "/api", LocationiserWeb do
     pipe_through(:api)
+
+    scope "/v1" do
+      resources("/users", UserController, except: [:new, :edit])
+    end
   end
 end
