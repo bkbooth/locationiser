@@ -10,6 +10,7 @@ defmodule LocationiserWeb.Router do
 
     scope "/v1" do
       resources("/users", UserController, except: [:new, :edit])
+      resources("/pins", PinController, except: [:new, :edit])
     end
   end
 end
