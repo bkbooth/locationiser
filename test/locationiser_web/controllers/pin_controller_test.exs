@@ -1,7 +1,6 @@
 defmodule LocationiserWeb.PinControllerTest do
   use LocationiserWeb.ConnCase
 
-  alias Locationiser.Locations
   alias Locationiser.Locations.Pin
 
   setup %{conn: conn} do
@@ -34,11 +33,11 @@ defmodule LocationiserWeb.PinControllerTest do
       {:ok, pin: pin}
     end
 
-    test "index lists all pins", %{conn: conn, pin: %Pin{id: pin_id}} do
+    test "index lists all pins", %{conn: conn, pin: %Pin{id: id}} do
       conn = get(conn, pin_path(conn, :index))
       data = json_response(conn, 200)["data"]
       assert length(data) == 1
-      assert List.first(data)["id"] == pin_id
+      assert List.first(data)["id"] == id
     end
 
     test "update renders pin when data is valid", %{conn: conn, pin: %Pin{id: id} = pin} do

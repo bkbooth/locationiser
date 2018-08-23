@@ -1,7 +1,6 @@
 defmodule LocationiserWeb.UserControllerTest do
   use LocationiserWeb.ConnCase
 
-  alias Locationiser.Accounts
   alias Locationiser.Accounts.User
 
   setup %{conn: conn} do
@@ -18,7 +17,8 @@ defmodule LocationiserWeb.UserControllerTest do
     assert data["id"] == id
     assert data["email"] =~ ~r/^user\d+@example\.com$/
     assert data["name"] == "Test User"
-    assert data["password_hash"] == "password123"
+    refute data["password"]
+    refute data["password_hash"]
   end
 
   test "create user renders errors when data is invalid", %{conn: conn} do
@@ -32,11 +32,11 @@ defmodule LocationiserWeb.UserControllerTest do
       {:ok, user: user}
     end
 
-    test "index lists all users", %{conn: conn, user: %User{id: user_id}} do
+    test "index lists all users", %{conn: conn, user: %User{id: id}} do
       conn = get(conn, user_path(conn, :index))
       data = json_response(conn, 200)["data"]
       assert length(data) == 1
-      assert List.first(data)["id"] == user_id
+      assert List.first(data)["id"] == id
     end
 
     test "update renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do

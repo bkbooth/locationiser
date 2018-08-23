@@ -8,7 +8,8 @@ defmodule Locationiser.AccountsTest do
     assert {:ok, %User{} = user} = Accounts.create_user(valid_user())
     assert user.email =~ ~r/^user\d+@example\.com$/
     assert user.name == "Test User"
-    assert user.password_hash == "password123"
+    assert user.password_hash != "password123"
+    refute user.password
   end
 
   test "create_user/1 with invalid data returns error changeset" do
@@ -29,10 +30,10 @@ defmodule Locationiser.AccountsTest do
       assert Accounts.get_user!(user.id) == user
     end
 
-    test "update_user/2 with valid data updates the user", %{user: user} do
+    test "update_user/2 with valid data updates the user", %{user: %User{id: id} = user} do
       attrs = %{name: "Updated Name"}
-      assert {:ok, user} = Accounts.update_user(user, attrs)
-      assert %User{} = user
+      assert {:ok, %User{} = user} = Accounts.update_user(user, attrs)
+      assert user.id == id
       assert user.name == "Updated Name"
     end
 

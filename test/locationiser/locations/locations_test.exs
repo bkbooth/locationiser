@@ -36,10 +36,10 @@ defmodule Locationiser.LocationsTest do
       assert Locations.get_pin!(pin.id) |> Repo.preload(:user) == pin
     end
 
-    test "update_pin/2 with valid data updates the pin", %{pin: pin} do
+    test "update_pin/2 with valid data updates the pin", %{pin: %Pin{id: id} = pin} do
       attrs = %{lat: "-33.820457", lng: "151.297659"}
-      assert {:ok, pin} = Locations.update_pin(pin, attrs)
-      assert %Pin{} = pin
+      assert {:ok, %Pin{} = pin} = Locations.update_pin(pin, attrs)
+      assert pin.id == id
       assert pin.lat == Decimal.new("-33.820457")
       assert pin.lng == Decimal.new("151.297659")
     end

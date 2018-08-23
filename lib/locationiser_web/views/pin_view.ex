@@ -11,6 +11,12 @@ defmodule LocationiserWeb.PinView do
   end
 
   def render("pin.json", %{pin: pin}) do
-    %{id: pin.id, lat: pin.lat, lng: pin.lng, title: pin.title, description: pin.description}
+    %{
+      id: pin.id,
+      lat: pin.lat,
+      lng: pin.lng,
+      title: pin.title,
+      description: pin.description
+    }
   end
 end

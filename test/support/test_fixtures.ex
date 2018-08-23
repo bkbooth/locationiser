@@ -5,12 +5,12 @@ defmodule Locationiser.TestFixtures do
     %{
       name: "Test User",
       email: "#{unique_username()}@example.com",
-      password_hash: "password123"
+      password: "password123"
     }
   end
 
   def invalid_user do
-    %{name: nil, email: nil, password_hash: nil}
+    %{name: nil, email: nil, password: nil}
   end
 
   def user_fixture(attrs \\ %{}) do
