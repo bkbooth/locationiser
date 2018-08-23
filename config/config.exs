@@ -17,6 +17,10 @@ config :locationiser, LocationiserWeb.Endpoint,
   render_errors: [view: LocationiserWeb.ErrorView, accepts: ~w(json)],
   pubsub: [name: Locationiser.PubSub, adapter: Phoenix.PubSub.PG2]
 
+config :locationiser, Locationiser.Accounts.Guardian,
+  issuer: "locationiser",
+  secret_key: "ah8eC6QgyMOcrbVoa18XlegL2x2uuw2H/jMt+FxTBfnMQg2vr4nrGVLEyiABKBqS"
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

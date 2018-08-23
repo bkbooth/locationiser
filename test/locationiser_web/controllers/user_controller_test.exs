@@ -9,7 +9,8 @@ defmodule LocationiserWeb.UserControllerTest do
 
   test "create user renders user when data is valid", %{conn: conn} do
     conn = post(conn, user_path(conn, :create), user: valid_user())
-    assert %{"id" => id} = json_response(conn, 201)["data"]
+    assert %{"user" => %{"id" => id}, "token" => token} = json_response(conn, 201)["data"]
+    assert token =~ ~r/^[\w-]+\.[\w-]+\.[\w-]+$/
 
     conn = get(conn, user_path(conn, :show, id))
 

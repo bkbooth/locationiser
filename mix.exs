@@ -40,7 +40,8 @@ defmodule Locationiser.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:comeonin, "~> 4.1"},
-      {:bcrypt_elixir, "~> 1.0"}
+      {:bcrypt_elixir, "~> 1.0"},
+      {:guardian, "~> 1.1"}
     ]
   end
 

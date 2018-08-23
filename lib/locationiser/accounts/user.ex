@@ -2,6 +2,8 @@ defmodule Locationiser.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias Comeonin.Bcrypt
+
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "users" do
@@ -39,7 +41,7 @@ defmodule Locationiser.Accounts.User do
   end
 
   defp put_password_hash(%Ecto.Changeset{valid?: true, changes: %{password: pwd}} = changeset) do
-    change(changeset, Comeonin.Bcrypt.add_hash(pwd))
+    change(changeset, Bcrypt.add_hash(pwd))
   end
 
   defp put_password_hash(changeset), do: changeset

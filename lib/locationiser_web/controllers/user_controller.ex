@@ -2,7 +2,7 @@ defmodule LocationiserWeb.UserController do
   use LocationiserWeb, :controller
 
   alias Locationiser.Accounts
-  alias Locationiser.Accounts.User
+  alias Locationiser.Accounts.{Guardian, User}
 
   action_fallback(LocationiserWeb.FallbackController)
 
@@ -12,11 +12,12 @@ defmodule LocationiserWeb.UserController do
   end
 
   def create(conn, %{"user" => user_params}) do
-    with {:ok, %User{} = user} <- Accounts.create_user(user_params) do
+    with {:ok, %User{} = user} <- Accounts.create_user(user_params),
+         {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", user_path(conn, :show, user))
-      |> render("show.json", user: user)
+      |> render("create.json", user: user, token: token)
     end
   end
 

@@ -10,6 +10,15 @@ defmodule LocationiserWeb.UserView do
     %{data: render_one(user, UserView, "user.json")}
   end
 
+  def render("create.json", %{user: user, token: token}) do
+    %{
+      data: %{
+        user: render_one(user, UserView, "user.json"),
+        token: token
+      }
+    }
+  end
+
   def render("user.json", %{user: user}) do
     %{
       id: user.id,
