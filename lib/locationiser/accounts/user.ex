@@ -8,7 +8,6 @@ defmodule Locationiser.Accounts.User do
     field(:email, :string)
     field(:name, :string)
     field(:password_hash, :string)
-    has_many(:pins, Locationiser.Locations.Pin)
 
     timestamps()
   end
