@@ -1,6 +1,7 @@
 defmodule LocationiserWeb.PinController do
   use LocationiserWeb, :controller
 
+  alias Locationiser.Accounts
   alias Locationiser.Locations
   alias Locationiser.Locations.Pin
 
@@ -11,8 +12,10 @@ defmodule LocationiserWeb.PinController do
     render(conn, "index.json", pins: pins)
   end
 
-  def create(conn, %{"pin" => pin_params}) do
-    with {:ok, %Pin{} = pin} <- Locations.create_pin(pin_params) do
+  def create(conn, %{"pin" => pin_params, "user_id" => user_id}) do
+    user = Accounts.get_user!(user_id)
+
+    with {:ok, %Pin{} = pin} <- Locations.create_pin(user, pin_params) do
       conn
       |> put_status(:created)
       |> put_resp_header("location", pin_path(conn, :show, pin))

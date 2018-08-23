@@ -5,10 +5,11 @@ defmodule Locationiser.Locations.Pin do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "pins" do
-    field(:description, :string)
     field(:lat, :decimal)
     field(:lng, :decimal)
     field(:title, :string)
+    field(:description, :string)
+
     belongs_to(:user, Locationiser.Accounts.User)
 
     timestamps()
@@ -17,8 +18,8 @@ defmodule Locationiser.Locations.Pin do
   @doc false
   def changeset(pin, attrs) do
     pin
-    |> cast(attrs, [:lat, :lng, :title, :description, :user_id])
-    |> validate_required([:lat, :lng, :title, :description, :user_id])
+    |> cast(attrs, [:lat, :lng, :title, :description])
+    |> validate_required([:lat, :lng, :title, :description])
     |> cast_assoc(:user)
   end
 end

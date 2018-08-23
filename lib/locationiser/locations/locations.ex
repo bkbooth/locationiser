@@ -4,7 +4,9 @@ defmodule Locationiser.Locations do
   """
 
   import Ecto.Query, warn: false
+
   alias Locationiser.Repo
+  alias Locationiser.Accounts.User
   alias Locationiser.Locations.Pin
 
   @doc """
@@ -41,16 +43,17 @@ defmodule Locationiser.Locations do
 
   ## Examples
 
-      iex> create_pin(%{field: value})
+      iex> create_pin(user, %{field: value})
       {:ok, %Pin{}}
 
-      iex> create_pin(%{field: bad_value})
+      iex> create_pin(user, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_pin(attrs \\ %{}) do
+  def create_pin(%User{} = user, attrs \\ %{}) do
     %Pin{}
     |> Pin.changeset(attrs)
+    |> put_user(user)
     |> Repo.insert()
   end
 
@@ -93,11 +96,17 @@ defmodule Locationiser.Locations do
 
   ## Examples
 
-      iex> change_pin(pin)
+      iex> change_pin(user, pin)
       %Ecto.Changeset{source: %Pin{}}
 
   """
-  def change_pin(%Pin{} = pin) do
-    Pin.changeset(pin, %{})
+  def change_pin(%User{} = user, %Pin{} = pin) do
+    pin
+    |> Pin.changeset(%{})
+    |> put_user(user)
+  end
+
+  defp put_user(changeset, user) do
+    Ecto.Changeset.put_assoc(changeset, :user, user)
   end
 end

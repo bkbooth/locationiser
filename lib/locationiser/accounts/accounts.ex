@@ -4,6 +4,7 @@ defmodule Locationiser.Accounts do
   """
 
   import Ecto.Query, warn: false
+
   alias Locationiser.Repo
   alias Locationiser.Accounts.User
 
