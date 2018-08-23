@@ -1,5 +1,7 @@
 # Locationiser
 
+[![Build Status](https://travis-ci.com/locationiser/elixir-api.svg?branch=master)](https://travis-ci.com/locationiser/elixir-api)
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
