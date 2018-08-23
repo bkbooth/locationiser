@@ -22,6 +22,7 @@ defmodule Locationiser.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Locationiser.DataCase
+      import Locationiser.TestFixtures
     end
   end
 

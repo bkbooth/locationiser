@@ -4,78 +4,59 @@ defmodule LocationiserWeb.UserControllerTest do
   alias Locationiser.Accounts
   alias Locationiser.Accounts.User
 
-  @create_attrs %{email: "some email", name: "some name", password_hash: "some password_hash"}
-  @update_attrs %{
-    email: "some updated email",
-    name: "some updated name",
-    password_hash: "some updated password_hash"
-  }
-  @invalid_attrs %{email: nil, name: nil, password_hash: nil}
-
-  def fixture(:user) do
-    {:ok, user} = Accounts.create_user(@create_attrs)
-    user
-  end
-
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  describe "index" do
-    test "lists all users", %{conn: conn} do
+  test "create user renders user when data is valid", %{conn: conn} do
+    conn = post(conn, user_path(conn, :create), user: valid_user())
+    assert %{"id" => id} = json_response(conn, 201)["data"]
+
+    conn = get(conn, user_path(conn, :show, id))
+
+    data = json_response(conn, 200)["data"]
+    assert data["id"] == id
+    assert data["email"] =~ ~r/^user\d+@example\.com$/
+    assert data["name"] == "Test User"
+    assert data["password_hash"] == "password123"
+  end
+
+  test "create user renders errors when data is invalid", %{conn: conn} do
+    conn = post(conn, user_path(conn, :create), user: invalid_user())
+    assert json_response(conn, 422)["errors"] != %{}
+  end
+
+  describe "with existing user" do
+    setup _ do
+      user = user_fixture()
+      {:ok, user: user}
+    end
+
+    test "index lists all users", %{conn: conn, user: %User{id: user_id}} do
       conn = get(conn, user_path(conn, :index))
-      assert json_response(conn, 200)["data"] == []
-    end
-  end
-
-  describe "create user" do
-    test "renders user when data is valid", %{conn: conn} do
-      conn = post(conn, user_path(conn, :create), user: @create_attrs)
-      assert %{"id" => id} = json_response(conn, 201)["data"]
-
-      conn = get(conn, user_path(conn, :show, id))
-
-      assert json_response(conn, 200)["data"] == %{
-               "id" => id,
-               "email" => "some email",
-               "name" => "some name",
-               "password_hash" => "some password_hash"
-             }
+      data = json_response(conn, 200)["data"]
+      assert length(data) == 1
+      assert List.first(data)["id"] == user_id
     end
 
-    test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, user_path(conn, :create), user: @invalid_attrs)
-      assert json_response(conn, 422)["errors"] != %{}
-    end
-  end
-
-  describe "update user" do
-    setup [:create_user]
-
-    test "renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
-      conn = put(conn, user_path(conn, :update, user), user: @update_attrs)
+    test "update renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
+      attrs = %{name: "Updated Name"}
+      conn = put(conn, user_path(conn, :update, user), user: attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
       conn = get(conn, user_path(conn, :show, id))
 
-      assert json_response(conn, 200)["data"] == %{
-               "id" => id,
-               "email" => "some updated email",
-               "name" => "some updated name",
-               "password_hash" => "some updated password_hash"
-             }
+      data = json_response(conn, 200)["data"]
+      assert data["id"] == id
+      assert data["name"] == "Updated Name"
     end
 
-    test "renders errors when data is invalid", %{conn: conn, user: user} do
-      conn = put(conn, user_path(conn, :update, user), user: @invalid_attrs)
+    test "update renders errors when data is invalid", %{conn: conn, user: user} do
+      conn = put(conn, user_path(conn, :update, user), user: invalid_user())
       assert json_response(conn, 422)["errors"] != %{}
     end
-  end
 
-  describe "delete user" do
-    setup [:create_user]
-
-    test "deletes chosen user", %{conn: conn, user: user} do
+    test "delete deletes chosen user", %{conn: conn, user: user} do
       conn = delete(conn, user_path(conn, :delete, user))
       assert response(conn, 204)
 
@@ -83,10 +64,5 @@ defmodule LocationiserWeb.UserControllerTest do
         get(conn, user_path(conn, :show, user))
       end)
     end
-  end
-
-  defp create_user(_) do
-    user = fixture(:user)
-    {:ok, user: user}
   end
 end

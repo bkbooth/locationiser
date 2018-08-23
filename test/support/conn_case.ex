@@ -19,6 +19,8 @@ defmodule LocationiserWeb.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
+
+      import Locationiser.TestFixtures
       import LocationiserWeb.Router.Helpers
 
       # The default endpoint for testing
