@@ -15,11 +15,12 @@ defmodule LocationiserWeb.Router do
     scope "/v1" do
       post("/auth/login", AuthController, :login)
       resources("/users", UserController, except: [:new, :edit])
-      resources("/pins", PinController, except: [:new, :edit])
     end
 
     scope "/v1" do
       pipe_through(:authenticated)
+
+      resources("/pins", PinController, except: [:new, :edit])
     end
   end
 end

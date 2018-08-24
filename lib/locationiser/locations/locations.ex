@@ -23,6 +23,21 @@ defmodule Locationiser.Locations do
   end
 
   @doc """
+  Returns the list of pins for a given user.
+
+  ## Examples
+
+      iex> list_pins(user)
+      [%Pin{}, ...]
+
+  """
+  def list_user_pins(%User{} = user) do
+    Pin
+    |> user_pins_query(user)
+    |> Repo.all()
+  end
+
+  @doc """
   Gets a single pin.
 
   Raises `Ecto.NoResultsError` if the Pin does not exist.
@@ -37,6 +52,29 @@ defmodule Locationiser.Locations do
 
   """
   def get_pin!(id), do: Repo.get!(Pin, id)
+
+  @doc """
+  Gets a single pin for a given user.
+
+  Raises `Ecto.NoResultsError` if the Pin does not exist or if the user isn't the owner.
+
+  ## Examples
+
+      iex> get_pin!(owner, 123)
+      %Pin{}
+
+      iex> get_pin!(owner, 456)
+      ** (Ecto.NoResultsError)
+
+      iex> get_pin!(non_owner, 123)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_user_pin!(%User{} = user, id) do
+    from(p in Pin, where: p.id == ^id)
+    |> user_pins_query(user)
+    |> Repo.one!()
+  end
 
   @doc """
   Creates a pin.
@@ -108,5 +146,9 @@ defmodule Locationiser.Locations do
 
   defp put_user(changeset, user) do
     Ecto.Changeset.put_assoc(changeset, :user, user)
+  end
+
+  defp user_pins_query(query, %User{id: user_id}) do
+    from(p in query, where: p.user_id == ^user_id)
   end
 end

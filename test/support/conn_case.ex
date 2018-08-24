@@ -23,6 +23,15 @@ defmodule LocationiserWeb.ConnCase do
       import Locationiser.TestFixtures
       import LocationiserWeb.Router.Helpers
 
+      @doc """
+      Recycle a Plug.Conn and authorize the given user.
+      """
+      def recycle_and_authorize(conn, owner) do
+        conn
+        |> Phoenix.ConnTest.recycle()
+        |> Locationiser.Accounts.Guardian.Plug.sign_in(owner)
+      end
+
       # The default endpoint for testing
       @endpoint LocationiserWeb.Endpoint
     end
