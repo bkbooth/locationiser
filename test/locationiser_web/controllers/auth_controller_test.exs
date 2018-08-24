@@ -3,9 +3,8 @@ defmodule LocationiserWeb.AuthControllerTest do
 
   alias Locationiser.Accounts.{Guardian, User}
 
-  setup %{conn: conn} do
-    user = user_fixture()
-    {:ok, conn: put_req_header(conn, "accept", "application/json"), user: user}
+  setup _ do
+    {:ok, user: user_fixture()}
   end
 
   test "login renders auth token with valid credentials", %{conn: conn, user: user} do

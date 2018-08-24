@@ -18,8 +18,7 @@ defmodule Locationiser.AccountsTest do
 
   describe "with existing user" do
     setup _ do
-      user = user_fixture()
-      {:ok, user: user}
+      {:ok, user: user_fixture()}
     end
 
     test "list_users/0 returns all users", %{user: user} do

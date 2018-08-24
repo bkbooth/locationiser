@@ -3,10 +3,6 @@ defmodule LocationiserWeb.UserControllerTest do
 
   alias Locationiser.Accounts.{Guardian, User}
 
-  setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/json")}
-  end
-
   test "create user renders auth token when data is valid", %{conn: conn} do
     conn = post(conn, user_path(conn, :create), user: valid_user())
     assert %{"token" => token} = json_response(conn, 201)["data"]
@@ -30,8 +26,7 @@ defmodule LocationiserWeb.UserControllerTest do
 
   describe "with existing user" do
     setup _ do
-      user = user_fixture()
-      {:ok, user: user}
+      {:ok, user: user_fixture()}
     end
 
     test "index lists all users", %{conn: conn, user: %User{id: id}} do

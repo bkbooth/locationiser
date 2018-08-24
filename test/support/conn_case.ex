@@ -21,16 +21,8 @@ defmodule LocationiserWeb.ConnCase do
       use Phoenix.ConnTest
 
       import Locationiser.TestFixtures
+      import Locationiser.TestHelpers
       import LocationiserWeb.Router.Helpers
-
-      @doc """
-      Recycle a Plug.Conn and authorize the given user.
-      """
-      def recycle_and_authorize(conn, owner) do
-        conn
-        |> Phoenix.ConnTest.recycle()
-        |> Locationiser.Accounts.Guardian.Plug.sign_in(owner)
-      end
 
       # The default endpoint for testing
       @endpoint LocationiserWeb.Endpoint
@@ -44,6 +36,16 @@ defmodule LocationiserWeb.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(Locationiser.Repo, {:shared, self()})
     end
 
-    {:ok, conn: Phoenix.ConnTest.build_conn()}
+    conn =
+      Phoenix.ConnTest.build_conn()
+      |> Plug.Conn.put_req_header("accept", "application/json")
+
+    if tags[:authorize] do
+      user = Locationiser.TestFixtures.user_fixture()
+      conn = Locationiser.Accounts.Guardian.Plug.sign_in(conn, user)
+      {:ok, conn: conn, user: user}
+    else
+      {:ok, conn: conn}
+    end
   end
 end

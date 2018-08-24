@@ -6,8 +6,7 @@ defmodule Locationiser.LocationsTest do
   alias Locationiser.Locations.Pin
 
   setup _ do
-    owner = user_fixture()
-    {:ok, owner: owner}
+    {:ok, owner: user_fixture()}
   end
 
   test "create_pin/2 with valid data creates a pin", %{owner: owner} do
@@ -25,9 +24,7 @@ defmodule Locationiser.LocationsTest do
   describe "with existing pins" do
     setup %{owner: owner} do
       other_user = user_fixture()
-      owned_pin = pin_fixture(owner)
-      other_pin = pin_fixture(other_user)
-      {:ok, owned_pin: owned_pin, other_pin: other_pin}
+      {:ok, owned_pin: pin_fixture(owner), other_pin: pin_fixture(other_user)}
     end
 
     test "list_pins/0 returns all pins", %{owned_pin: owned_pin, other_pin: other_pin} do
