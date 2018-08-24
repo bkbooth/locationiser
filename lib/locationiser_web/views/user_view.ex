@@ -22,8 +22,7 @@ defmodule LocationiserWeb.UserView do
   def render("user.json", %{user: user}) do
     %{
       id: user.id,
-      name: user.name,
-      email: user.email
+      name: user.name
     }
   end
 end

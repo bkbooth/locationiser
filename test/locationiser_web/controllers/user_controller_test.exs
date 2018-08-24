@@ -13,8 +13,8 @@ defmodule LocationiserWeb.UserControllerTest do
 
     data = json_response(conn, 200)["data"]
     assert data["id"] == id
-    assert data["email"] =~ ~r/^user\d+@example\.com$/
     assert data["name"] == "Test User"
+    refute data["email"]
     refute data["password"]
     refute data["password_hash"]
   end
