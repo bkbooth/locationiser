@@ -35,7 +35,10 @@ defmodule LocationiserWeb.UserControllerTest do
       assert length(data) == 1
       assert List.first(data)["id"] == id
     end
+  end
 
+  describe "with authorized user" do
+    @tag :authorize
     test "update renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
       attrs = %{name: "Updated Name"}
       conn = put(conn, user_path(conn, :update, user), user: attrs)
@@ -48,11 +51,13 @@ defmodule LocationiserWeb.UserControllerTest do
       assert data["name"] == "Updated Name"
     end
 
+    @tag :authorize
     test "update renders errors when data is invalid", %{conn: conn, user: user} do
       conn = put(conn, user_path(conn, :update, user), user: invalid_user())
       assert json_response(conn, 422)["errors"] != %{}
     end
 
+    @tag :authorize
     test "delete deletes chosen user", %{conn: conn, user: user} do
       conn = delete(conn, user_path(conn, :delete, user))
       assert response(conn, 204)
