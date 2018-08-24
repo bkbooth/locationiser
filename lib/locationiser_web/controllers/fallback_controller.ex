@@ -17,4 +17,10 @@ defmodule LocationiserWeb.FallbackController do
     |> put_status(:not_found)
     |> render(LocationiserWeb.ErrorView, :"404")
   end
+
+  def call(conn, {:error, :unprocessable_entity}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> render(LocationiserWeb.ErrorView, :"422")
+  end
 end

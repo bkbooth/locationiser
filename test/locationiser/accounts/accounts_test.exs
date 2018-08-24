@@ -2,7 +2,7 @@ defmodule Locationiser.AccountsTest do
   use Locationiser.DataCase
 
   alias Locationiser.Accounts
-  alias Locationiser.Accounts.User
+  alias Locationiser.Accounts.{Guardian, User}
 
   test "create_user/1 with valid data creates a user" do
     assert {:ok, %User{} = user} = Accounts.create_user(valid_user())
@@ -30,6 +30,14 @@ defmodule Locationiser.AccountsTest do
       assert Accounts.get_user!(user.id) == user
     end
 
+    test "get_user_by_email/1 returns the user with a known email address", %{user: user} do
+      assert Accounts.get_user_by_email(user.email) == user
+    end
+
+    test "get_user_by_email/1 returns nil with an unknown email address" do
+      assert Accounts.get_user_by_email("unknown@example.com") == nil
+    end
+
     test "update_user/2 with valid data updates the user", %{user: %User{id: id} = user} do
       attrs = %{name: "Updated Name"}
       assert {:ok, %User{} = user} = Accounts.update_user(user, attrs)
@@ -49,6 +57,29 @@ defmodule Locationiser.AccountsTest do
 
     test "change_user/1 returns a user changeset", %{user: user} do
       assert %Ecto.Changeset{} = Accounts.change_user(user)
+    end
+
+    test "authenticate_by_email_and_password/2 returns a token with valid credentials", %{
+      user: user
+    } do
+      assert {:ok, token, %{"sub" => sub} = auth_claims} =
+               Accounts.authenticate_by_email_and_password(user.email, "password123")
+
+      assert sub == user.id
+      assert {:ok, verified_claims} = Guardian.decode_and_verify(token)
+      assert verified_claims == auth_claims
+    end
+
+    test "authenticate_by_email_and_password/2 returns :unauthorized with invalid password", %{
+      user: user
+    } do
+      assert {:error, :unauthorized} =
+               Accounts.authenticate_by_email_and_password(user.email, "invalid123")
+    end
+
+    test "authenticate_by_email_and_password/2 returns :not_found with unknown email" do
+      assert {:error, :not_found} =
+               Accounts.authenticate_by_email_and_password("unknown@example.com", "password123")
     end
   end
 end

@@ -1,16 +1,17 @@
 defmodule LocationiserWeb.UserControllerTest do
   use LocationiserWeb.ConnCase
 
-  alias Locationiser.Accounts.User
+  alias Locationiser.Accounts.{Guardian, User}
 
   setup %{conn: conn} do
     {:ok, conn: put_req_header(conn, "accept", "application/json")}
   end
 
-  test "create user renders user when data is valid", %{conn: conn} do
+  test "create user renders auth token when data is valid", %{conn: conn} do
     conn = post(conn, user_path(conn, :create), user: valid_user())
-    assert %{"user" => %{"id" => id}, "token" => token} = json_response(conn, 201)["data"]
+    assert %{"token" => token} = json_response(conn, 201)["data"]
     assert token =~ ~r/^[\w-]+\.[\w-]+\.[\w-]+$/
+    assert {:ok, %User{id: id}, _claims} = Guardian.resource_from_token(token)
 
     conn = get(conn, user_path(conn, :show, id))
 
