@@ -40,6 +40,8 @@ defmodule LocationiserWeb.Endpoint do
     signing_salt: "x/zcNX0T"
   )
 
+  plug(CORSPlug)
+
   plug(LocationiserWeb.Router)
 
   @doc """
