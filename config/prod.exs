@@ -15,11 +15,24 @@ use Mix.Config
 # which you typically run after static files are built.
 config :locationiser, LocationiserWeb.Endpoint,
   load_from_system_env: true,
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  server: true,
+  url: [host: "locationiser.gigalixirapp.com", port: 80],
+  secret_key_base:
+    System.get_env("SECRET_KEY_BASE") || raise("ENV variable not set: SECRET_KEY_BASE")
+
+config :locationiser, Locationiser.Accounts.Guardian,
+  secret_key:
+    System.get_env("GUARDIAN_SECRET_KEY") || raise("ENV variable not set: GUARDIAN_SECRET_KEY")
 
 # Do not print debug messages in production
 config :logger, level: :info
+
+config :locationiser, Locationiser.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  url: System.get_env("DATABASE_URL") || raise("ENV variable not set: DATABASE_URL"),
+  ssl: true,
+  # Gigalixir free tier allows 1 connection
+  pool_size: 1
 
 # ## SSL Support
 #
@@ -61,4 +74,4 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-import_config "prod.secret.exs"
+# import_config "prod.secret.exs"
