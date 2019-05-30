@@ -4,6 +4,12 @@ elixir:
 otp_release:
   - "21.0"
 
+services:
+  - postgresql
+
+before_script:
+  - mix ecto.create
+
 script:
   - mix format --check-formatted
   - mix test
