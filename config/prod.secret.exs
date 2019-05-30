@@ -12,9 +12,7 @@ database_url =
     For example: ecto://USER:PASS@HOST/DATABASE
     """
 
-config :locationiser, Locationiser.Repo,
-  # pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10"),
-  url: database_url
+config :locationiser, Locationiser.Repo, url: database_url
 
 secret_key_base =
   System.get_env("SECRET_KEY_BASE") ||
@@ -23,9 +21,7 @@ secret_key_base =
     You can generate one by calling: mix phx.gen.secret
     """
 
-config :locationiser, LocationiserWeb.Endpoint,
-  http: [:inet6, port: String.to_integer(System.get_env("PORT") || "4000")],
-  secret_key_base: secret_key_base
+config :locationiser, LocationiserWeb.Endpoint, secret_key_base: secret_key_base
 
 guardian_secret_key =
   System.get_env("GUARDIAN_SECRET_KEY") ||
