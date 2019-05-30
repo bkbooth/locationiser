@@ -16,8 +16,9 @@ defmodule LocationiserWeb.UserController do
          {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", user_path(conn, :show, user))
-      |> render(LocationiserWeb.AuthView, "login.json", token: token)
+      |> put_resp_header("location", Routes.user_path(conn, :show, user))
+      |> put_view(LocationiserWeb.AuthView)
+      |> render("login.json", token: token)
     end
   end
 

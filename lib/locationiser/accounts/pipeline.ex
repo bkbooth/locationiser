@@ -6,7 +6,7 @@ defmodule Locationiser.Accounts.Pipeline do
 
   alias Guardian.Plug
 
-  plug(Plug.VerifyHeader, realm: "Bearer")
-  plug(Plug.EnsureAuthenticated)
-  plug(Plug.LoadResource)
+  plug Plug.VerifyHeader, realm: "Bearer"
+  plug Plug.EnsureAuthenticated
+  plug Plug.LoadResource
 end

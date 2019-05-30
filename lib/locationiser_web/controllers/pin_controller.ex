@@ -21,7 +21,7 @@ defmodule LocationiserWeb.PinController do
     with {:ok, %Pin{} = pin} <- Locations.create_pin(current_user, pin_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", pin_path(conn, :show, pin))
+      |> put_resp_header("location", Routes.pin_path(conn, :show, pin))
       |> render("show.json", pin: pin)
     end
   end

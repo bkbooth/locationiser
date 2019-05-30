@@ -20,9 +20,10 @@ defmodule LocationiserWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: LocationiserWeb
+
       import Plug.Conn
-      import LocationiserWeb.Router.Helpers
       import LocationiserWeb.Gettext
+      alias LocationiserWeb.Router.Helpers, as: Routes
     end
   end
 
@@ -35,9 +36,9 @@ defmodule LocationiserWeb do
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]
 
-      import LocationiserWeb.Router.Helpers
       import LocationiserWeb.ErrorHelpers
       import LocationiserWeb.Gettext
+      alias LocationiserWeb.Router.Helpers, as: Routes
     end
   end
 

@@ -5,7 +5,7 @@ defmodule Locationiser.Accounts do
 
   import Ecto.Query, warn: false
 
-  alias Comeonin.Bcrypt
+  alias Bcrypt
   alias Locationiser.Repo
   alias Locationiser.Accounts.{Guardian, User}
 
@@ -139,7 +139,7 @@ defmodule Locationiser.Accounts do
       Guardian.encode_and_sign(user)
     else
       nil ->
-        Bcrypt.dummy_checkpw()
+        Bcrypt.no_user_verify()
         {:error, :not_found}
 
       _ ->
@@ -148,7 +148,7 @@ defmodule Locationiser.Accounts do
   end
 
   defp verify_password(password, password_hash) do
-    if Bcrypt.checkpw(password, password_hash) do
+    if Bcrypt.verify_pass(password, password_hash) do
       :ok
     else
       {:error, :invalid_password}

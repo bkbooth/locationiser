@@ -2,26 +2,26 @@ defmodule LocationiserWeb.Router do
   use LocationiserWeb, :router
 
   pipeline :api do
-    plug(:accepts, ["json"])
+    plug :accepts, ["json"]
   end
 
   pipeline :authenticated do
-    plug(Locationiser.Accounts.Pipeline)
+    plug Locationiser.Accounts.Pipeline
   end
 
   scope "/api", LocationiserWeb do
-    pipe_through(:api)
+    pipe_through :api
 
     scope "/v1" do
-      post("/auth/login", AuthController, :login)
-      resources("/users", UserController, only: [:index, :create, :show])
+      post "/auth/login", AuthController, :login
+      resources "/users", UserController, only: [:index, :create, :show]
     end
 
     scope "/v1" do
-      pipe_through(:authenticated)
+      pipe_through :authenticated
 
-      resources("/users", UserController, only: [:update, :delete])
-      resources("/pins", PinController, except: [:new, :edit])
+      resources "/users", UserController, only: [:update, :delete]
+      resources "/pins", PinController, except: [:new, :edit]
     end
   end
 end
