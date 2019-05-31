@@ -1,0 +1,6 @@
+[submodule "api"]
+	path = api
+	url = git@github.com:locationiser/elixir-api.git
+[submodule "client"]
+	path = client
+	url = git@github.com:locationiser/react-client.git
