@@ -1,3 +1,3 @@
 # locationiser
 
-A description of locationiser
+A simple location sharing service
