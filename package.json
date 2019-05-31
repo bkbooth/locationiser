@@ -1,0 +1,7 @@
+{
+  "name": "locationiser",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Ben Booth <bkbooth@gmail.com> (https://benbooth.dev)",
+  "license": "MIT"
+}
