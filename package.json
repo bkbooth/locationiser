@@ -3,5 +3,13 @@
   "version": "1.0.0",
   "author": "Ben Booth <bkbooth@gmail.com> (https://benbooth.dev)",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "scripts": {
+    "start:api": "cd api && mix phx.server",
+    "start:client": "cd client && npm run start",
+    "start": "run-p start:*"
+  },
+  "dependencies": {
+    "npm-run-all": "^4.1.5"
+  }
 }
