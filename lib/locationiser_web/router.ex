@@ -20,6 +20,7 @@ defmodule LocationiserWeb.Router do
     scope "/v1" do
       pipe_through(:authenticated)
 
+      get("/user", UserController, :current)
       resources("/users", UserController, only: [:update, :delete])
       resources("/pins", PinController, except: [:new, :edit])
     end

@@ -161,7 +161,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
 						"url": {
 							"raw": "{{URL}}/api/v1/users",
 							"host": [
@@ -181,7 +180,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {},
 								"url": {
 									"raw": "{{URL}}/api/v1/users",
 									"host": [
@@ -244,7 +242,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
 						"url": {
 							"raw": "{{URL}}/api/v1/users/{{userId}}",
 							"host": [
@@ -265,7 +262,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {},
 								"url": {
 									"raw": "{{URL}}/api/v1/users/{{userId}}",
 									"host": [
@@ -308,7 +304,6 @@
 							"listen": "test",
 							"script": {
 								"id": "ce1b72da-3d46-4cd6-b1eb-db0202b69465",
-								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"response is ok\", () => {",
 									"    pm.response.to.have.status(200);",
@@ -327,7 +322,8 @@
 									"    pm.environment.set(\"accessToken\", res.data.token);",
 									"    pm.environment.set(\"userId\", payload.sub);",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -405,6 +401,93 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get current user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecec5984-837c-401c-84b6-2a13a0886d7f",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"returns the specified user\", function () {",
+									"    let res = pm.response.json();",
+									"    let userId = pm.variables.get(\"userId\");",
+									"    pm.expect(res.data.id).to.eql(userId);",
+									"    pm.expect(res.data.name).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user"
+							]
+						},
+						"description": "Gets the currently authenticated user"
+					},
+					"response": [
+						{
+							"name": "Get current user success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/user",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "71"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": \"a92668ee-4444-45e3-8f32-46296ee09fbf\",\n        \"name\": \"Foo Bar\"\n    }\n}"
 						}
 					]
 				},
@@ -529,7 +612,6 @@
 							"listen": "test",
 							"script": {
 								"id": "f075821f-bd5d-4ef7-afba-e4748a94e23e",
-								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(204);",
@@ -539,7 +621,8 @@
 									"// Clear the accessToken and userId in the environment",
 									"pm.environment.unset(\"accessToken\");",
 									"pm.environment.unset(\"userId\");"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -556,7 +639,6 @@
 						},
 						"method": "DELETE",
 						"header": [],
-						"body": {},
 						"url": {
 							"raw": "{{URL}}/api/v1/users/{{userId}}",
 							"host": [
@@ -577,7 +659,10 @@
 							"originalRequest": {
 								"method": "DELETE",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
 								"url": {
 									"raw": "{{URL}}/api/v1/users/{{userId}}",
 									"host": [
@@ -827,7 +912,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
 						"url": {
 							"raw": "{{URL}}/api/v1/pins",
 							"host": [
@@ -847,7 +931,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {},
 								"url": {
 									"raw": "{{URL}}/api/v1/pins",
 									"host": [
@@ -913,7 +996,6 @@
 					"request": {
 						"method": "GET",
 						"header": [],
-						"body": {},
 						"url": {
 							"raw": "{{URL}}/api/v1/pins/{{pinId}}",
 							"host": [
@@ -934,7 +1016,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {},
 								"url": {
 									"raw": "{{URL}}/api/v1/pins/{{pinId}}",
 									"host": [
@@ -1083,7 +1164,6 @@
 							"listen": "test",
 							"script": {
 								"id": "1b60fd09-d49b-41d7-87d8-0fea468e8df3",
-								"type": "text/javascript",
 								"exec": [
 									"pm.test(\"response is ok\", function () {",
 									"    pm.response.to.have.status(204);",
@@ -1103,14 +1183,14 @@
 									"    pm.environment.unset(\"accessToken\");",
 									"    pm.environment.unset(\"userId\");",
 									"});"
-								]
+								],
+								"type": "text/javascript"
 							}
 						}
 					],
 					"request": {
 						"method": "DELETE",
 						"header": [],
-						"body": {},
 						"url": {
 							"raw": "{{URL}}/api/v1/pins/{{pinId}}",
 							"host": [
@@ -1131,7 +1211,10 @@
 							"originalRequest": {
 								"method": "DELETE",
 								"header": [],
-								"body": {},
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
 								"url": {
 									"raw": "{{URL}}/api/v1/pins/{{pinId}}",
 									"host": [
@@ -1221,25 +1304,25 @@
 	],
 	"variable": [
 		{
-			"id": "7f326f25-9d75-4b6b-9a64-5da98c72f73b",
+			"id": "7306e69a-2fa0-4244-9fb0-ee10a324ce33",
 			"key": "URL",
 			"value": "http://localhost:4000",
 			"type": "string"
 		},
 		{
-			"id": "02165bfa-34ae-4b37-bcce-7a0fe1045725",
+			"id": "ba49f427-9d61-4d24-9041-689172a0cca5",
 			"key": "authToken",
 			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
 			"type": "string"
 		},
 		{
-			"id": "592ebdd3-12f1-4dfa-9df3-33b84499badc",
+			"id": "53a21877-754c-4e56-b8ea-ca4d94ffe3e1",
 			"key": "userId",
 			"value": "e6734c6b-e6b1-4554-8e07-c65cd39d7b68",
 			"type": "string"
 		},
 		{
-			"id": "05840c91-de0b-4ad8-9595-0b252ee29fa8",
+			"id": "12ca710f-2d88-4b9b-beaf-5af105f699f0",
 			"key": "pinId",
 			"value": "dae117f2-ebcc-4c89-a7ad-8cb6b1974474",
 			"type": "string"

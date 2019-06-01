@@ -39,6 +39,14 @@ defmodule LocationiserWeb.UserControllerTest do
 
   describe "with authorized user" do
     @tag :authorize
+    test "current renders current user", %{conn: conn, user: %User{id: id} = user} do
+      conn = get(conn, user_path(conn, :current))
+      data = json_response(conn, 200)["data"]
+      assert data["id"] == id
+      assert data["name"] == user.name
+    end
+
+    @tag :authorize
     test "update renders user when data is valid", %{conn: conn, user: %User{id: id} = user} do
       attrs = %{name: "Updated Name"}
       conn = put(conn, user_path(conn, :update, user), user: attrs)
