@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { AuthContext } from '../components/Auth';
 import Emoji, { emojis } from './Emoji';
@@ -16,8 +17,17 @@ const Title = styled.h1`
   flex-grow: 1;
 `;
 
-function Navbar() {
+function Navbar({ history }) {
   const auth = useContext(AuthContext);
+
+  function handleLogin() {
+    history.push('/login');
+  }
+
+  function handleLogout() {
+    auth.handleLogout();
+    history.push('/login');
+  }
 
   return (
     <Header>
@@ -25,14 +35,11 @@ function Navbar() {
         <Emoji emoji={emojis.worldMap} /> Locationiser
       </Title>
       {auth.isAuthenticated ? (
-        <button onClick={auth.handleLogout} disabled={auth.isLoading}>
+        <button onClick={handleLogout} disabled={auth.isLoading}>
           Logout
         </button>
       ) : (
-        <button
-          onClick={() => auth.handleLogin('mario@example.com', 'mario123')}
-          disabled={auth.isLoading}
-        >
+        <button onClick={handleLogin} disabled={auth.isLoading}>
           Login
         </button>
       )}
@@ -40,4 +47,4 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+export default withRouter(Navbar);

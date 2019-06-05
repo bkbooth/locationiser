@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../components/Auth';
 import Emoji, { emojis } from '../components/Emoji';
 
@@ -15,7 +16,7 @@ function Home() {
     </p>
   ) : (
     <p>
-      <Emoji emoji={emojis.wave} /> Hi there! Please login.
+      <Emoji emoji={emojis.wave} /> Hi there! Please <Link to="/login">login</Link>.
     </p>
   );
 }

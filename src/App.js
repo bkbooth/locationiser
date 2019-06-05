@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components/macro';
 import Auth from './components/Auth';
 import Navbar from './components/Navbar';
-import Home from './pages/Home';
+
+const Home = lazy(() => import('./pages/Home'));
+const Login = lazy(() => import('./pages/Login'));
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -28,10 +31,17 @@ function App() {
     <>
       <GlobalStyle />
       <Auth>
-        <Navbar />
-        <Main>
-          <Home />
-        </Main>
+        <Router>
+          <Navbar />
+          <Main>
+            <Suspense fallback={<p>Loading...</p>}>
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/login" component={Login} />
+              </Switch>
+            </Suspense>
+          </Main>
+        </Router>
       </Auth>
     </>
   );
