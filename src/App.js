@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { createGlobalStyle } from 'styled-components/macro';
+import Auth from './components/Auth';
 import Navbar from './components/Navbar';
+import Home from './pages/Home';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -25,13 +27,12 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <Navbar />
-      <Main>
-        <span role="img" aria-label="waving hand">
-          👋
-        </span>{' '}
-        Hi there!
-      </Main>
+      <Auth>
+        <Navbar />
+        <Main>
+          <Home />
+        </Main>
+      </Auth>
     </>
   );
 }
