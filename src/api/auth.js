@@ -20,6 +20,7 @@ export async function login(email, password) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
   });
+  if (res.status === 422) throw new Error('Invalid email or password');
   if (res.status !== 200) throw new Error('Failed logging in');
 
   const {

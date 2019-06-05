@@ -48,9 +48,8 @@ function Auth({ children }) {
       const user = await login(email, password);
       dispatch({ type: 'login', payload: user });
     } catch (err) {
-      // TODO: handle failed login
-      console.log(err);
       dispatch({ type: 'loading', payload: false });
+      throw new Error(err);
     }
   }
 
