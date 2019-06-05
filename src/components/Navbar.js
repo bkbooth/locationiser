@@ -25,9 +25,16 @@ function Navbar() {
         <Emoji emoji={emojis.worldMap} /> Locationiser
       </Title>
       {auth.isAuthenticated ? (
-        <button onClick={auth.handleLogout}>Logout</button>
+        <button onClick={auth.handleLogout} disabled={auth.isLoading}>
+          Logout
+        </button>
       ) : (
-        <button onClick={() => auth.handleLogin('mario@example.com', 'mario123')}>Login</button>
+        <button
+          onClick={() => auth.handleLogin('mario@example.com', 'mario123')}
+          disabled={auth.isLoading}
+        >
+          Login
+        </button>
       )}
     </Header>
   );

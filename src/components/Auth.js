@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useReducer } from 'react';
 import { getUser, login, logout } from '../api/auth';
 
 const initialState = {
+  isLoading: true,
   isAuthenticated: false,
   user: null,
 };
@@ -14,15 +15,21 @@ export const AuthContext = createContext({
 
 function reducer(state, action) {
   switch (action.type) {
+    case 'loading':
+      return {
+        ...state,
+        isLoading: action.payload,
+      };
     case 'login':
       return {
+        isLoading: false,
         isAuthenticated: true,
         user: action.payload,
       };
     case 'logout':
-      return initialState;
+      return { ...initialState, isLoading: false };
     default:
-      throw new Error();
+      throw new Error('Unknown Auth reducer action');
   }
 }
 
@@ -32,16 +39,18 @@ function Auth({ children }) {
   useEffect(() => {
     getUser()
       .then(user => dispatch({ type: 'login', payload: user }))
-      .catch(err => console.error(err));
+      .catch(err => console.error(err) || dispatch({ type: 'loading', payload: false }));
   }, []);
 
   async function handleLogin(email, password) {
+    dispatch({ type: 'loading', payload: true });
     try {
       const user = await login(email, password);
       dispatch({ type: 'login', payload: user });
     } catch (err) {
       // TODO: handle failed login
       console.log(err);
+      dispatch({ type: 'loading', payload: false });
     }
   }
 
