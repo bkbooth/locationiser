@@ -31,3 +31,12 @@ guardian_secret_key =
     """
 
 config :locationiser, Locationiser.Accounts.Guardian, secret_key: guardian_secret_key
+
+client_origin =
+  System.get_env("CLIENT_ORIGIN") ||
+    raise """
+    environment variable CLIENT_ORIGIN is missing.
+    For example: http://example.com
+    """
+
+config :cors_plug, origin: [client_origin]
