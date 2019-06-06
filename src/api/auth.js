@@ -31,6 +31,33 @@ export async function login(email, password) {
   return getUser();
 }
 
+function buildSignupErrorMessage(errors) {
+  let errorMessage = '';
+  if (errors.email) errorMessage += `Email: ${errors.email.join(',')}.`;
+  if (errors.password) errorMessage += `Password: ${errors.password.join(',')}.`;
+  return errorMessage;
+}
+
+export async function signup(name, email, password) {
+  const res = await fetch(`${API_BASE_URL}/users`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user: { name, email, password } }),
+  });
+  if (res.status === 422) {
+    const { errors } = await res.json();
+    throw new Error(buildSignupErrorMessage(errors));
+  }
+  if (res.status !== 201) throw new Error('Failed signing up');
+
+  const {
+    data: { token },
+  } = await res.json();
+  localStorage.setItem(AUTH_TOKEN_KEY, token);
+
+  return getUser();
+}
+
 export function logout() {
   localStorage.removeItem(AUTH_TOKEN_KEY);
 }

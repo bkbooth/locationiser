@@ -24,6 +24,10 @@ function Navbar({ history }) {
     history.push('/login');
   }
 
+  function handleSignup() {
+    history.push('/signup');
+  }
+
   function handleLogout() {
     auth.handleLogout();
     history.push('/login');
@@ -39,9 +43,14 @@ function Navbar({ history }) {
           Logout
         </button>
       ) : (
-        <button onClick={handleLogin} disabled={auth.isLoading}>
-          Login
-        </button>
+        <>
+          <button onClick={handleLogin} disabled={auth.isLoading}>
+            Login
+          </button>
+          <button onClick={handleSignup} disabled={auth.isLoading}>
+            Signup
+          </button>
+        </>
       )}
     </Header>
   );

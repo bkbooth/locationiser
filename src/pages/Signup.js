@@ -8,8 +8,9 @@ const Error = styled.p`
   color: red;
 `;
 
-function Login({ history }) {
+function Signup({ history }) {
   const auth = useContext(AuthContext);
+  const nameInput = useTextInput('');
   const emailInput = useTextInput('');
   const passwordInput = useTextInput('');
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +21,7 @@ function Login({ history }) {
 
     setIsLoading(true);
     auth
-      .handleLogin(emailInput.value, passwordInput.value)
+      .handleSignup(nameInput.value, emailInput.value, passwordInput.value)
       .then(() => history.push('/'))
       .catch(err => setErrorMessage(err.message))
       .then(() => setIsLoading(false));
@@ -32,9 +33,13 @@ function Login({ history }) {
     </p>
   ) : (
     <>
-      <h1>Login to your account</h1>
+      <h1>Signup for an account</h1>
       <form onSubmit={handleSubmit}>
         {errorMessage && <Error>{errorMessage}</Error>}
+        <div>
+          <label htmlFor="name">Name</label>
+          <input {...nameInput} type="text" id="name" name="name" />
+        </div>
         <div>
           <label htmlFor="email">Email</label>
           <input {...emailInput} type="email" id="email" name="email" />
@@ -45,15 +50,15 @@ function Login({ history }) {
         </div>
         <div>
           <button type="submit" disabled={isLoading}>
-            Log{isLoading ? 'ging in' : 'in'}
+            Sign{isLoading ? 'ing up' : 'up'}
           </button>
         </div>
       </form>
       <p>
-        Don't have an account? Please <Link to="/signup">signup</Link>.
+        Already have an account? Please <Link to="/login">login</Link>.
       </p>
     </>
   );
 }
 
-export default withRouter(Login);
+export default withRouter(Signup);

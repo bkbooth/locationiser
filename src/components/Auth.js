@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useReducer } from 'react';
-import { getUser, login, logout } from '../api/auth';
+import { getUser, login, logout, signup } from '../api/auth';
 
 const initialState = {
   isLoading: true,
@@ -53,13 +53,24 @@ function Auth({ children }) {
     }
   }
 
+  async function handleSignup(name, email, password) {
+    dispatch({ type: 'loading', payload: true });
+    try {
+      const user = await signup(name, email, password);
+      dispatch({ type: 'login', payload: user });
+    } catch (err) {
+      dispatch({ type: 'loading', payload: false });
+      throw new Error(err);
+    }
+  }
+
   function handleLogout() {
     logout();
     dispatch({ type: 'logout' });
   }
 
   return (
-    <AuthContext.Provider value={{ ...state, handleLogin, handleLogout }}>
+    <AuthContext.Provider value={{ ...state, handleLogin, handleLogout, handleSignup }}>
       {children}
     </AuthContext.Provider>
   );
