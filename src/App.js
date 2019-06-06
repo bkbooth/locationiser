@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 
 const Home = lazy(() => import('./pages/Home'));
 const Login = lazy(() => import('./pages/Login'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -38,6 +39,7 @@ function App() {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/login" component={Login} />
+                <Route component={NotFound} />
               </Switch>
             </Suspense>
           </Main>
