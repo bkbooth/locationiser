@@ -1,20 +1,43 @@
 import React, { useContext } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Link as RouterLink, withRouter } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { AuthContext } from '../components/Auth';
-import Emoji, { emojis } from './Emoji';
+import { WhiteButton } from '../components/styles/Button';
+import worldMapEmoji from '../assets/world-map-emoji.png';
 
 const Header = styled.header`
-  background: black;
-  color: white;
   display: flex;
-  flex: 1;
   align-items: center;
-  padding: 0 30px;
+  justify-content: space-between;
+  background: ${({ theme }) => theme.colours.primary['500']};
+  color: ${({ theme }) => theme.colours.shade['900']};
+  padding: ${({ theme }) => theme.sizes.md};
+  box-shadow: ${({ theme }) => theme.sizes.xs} ${({ theme }) => theme.sizes.nil}
+    ${({ theme }) => theme.sizes.sm} rgba(0, 0, 0, 0.7);
 `;
 
 const Title = styled.h1`
-  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  margin: ${({ theme }) => theme.sizes.nil};
+`;
+
+const Link = styled(RouterLink)`
+  color: ${({ theme }) => theme.colours.shade['900']};
+  text-decoration: none;
+  transition: opacity ${({ theme }) => theme.speeds.fast};
+
+  &:hover,
+  &:focus {
+    opacity: 0.8;
+    outline: none;
+  }
+`;
+
+const Logo = styled.img`
+  width: ${({ theme }) => theme.sizes.xl};
+  height: auto;
+  margin-right: ${({ theme }) => theme.sizes.sm};
 `;
 
 function Navbar({ history }) {
@@ -24,10 +47,6 @@ function Navbar({ history }) {
     history.push('/login');
   }
 
-  function handleSignup() {
-    history.push('/signup');
-  }
-
   function handleLogout() {
     auth.handleLogout();
     history.push('/login');
@@ -35,23 +54,23 @@ function Navbar({ history }) {
 
   return (
     <Header>
-      <Title>
-        <Emoji emoji={emojis.worldMap} /> Locationiser
-      </Title>
-      {auth.isAuthenticated ? (
-        <button onClick={handleLogout} disabled={auth.isLoading}>
-          Logout
-        </button>
-      ) : (
-        <>
-          <button onClick={handleLogin} disabled={auth.isLoading}>
+      <Link to="/">
+        <Title>
+          <Logo src={worldMapEmoji} alt="world map emoji" />
+          locations
+        </Title>
+      </Link>
+      <nav>
+        {auth.isAuthenticated ? (
+          <WhiteButton onClick={handleLogout} disabled={auth.isLoading}>
+            Logout
+          </WhiteButton>
+        ) : (
+          <WhiteButton onClick={handleLogin} disabled={auth.isLoading}>
             Login
-          </button>
-          <button onClick={handleSignup} disabled={auth.isLoading}>
-            Signup
-          </button>
-        </>
-      )}
+          </WhiteButton>
+        )}
+      </nav>
     </Header>
   );
 }

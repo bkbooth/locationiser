@@ -11,6 +11,7 @@ export const AuthContext = createContext({
   ...initialState,
   handleLogin: null,
   handleLogout: null,
+  handleSignup: null,
 });
 
 function reducer(state, action) {

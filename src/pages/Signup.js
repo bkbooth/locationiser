@@ -1,11 +1,21 @@
 import React, { useContext, useState } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, Redirect, withRouter } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { AuthContext } from '../components/Auth';
+import Emoji, { emojis } from '../components/Emoji';
+import { PrimaryButton } from '../components/styles/Button';
+import { Error } from '../components/styles/Error';
+import { Input, InputGroup, Label } from '../components/styles/Input';
 import { useTextInput } from '../utils/useTextInput';
 
-const Error = styled.p`
-  color: red;
+const Wrapper = styled.div`
+  padding: ${({ theme }) => theme.sizes.lg} ${({ theme }) => theme.sizes.md};
+  *:first-child {
+    margin-top: ${({ theme }) => theme.sizes.nil};
+  }
+  *:last-child {
+    margin-bottom: ${({ theme }) => theme.sizes.nil};
+  }
 `;
 
 function Signup({ history }) {
@@ -27,37 +37,43 @@ function Signup({ history }) {
       .then(() => setIsLoading(false));
   }
 
-  return auth.isAuthenticated ? (
-    <p>
-      You are already logged in. Back to <Link to="/">home</Link>.
-    </p>
-  ) : (
-    <>
-      <h1>Signup for an account</h1>
-      <form onSubmit={handleSubmit}>
-        {errorMessage && <Error>{errorMessage}</Error>}
-        <div>
-          <label htmlFor="name">Name</label>
-          <input {...nameInput} type="text" id="name" name="name" />
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input {...emailInput} type="email" id="email" name="email" />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input {...passwordInput} type="password" id="password" name="password" />
-        </div>
-        <div>
-          <button type="submit" disabled={isLoading}>
-            Sign{isLoading ? 'ing up' : 'up'}
-          </button>
-        </div>
-      </form>
-      <p>
-        Already have an account? Please <Link to="/login">login</Link>.
-      </p>
-    </>
+  return (
+    <Wrapper>
+      {auth.isLoading ? (
+        <p>
+          <Emoji emoji={emojis.waiting} /> Loading...
+        </p>
+      ) : auth.isAuthenticated ? (
+        <Redirect to="/" />
+      ) : (
+        <>
+          <h1>Signup for an account</h1>
+          <form onSubmit={handleSubmit}>
+            {errorMessage && <Error>{errorMessage}</Error>}
+            <InputGroup>
+              <Label htmlFor="name">Name</Label>
+              <Input {...nameInput} type="text" id="name" name="name" />
+            </InputGroup>
+            <InputGroup>
+              <Label htmlFor="email">Email</Label>
+              <Input {...emailInput} type="email" id="email" name="email" />
+            </InputGroup>
+            <InputGroup>
+              <Label htmlFor="password">Password</Label>
+              <Input {...passwordInput} type="password" id="password" name="password" />
+            </InputGroup>
+            <InputGroup>
+              <PrimaryButton type="submit" disabled={isLoading}>
+                Sign{isLoading ? 'ing up' : 'up'}
+              </PrimaryButton>
+            </InputGroup>
+          </form>
+          <p>
+            Already have an account? Please <Link to="/login">login</Link>.
+          </p>
+        </>
+      )}
+    </Wrapper>
   );
 }
 
