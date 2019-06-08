@@ -13,13 +13,16 @@
     "format:check": "prettier --check src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
   },
   "dependencies": {
-    "prettier": "^1.17.1",
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.1",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.0.1",
     "styled-components": "^4.2.1"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^8.0.1",
+    "prettier": "^1.17.1",
+    "react-scripts": "3.0.1"
   },
   "eslintConfig": {
     "extends": "react-app"
