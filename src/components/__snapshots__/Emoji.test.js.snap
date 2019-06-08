@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a waiting emoji 1`] = `
+<div>
+  <span
+    aria-label="hourglass not done"
+    role="img"
+  >
+    ⏳
+  </span>
+</div>
+`;
+
+exports[`renders a waving emoji 1`] = `
+<div>
+  <span
+    aria-label="waving hand"
+    role="img"
+  >
+    👋
+  </span>
+</div>
+`;
+
+exports[`renders a world map emoji 1`] = `
+<div>
+  <span
+    aria-label="world map"
+    role="img"
+  >
+    🗺️
+  </span>
+</div>
+`;
