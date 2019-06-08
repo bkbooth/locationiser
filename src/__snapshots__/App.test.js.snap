@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <header
+    class="Navbar__Header-sc-1igkgb7-0 bGlLbZ"
+  >
+    <a
+      class="Navbar__Link-sc-1igkgb7-2 ckPUjd"
+      href="/"
+    >
+      <h1
+        class="Navbar__Title-sc-1igkgb7-1 etlmTj"
+      >
+        <img
+          alt="world map emoji"
+          class="Navbar__Logo-sc-1igkgb7-3 gwmEys"
+          src="world-map-emoji.png"
+        />
+        locations
+      </h1>
+    </a>
+    <nav>
+      <button
+        class="Button__PrimaryButton-f2jzi9-0 Button__WhiteButton-f2jzi9-1 kPngaL"
+        disabled=""
+      >
+        Login
+      </button>
+    </nav>
+  </header>
+  <div
+    class="PageWrapper-sc-174k499-0 euLLce"
+  >
+    <p>
+      <span
+        aria-label="hourglass not done"
+        role="img"
+      >
+        ⏳
+      </span>
+       Loading...
+    </p>
+  </div>
+</div>
+`;

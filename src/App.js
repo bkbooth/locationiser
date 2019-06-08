@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components/macro';
 import Auth from './components/Auth';
 import Navbar from './components/Navbar';
+import SuspenseFallback from './components/SuspenseFallback';
 import GlobalStyle from './components/styles/GlobalStyle';
 import { theme } from './utils/theme';
 
@@ -19,7 +20,7 @@ function App() {
         <Auth>
           <Router>
             <Navbar />
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={<SuspenseFallback />}>
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/login" component={Login} />
