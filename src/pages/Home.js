@@ -1,24 +1,14 @@
 import React, { useContext } from 'react';
 import { Redirect } from 'react-router-dom';
-import styled from 'styled-components/macro';
 import { AuthContext } from '../components/Auth';
 import Emoji, { emojis } from '../components/Emoji';
-
-const Wrapper = styled.div`
-  padding: ${({ theme }) => theme.sizes.lg} ${({ theme }) => theme.sizes.md};
-  *:first-child {
-    margin-top: ${({ theme }) => theme.sizes.nil};
-  }
-  *:last-child {
-    margin-bottom: ${({ theme }) => theme.sizes.nil};
-  }
-`;
+import { PageWrapper } from '../components/styles/PageWrapper';
 
 function Home() {
   const auth = useContext(AuthContext);
 
   return (
-    <Wrapper>
+    <PageWrapper>
       {auth.isLoading ? (
         <p>
           <Emoji emoji={emojis.waiting} /> Loading...
@@ -30,7 +20,7 @@ function Home() {
       ) : (
         <Redirect to="/signup" />
       )}
-    </Wrapper>
+    </PageWrapper>
   );
 }
 

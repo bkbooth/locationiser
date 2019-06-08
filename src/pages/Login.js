@@ -1,22 +1,12 @@
 import React, { useContext, useState } from 'react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
-import styled from 'styled-components/macro';
 import { AuthContext } from '../components/Auth';
 import Emoji, { emojis } from '../components/Emoji';
 import { PrimaryButton } from '../components/styles/Button';
 import { Error } from '../components/styles/Error';
 import { Input, InputGroup, Label } from '../components/styles/Input';
+import { PageWrapper } from '../components/styles/PageWrapper';
 import { useTextInput } from '../utils/useTextInput';
-
-const Wrapper = styled.div`
-  padding: ${({ theme }) => theme.sizes.lg} ${({ theme }) => theme.sizes.md};
-  *:first-child {
-    margin-top: ${({ theme }) => theme.sizes.nil};
-  }
-  *:last-child {
-    margin-bottom: ${({ theme }) => theme.sizes.nil};
-  }
-`;
 
 function Login({ history }) {
   const auth = useContext(AuthContext);
@@ -37,7 +27,7 @@ function Login({ history }) {
   }
 
   return (
-    <Wrapper>
+    <PageWrapper>
       {auth.isLoading ? (
         <p>
           <Emoji emoji={emojis.waiting} /> Loading...
@@ -68,7 +58,7 @@ function Login({ history }) {
           </p>
         </>
       )}
-    </Wrapper>
+    </PageWrapper>
   );
 }
 
