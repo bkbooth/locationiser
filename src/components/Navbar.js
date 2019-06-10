@@ -22,6 +22,8 @@ const Title = styled.h1`
   display: flex;
   align-items: center;
   margin: ${({ theme }) => theme.sizes.nil};
+  font-size: 1.7rem;
+  letter-spacing: 0.05rem;
 `;
 
 const Link = styled(RouterLink)`

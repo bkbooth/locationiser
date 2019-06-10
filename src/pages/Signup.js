@@ -5,6 +5,7 @@ import { getRandomLocation, MapContext } from '../components/Map';
 import Emoji, { emojis } from '../components/Emoji';
 import { PrimaryButton } from '../components/styles/Button';
 import { Error } from '../components/styles/Error';
+import { Heading } from '../components/styles/Heading';
 import { Input, InputGroup, Label } from '../components/styles/Input';
 import { PageWrapper } from '../components/styles/PageWrapper';
 import { useTextInput } from '../utils/useTextInput';
@@ -44,7 +45,7 @@ function Signup({ history }) {
         <Redirect to="/" />
       ) : (
         <>
-          <h1>Signup for an account</h1>
+          <Heading>Signup for an account</Heading>
           <form onSubmit={handleSubmit}>
             {errorMessage && <Error>{errorMessage}</Error>}
             <InputGroup>
