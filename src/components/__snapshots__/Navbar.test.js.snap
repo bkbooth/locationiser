@@ -1,20 +1,104 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
+.c4 {
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  -webkit-letter-spacing: 0.05rem;
+  -moz-letter-spacing: 0.05rem;
+  -ms-letter-spacing: 0.05rem;
+  letter-spacing: 0.05rem;
+  background: #0094c0;
+  color: #fbfbfb;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+  background: #fbfbfb;
+  color: #101010;
+  border: 1px solid #656565;
+}
+
+.c4:hover,
+.c4:focus {
+  box-shadow: 1px 1px 10px rgba(0,0,0,0.4);
+  outline: none;
+}
+
+.c0 {
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  background: #0094c0;
+  color: #fbfbfb;
+  padding: 20px;
+  box-shadow: 5px 0 10px rgba(0,0,0,0.7);
+  z-index: 2;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin: 0;
+  font-size: 1.7rem;
+  -webkit-letter-spacing: 0.05rem;
+  -moz-letter-spacing: 0.05rem;
+  -ms-letter-spacing: 0.05rem;
+  letter-spacing: 0.05rem;
+}
+
+.c1 {
+  color: #fbfbfb;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+
+.c1:hover,
+.c1:focus {
+  opacity: 0.8;
+  outline: none;
+}
+
+.c3 {
+  width: 40px;
+  height: auto;
+  margin-right: 10px;
+}
+
 <div>
   <header
-    class="Navbar__Header-sc-1igkgb7-0 dAQEOm"
+    class="c0"
   >
     <a
-      class="Navbar__Link-sc-1igkgb7-2 ckPUjd"
+      class="c1"
       href="/"
     >
       <h1
-        class="Navbar__Title-sc-1igkgb7-1 etlmTj"
+        class="c2"
       >
         <img
           alt="world map emoji"
-          class="Navbar__Logo-sc-1igkgb7-3 gwmEys"
+          class="c3"
           src="world-map-emoji.png"
         />
         locations
@@ -22,7 +106,7 @@ exports[`renders correctly 1`] = `
     </a>
     <nav>
       <button
-        class="Button__PrimaryButton-f2jzi9-0 Button__WhiteButton-f2jzi9-1 kPngaL"
+        class="c4"
         disabled=""
       >
         Login
