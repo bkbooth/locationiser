@@ -6,6 +6,7 @@ import { WhiteButton } from '../components/styles/Button';
 import worldMapEmoji from '../assets/world-map-emoji.png';
 
 const Header = styled.header`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,6 +15,7 @@ const Header = styled.header`
   padding: ${({ theme }) => theme.sizes.md};
   box-shadow: ${({ theme }) => theme.sizes.xs} ${({ theme }) => theme.sizes.nil}
     ${({ theme }) => theme.sizes.sm} rgba(0, 0, 0, 0.7);
+  z-index: 2;
 `;
 
 const Title = styled.h1`

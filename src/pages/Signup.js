@@ -1,6 +1,7 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { AuthContext } from '../components/Auth';
+import { getRandomLocation, MapContext } from '../components/Map';
 import Emoji, { emojis } from '../components/Emoji';
 import { PrimaryButton } from '../components/styles/Button';
 import { Error } from '../components/styles/Error';
@@ -10,11 +11,17 @@ import { useTextInput } from '../utils/useTextInput';
 
 function Signup({ history }) {
   const auth = useContext(AuthContext);
+  const map = useContext(MapContext);
   const nameInput = useTextInput('');
   const emailInput = useTextInput('');
   const passwordInput = useTextInput('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    const { lat, lng, zoom } = getRandomLocation();
+    map.setView([lat, lng], zoom);
+  }, [map]);
 
   function handleSubmit(event) {
     event.preventDefault();

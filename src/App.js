@@ -2,6 +2,7 @@ import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components/macro';
 import Auth from './components/Auth';
+import Map from './components/Map';
 import Navbar from './components/Navbar';
 import SuspenseFallback from './components/SuspenseFallback';
 import GlobalStyle from './components/styles/GlobalStyle';
@@ -20,14 +21,16 @@ function App() {
         <Auth>
           <Router>
             <Navbar />
-            <Suspense fallback={<SuspenseFallback />}>
-              <Switch>
-                <Route exact path="/" component={Home} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route component={NotFound} />
-              </Switch>
-            </Suspense>
+            <Map>
+              <Suspense fallback={<SuspenseFallback />}>
+                <Switch>
+                  <Route exact path="/" component={Home} />
+                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/signup" component={Signup} />
+                  <Route component={NotFound} />
+                </Switch>
+              </Suspense>
+            </Map>
           </Router>
         </Auth>
       </ThemeProvider>
