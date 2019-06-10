@@ -6,6 +6,8 @@ export const PageWrapper = styled.div`
   padding: ${({ theme }) => theme.sizes.lg} ${({ theme }) => theme.sizes.md};
   border-radius: ${({ theme }) => theme.sizes.xs};
   box-shadow: 0 ${({ theme }) => theme.sizes.sm} ${({ theme }) => theme.sizes.xl} rgba(0, 0, 0, 0.3);
+  max-height: calc(100% - 2 * ${({ theme }) => theme.sizes.xl});
+  overflow-y: auto;
 
   @media screen and (min-width: 540px) {
     margin: ${({ theme }) => theme.sizes.xl} auto;
