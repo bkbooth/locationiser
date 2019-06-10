@@ -2,7 +2,7 @@ import styled from 'styled-components/macro';
 
 export const Label = styled.label`
   display: inline-block;
-  width: 90px;
+  width: 110px;
 `;
 
 export const Input = styled.input`
