@@ -1,5 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`renders a pin emoji 1`] = `
+<div>
+  <span
+    aria-label="round pushpin"
+    role="img"
+  >
+    📍
+  </span>
+</div>
+`;
+
 exports[`renders a waiting emoji 1`] = `
 <div>
   <span
