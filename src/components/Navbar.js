@@ -13,9 +13,9 @@ const Header = styled.header`
   background: ${({ theme }) => theme.colours.primary['500']};
   color: ${({ theme }) => theme.colours.shade['900']};
   padding: ${({ theme }) => theme.sizes.md};
-  box-shadow: ${({ theme }) => theme.sizes.xs} ${({ theme }) => theme.sizes.nil}
-    ${({ theme }) => theme.sizes.sm} rgba(0, 0, 0, 0.7);
-  z-index: 2;
+  box-shadow: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.xs}
+    ${({ theme }) => theme.sizes.sm} rgba(0, 0, 0, 0.4);
+  z-index: 10;
 `;
 
 const Title = styled.h1`
