@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { AuthContext } from '../components/Auth';
 import { getRandomLocation, MapContext } from '../components/Map';
 import Emoji, { emojis } from '../components/Emoji';
+import UserToolbar from '../components/UserToolbar';
 import { PageWrapper } from '../components/styles/PageWrapper';
 
 function Home() {
@@ -15,19 +16,19 @@ function Home() {
   }, [map]);
 
   return (
-    <PageWrapper>
+    <>
       {auth.isLoading ? (
-        <p>
-          <Emoji emoji={emojis.waiting} /> Loading...
-        </p>
+        <PageWrapper>
+          <p>
+            <Emoji emoji={emojis.waiting} /> Loading...
+          </p>
+        </PageWrapper>
       ) : auth.isAuthenticated ? (
-        <p>
-          <Emoji emoji={emojis.wave} /> Welcome back, {auth.user.name}!
-        </p>
+        <UserToolbar />
       ) : (
         <Redirect to="/signup" />
       )}
-    </PageWrapper>
+    </>
   );
 }
 

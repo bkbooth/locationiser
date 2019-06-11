@@ -1,6 +1,7 @@
 import React from 'react';
 
 export const emojis = {
+  pin: { emoji: '📍', label: 'round pushpin' },
   waiting: { emoji: '⏳', label: 'hourglass not done' },
   wave: { emoji: '👋', label: 'waving hand' },
   worldMap: { emoji: '🗺️', label: 'world map' },
