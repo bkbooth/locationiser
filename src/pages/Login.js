@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
-import { AuthContext } from '../components/Auth';
-import { getRandomLocation, setMapInteractive, MapContext } from '../components/Map';
+import { useAuth } from '../components/Auth';
 import Emoji, { emojis } from '../components/Emoji';
+import { getRandomLocation, setMapInteractive, useMap } from '../components/Map';
 import { PrimaryButton } from '../components/styles/Button';
 import { Error } from '../components/styles/Error';
 import { Heading } from '../components/styles/Heading';
@@ -11,8 +11,8 @@ import { PageWrapper } from '../components/styles/PageWrapper';
 import { useTextInput } from '../utils/useTextInput';
 
 function Login({ history }) {
-  const auth = useContext(AuthContext);
-  const map = useContext(MapContext);
+  const auth = useAuth();
+  const map = useMap();
   const emailInput = useTextInput('');
   const passwordInput = useTextInput('');
   const [isLoading, setIsLoading] = useState(false);

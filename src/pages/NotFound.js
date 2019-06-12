@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getRandomLocation, MapContext } from '../components/Map';
+import { getRandomLocation, useMap } from '../components/Map';
 import { Heading } from '../components/styles/Heading';
 import { PageWrapper } from '../components/styles/PageWrapper';
 
 function NotFound() {
-  const map = useContext(MapContext);
+  const map = useMap();
 
   useEffect(() => {
     const { lat, lng, zoom } = getRandomLocation();

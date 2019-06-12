@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from 'react';
+import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { getUser, login, logout, signup } from '../api/auth';
 
 const initialState = {
@@ -13,6 +13,10 @@ export const AuthContext = createContext({
   handleLogout: null,
   handleSignup: null,
 });
+
+export function useAuth() {
+  return useContext(AuthContext);
+}
 
 function reducer(state, action) {
   switch (action.type) {

@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import L from 'leaflet';
 import styled from 'styled-components/macro';
 
@@ -53,6 +53,10 @@ export function setMapInteractive(map, shouldBeInteractive) {
 }
 
 export const MapContext = createContext(null);
+
+export function useMap() {
+  return useContext(MapContext);
+}
 
 function Map({ children }) {
   const [map, setMap] = useState(null);

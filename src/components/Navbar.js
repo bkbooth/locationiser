@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link as RouterLink, withRouter } from 'react-router-dom';
 import styled from 'styled-components/macro';
-import { AuthContext } from '../components/Auth';
+import { useAuth } from '../components/Auth';
 import { WhiteButton } from '../components/styles/Button';
 import worldMapEmoji from '../assets/world-map-emoji.png';
 
@@ -45,7 +45,7 @@ const Logo = styled.img`
 `;
 
 function Navbar({ history }) {
-  const auth = useContext(AuthContext);
+  const auth = useAuth();
 
   function handleLogin() {
     history.push('/login');

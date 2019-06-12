@@ -1,14 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { AuthContext } from '../components/Auth';
-import { getRandomLocation, setMapInteractive, MapContext } from '../components/Map';
+import { useAuth } from '../components/Auth';
 import Emoji, { emojis } from '../components/Emoji';
+import { getRandomLocation, setMapInteractive, useMap } from '../components/Map';
 import UserToolbar from '../components/UserToolbar';
 import { PageWrapper } from '../components/styles/PageWrapper';
 
 function Home() {
-  const { isAuthenticated, isLoading } = useContext(AuthContext);
-  const map = useContext(MapContext);
+  const { isAuthenticated, isLoading } = useAuth();
+  const map = useMap();
 
   useEffect(() => {
     if (isAuthenticated) {

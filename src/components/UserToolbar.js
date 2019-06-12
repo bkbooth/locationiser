@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/macro';
-import { AuthContext } from './Auth';
+import { useAuth } from './Auth';
 import Emoji, { emojis } from './Emoji';
 import UserPinsList from './UserPinsList';
 import { WhiteButton } from './styles/Button';
@@ -45,7 +45,7 @@ const Wrapper = styled.div`
 `;
 
 function UserToolbar() {
-  const auth = useContext(AuthContext);
+  const { user } = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   function toggleIsCollapsed() {
@@ -55,7 +55,7 @@ function UserToolbar() {
   return (
     <Wrapper isCollapsed={isCollapsed}>
       <p>
-        <Emoji emoji={emojis.wave} /> Welcome back, {auth.user.name}!
+        <Emoji emoji={emojis.wave} /> Welcome back, {user.name}!
       </p>
       <UserPinsList />
       <ToggleButton onClick={toggleIsCollapsed}>{isCollapsed ? '▶️' : '◀️'}</ToggleButton>
