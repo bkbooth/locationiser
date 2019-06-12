@@ -34,6 +34,24 @@ export function getRandomLocation() {
   return defaultLocations[Math.floor(Math.random() * defaultLocations.length)];
 }
 
+export function setMapInteractive(map, shouldBeInteractive) {
+  const action = shouldBeInteractive ? 'enable' : 'disable';
+  map.dragging[action]();
+  map.touchZoom[action]();
+  map.doubleClickZoom[action]();
+  map.scrollWheelZoom[action]();
+  map.boxZoom[action]();
+  map.keyboard[action]();
+  if (map.tap) map.tap[action]();
+
+  if (shouldBeInteractive && !map.zoomControl) {
+    map.zoomControl = L.control.zoom({ position: 'bottomright' });
+    map.addControl(map.zoomControl);
+  } else if (!shouldBeInteractive && map.zoomControl) {
+    map.removeControl(map.zoomControl);
+  }
+}
+
 export const MapContext = createContext(null);
 
 function Map({ children }) {
@@ -46,6 +64,13 @@ function Map({ children }) {
         center: [lat, lng],
         zoom,
         zoomControl: false,
+        dragging: false,
+        touchZoom: false,
+        doubleClickZoom: false,
+        scrollWheelZoom: false,
+        boxZoom: false,
+        keyboard: false,
+        tap: false,
         layers: [
           L.tileLayer(
             'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',

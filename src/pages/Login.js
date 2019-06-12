@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { AuthContext } from '../components/Auth';
-import { getRandomLocation, MapContext } from '../components/Map';
+import { getRandomLocation, setMapInteractive, MapContext } from '../components/Map';
 import Emoji, { emojis } from '../components/Emoji';
 import { PrimaryButton } from '../components/styles/Button';
 import { Error } from '../components/styles/Error';
@@ -21,6 +21,7 @@ function Login({ history }) {
   useEffect(() => {
     const { lat, lng, zoom } = getRandomLocation();
     map.setView([lat, lng], zoom);
+    setMapInteractive(map, false);
   }, [map]);
 
   function handleSubmit(event) {
