@@ -1,6 +1,7 @@
 const L = {
   map: jest.fn(() => ({
     setView: jest.fn(),
+    fitBounds: jest.fn(),
     addControl: jest.fn(),
     removeControl: jest.fn(),
     zoomControl: null,
@@ -37,6 +38,12 @@ const L = {
   control: {
     zoom: jest.fn(() => Object.create()),
   },
+  marker: jest.fn(() => ({
+    addTo: jest.fn(),
+  })),
+  featureGroup: jest.fn(() => ({
+    getBounds: jest.fn(),
+  })),
 };
 
 export default L;

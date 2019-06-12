@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import L from 'leaflet';
 import styled from 'styled-components/macro';
 import { getPins } from '../api/pins';
 import Emoji, { emojis } from './Emoji';
+import { useMap } from './Map';
 
 const PinList = styled.ul`
   list-style-type: none;
@@ -13,17 +15,29 @@ const Pin = styled.li`
 `;
 
 function UserPinsList() {
+  const map = useMap();
   const [pins, setPins] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  // TODO: make map interactive, show pin on map
-  useEffect(() => {
+  const loadData = useCallback(async () => {
     setIsLoading(true);
-    getPins()
-      .then(pins => setPins(pins))
-      .catch(err => console.error(err))
-      .then(() => setIsLoading(false));
-  }, []);
+    try {
+      const pins = await getPins();
+      setPins(pins);
+      const markers = pins.map(({ lat, lng }) => {
+        const marker = L.marker([lat, lng]).addTo(map);
+        return marker;
+      });
+      map.fitBounds(L.featureGroup(markers).getBounds(), { padding: [40, 40] });
+    } catch (err) {
+      console.error(err);
+    }
+    setIsLoading(false);
+  }, [map]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   return isLoading ? (
     <p>
