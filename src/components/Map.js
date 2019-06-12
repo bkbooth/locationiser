@@ -16,6 +16,10 @@ const ContentWrapper = styled.div`
   bottom: 0;
   left: 0;
   z-index: 2;
+  pointer-events: none;
+  > * {
+    pointer-events: auto;
+  }
 `;
 
 export const defaultLocations = [
