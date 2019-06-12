@@ -5,7 +5,7 @@ import styled from 'styled-components/macro';
 const HEADER_HEIGHT = '80px';
 
 const LeafletMap = styled.div`
-  height: calc(100vh - ${HEADER_HEIGHT});
+  height: calc(100% - ${HEADER_HEIGHT});
   z-index: 1;
 `;
 

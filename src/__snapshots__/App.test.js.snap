@@ -2,7 +2,7 @@
 
 exports[`renders correctly 1`] = `
 .c5 {
-  height: calc(100vh - 80px);
+  height: calc(100% - 80px);
   z-index: 1;
 }
 

@@ -9,13 +9,16 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: inherit;
   }
 
+  html, body, #root {
+    height: 100%;
+  }
+
   body {
     font-family: ${theme.fonts.sans};
     margin: 0;
     padding: 0;
     background: ${theme.colours.shade['900']};
     color: ${theme.colours.shade['100']};
-    min-height: 100vh;
   }
 
   a {
