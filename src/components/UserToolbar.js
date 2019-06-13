@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import styled from 'styled-components/macro';
 import { useAuth } from './Auth';
 import Emoji, { emojis } from './Emoji';
@@ -44,23 +45,31 @@ const Wrapper = styled.div`
   }
 `;
 
-function UserToolbar() {
-  const { user } = useAuth();
+const LogoutButton = styled(WhiteButton)``;
+
+function UserToolbar({ history }) {
+  const auth = useAuth();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   function toggleIsCollapsed() {
     setIsCollapsed(isCollapsed => !isCollapsed);
   }
 
+  function handleLogout() {
+    auth.handleLogout();
+    history.push('/login');
+  }
+
   return (
     <Wrapper isCollapsed={isCollapsed}>
       <p>
-        <Emoji emoji={emojis.wave} /> Welcome back, {user.name}!
+        <Emoji emoji={emojis.wave} /> Welcome back, {auth.user.name}!
       </p>
       <UserPinsList />
       <ToggleButton onClick={toggleIsCollapsed}>{isCollapsed ? '▶️' : '◀️'}</ToggleButton>
+      <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
     </Wrapper>
   );
 }
 
-export default UserToolbar;
+export default withRouter(UserToolbar);

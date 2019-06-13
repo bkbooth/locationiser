@@ -3,11 +3,11 @@ import { Link, Redirect, withRouter } from 'react-router-dom';
 import { useAuth } from '../components/Auth';
 import Emoji, { emojis } from '../components/Emoji';
 import { getRandomLocation, useMap } from '../components/Map';
+import PageWrapper from '../components/PageWrapper';
 import { PrimaryButton } from '../components/styles/Button';
 import { Error } from '../components/styles/Error';
 import { Heading } from '../components/styles/Heading';
 import { Input, InputGroup, Label } from '../components/styles/Input';
-import { PageWrapper } from '../components/styles/PageWrapper';
 import { useTextInput } from '../utils/useTextInput';
 
 function Signup({ history }) {

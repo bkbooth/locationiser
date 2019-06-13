@@ -2,20 +2,19 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import L from 'leaflet';
 import styled from 'styled-components/macro';
 
-const HEADER_HEIGHT = '80px';
-
 const LeafletMap = styled.div`
-  height: calc(100% - ${HEADER_HEIGHT});
+  height: 100%;
   z-index: 1;
 `;
 
 const ContentWrapper = styled.div`
   position: absolute;
-  top: ${HEADER_HEIGHT};
+  top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 2;
+  display: flex;
   pointer-events: none;
   > * {
     pointer-events: auto;

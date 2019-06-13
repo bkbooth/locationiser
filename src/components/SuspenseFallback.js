@@ -1,6 +1,6 @@
 import React from 'react';
 import Emoji, { emojis } from './Emoji';
-import { PageWrapper } from './styles/PageWrapper';
+import PageWrapper from './PageWrapper';
 
 function SuspenseFallback() {
   return (

@@ -3,8 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { useAuth } from '../components/Auth';
 import Emoji, { emojis } from '../components/Emoji';
 import { getRandomLocation, setMapInteractive, useMap } from '../components/Map';
+import PageWrapper from '../components/PageWrapper';
 import UserToolbar from '../components/UserToolbar';
-import { PageWrapper } from '../components/styles/PageWrapper';
 
 function Home() {
   const { isAuthenticated, isLoading } = useAuth();
