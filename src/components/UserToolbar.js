@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components/macro';
 import { useAuth } from './Auth';
 import Emoji, { emojis } from './Emoji';
@@ -33,7 +35,7 @@ const Wrapper = styled.div`
     width: ${({ isCollapsed }) => (isCollapsed ? TOOLBAR_COLLAPSED_WIDTH : TOOLBAR_WIDTH)}px;
   }
 
-  *:not(${ToggleButton}) {
+  > *:not(${ToggleButton}) {
     ${({ isCollapsed }) => isCollapsed && 'display: none'};
   }
 
@@ -45,7 +47,14 @@ const Wrapper = styled.div`
   }
 `;
 
-const LogoutButton = styled(WhiteButton)``;
+const Intro = styled.p`
+  height: ${({ theme }) => theme.sizes.xl};
+  line-height: ${({ theme }) => theme.sizes.xl};
+`;
+
+const LogoutButton = styled(WhiteButton)`
+  margin-top: ${({ theme }) => theme.sizes.lg};
+`;
 
 function UserToolbar({ history }) {
   const auth = useAuth();
@@ -62,11 +71,13 @@ function UserToolbar({ history }) {
 
   return (
     <Wrapper isCollapsed={isCollapsed}>
-      <p>
+      <Intro>
         <Emoji emoji={emojis.wave} /> Welcome back, {auth.user.name}!
-      </p>
+      </Intro>
       <UserPinsList />
-      <ToggleButton onClick={toggleIsCollapsed}>{isCollapsed ? '▶️' : '◀️'}</ToggleButton>
+      <ToggleButton onClick={toggleIsCollapsed}>
+        <FontAwesomeIcon icon={faBars} />
+      </ToggleButton>
       <LogoutButton onClick={handleLogout}>Logout</LogoutButton>
     </Wrapper>
   );

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../components/Auth';
-import Emoji, { emojis } from '../components/Emoji';
 import { getRandomLocation, useMap } from '../components/Map';
 import PageWrapper from '../components/PageWrapper';
 import { PrimaryButton } from '../components/styles/Button';
@@ -39,7 +40,7 @@ function Signup({ history }) {
     <PageWrapper>
       {auth.isLoading ? (
         <p>
-          <Emoji emoji={emojis.waiting} /> Loading...
+          <FontAwesomeIcon icon={faSpinner} spin={true} /> Loading...
         </p>
       ) : auth.isAuthenticated ? (
         <Redirect to="/" />

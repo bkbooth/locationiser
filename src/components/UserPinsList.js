@@ -1,8 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMapMarkerAlt, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import L from 'leaflet';
 import styled from 'styled-components/macro';
 import { getPins } from '../api/pins';
-import Emoji, { emojis } from './Emoji';
+import { theme } from '../utils/theme';
 import { useMap } from './Map';
 
 const PinList = styled.ul`
@@ -41,13 +43,17 @@ function UserPinsList() {
 
   return isLoading ? (
     <p>
-      <Emoji emoji={emojis.waiting} /> Loading...
+      <FontAwesomeIcon icon={faSpinner} spin={true} /> Loading...
     </p>
   ) : pins.length ? (
     <PinList>
       {pins.map(pin => (
         <Pin key={pin.id}>
-          <Emoji emoji={emojis.pin} />
+          <FontAwesomeIcon
+            icon={faMapMarkerAlt}
+            color={theme.colours.primary['500']}
+            style={{ marginRight: theme.sizes.xs }}
+          />
           <b>{pin.title}</b>
           <br />
           {pin.description}

@@ -13,6 +13,9 @@
     "format:check": "prettier --check src/**/*.{js,jsx,ts,tsx,json,css,scss,md}"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "leaflet": "^1.5.1",
     "react": "^16.8.6",
     "react-app-polyfill": "^1.0.1",

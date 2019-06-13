@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../components/Auth';
-import Emoji, { emojis } from '../components/Emoji';
 import { getRandomLocation, setMapInteractive, useMap } from '../components/Map';
 import PageWrapper from '../components/PageWrapper';
 import UserToolbar from '../components/UserToolbar';
@@ -24,7 +25,7 @@ function Home() {
       {isLoading ? (
         <PageWrapper>
           <p>
-            <Emoji emoji={emojis.waiting} /> Loading...
+            <FontAwesomeIcon icon={faSpinner} spin={true} /> Loading...
           </p>
         </PageWrapper>
       ) : isAuthenticated ? (
