@@ -1,73 +1,72 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-.c5 {
-  height: calc(100% - 80px);
+.c0 {
+  height: 100%;
   z-index: 1;
 }
 
-.c6 {
+.c1 {
   position: absolute;
-  top: 80px;
+  top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   z-index: 2;
-  pointer-events: none;
-}
-
-.c6 > * {
-  pointer-events: auto;
-}
-
-.c4 {
-  text-transform: uppercase;
-  font-size: 0.7rem;
-  -webkit-letter-spacing: 0.05rem;
-  -moz-letter-spacing: 0.05rem;
-  -ms-letter-spacing: 0.05rem;
-  letter-spacing: 0.05rem;
-  background: #0094c0;
-  color: #fbfbfb;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-  background: #fbfbfb;
-  color: #101010;
-  border: 1px solid #656565;
-}
-
-.c4:hover,
-.c4:focus {
-  box-shadow: 1px 1px 10px rgba(0,0,0,0.4);
-  outline: none;
-}
-
-.c0 {
-  position: relative;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  background: #0094c0;
-  color: #fbfbfb;
-  padding: 20px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.4);
-  z-index: 10;
+  pointer-events: none;
+}
+
+.c1 > * {
+  pointer-events: auto;
 }
 
 .c2 {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  width: 100%;
+  max-height: calc(100% - 2 * 20px);
+  overflow-y: auto;
+  margin: 20px;
+  border-radius: 5px;
+  background: #fbfbfb;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.c6 {
+  padding: 30px 20px;
+}
+
+.c6 *:first-child {
+  margin-top: 0;
+}
+
+.c6 *:last-child {
+  margin-bottom: 0;
+}
+
+.c3 {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0 20px;
+  background: #0094c0;
+  color: #fbfbfb;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+}
+
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -84,98 +83,57 @@ exports[`renders correctly 1`] = `
   letter-spacing: 0.05rem;
 }
 
-.c1 {
-  color: #fbfbfb;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  -webkit-transition: opacity 0.2s;
-  transition: opacity 0.2s;
-}
-
-.c1:hover,
-.c1:focus {
-  opacity: 0.8;
-  outline: none;
-}
-
-.c3 {
+.c5 {
   width: 40px;
   height: auto;
   margin-right: 10px;
 }
 
-.c7 {
-  background: #fbfbfb;
-  margin: 40px 10px;
-  padding: 30px 20px;
-  border-radius: 5px;
-  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-  max-height: calc(100% - 2 * 40px);
-  overflow-y: auto;
-}
-
-.c7 *:first-child {
-  margin-top: 0;
-}
-
-.c7 *:last-child {
-  margin-bottom: 0;
-}
-
 @media screen and (min-width:540px) {
-  .c7 {
-    margin: 40px auto;
-    width: 520px;
+  .c2 {
+    width: 500px;
+    margin: 20px auto;
   }
 }
 
 <div>
-  <header
-    class="c0"
-  >
-    <a
-      class="c1"
-      href="/"
-    >
-      <h1
-        class="c2"
-      >
-        <img
-          alt="world map emoji"
-          class="c3"
-          src="world-map-emoji.png"
-        />
-        locations
-      </h1>
-    </a>
-    <nav>
-      <button
-        class="c4"
-        disabled=""
-      >
-        Login
-      </button>
-    </nav>
-  </header>
   <div
-    class="c5"
+    class="c0"
     id="leaflet-map"
   />
   <div
-    class="c6"
+    class="c1"
   >
     <div
-      class="c7"
+      class="c2"
     >
-      <p>
-        <span
-          aria-label="hourglass not done"
-          role="img"
+      <header
+        class="c3"
+      >
+        <h1
+          class="c4"
         >
-          ⏳
-        </span>
-         Loading...
-      </p>
+          <img
+            alt="world map emoji"
+            class="c5"
+            src="world-map-emoji.png"
+          />
+          locations
+        </h1>
+      </header>
+      <div
+        class="c6"
+      >
+        <p>
+          <span
+            aria-label="hourglass not done"
+            role="img"
+          >
+            ⏳
+          </span>
+           Loading...
+        </p>
+      </div>
     </div>
   </div>
 </div>
