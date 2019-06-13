@@ -1,27 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders a pin emoji 1`] = `
-<div>
-  <span
-    aria-label="round pushpin"
-    role="img"
-  >
-    📍
-  </span>
-</div>
-`;
-
-exports[`renders a waiting emoji 1`] = `
-<div>
-  <span
-    aria-label="hourglass not done"
-    role="img"
-  >
-    ⏳
-  </span>
-</div>
-`;
-
 exports[`renders a waving emoji 1`] = `
 <div>
   <span
@@ -29,17 +7,6 @@ exports[`renders a waving emoji 1`] = `
     role="img"
   >
     👋
-  </span>
-</div>
-`;
-
-exports[`renders a world map emoji 1`] = `
-<div>
-  <span
-    aria-label="world map"
-    role="img"
-  >
-    🗺️
   </span>
 </div>
 `;
