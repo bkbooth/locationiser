@@ -4,6 +4,7 @@ export const PrimaryButton = styled.button`
   text-transform: uppercase;
   font-size: 0.7rem;
   letter-spacing: 0.05rem;
+  width: ${({ isFullWidth }) => (isFullWidth ? '100%' : 'auto')};
   background: ${({ theme }) => theme.colours.primary['500']};
   color: ${({ theme }) => theme.colours.shade['900']};
   padding: ${({ theme }) => theme.sizes.sm} ${({ theme }) => theme.sizes.md};
