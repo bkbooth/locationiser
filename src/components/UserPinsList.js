@@ -1,9 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import L from 'leaflet';
 import styled from 'styled-components/macro';
-import { getPins } from '../api/pins';
 import { theme } from '../utils/theme';
 import { useMap } from './Map';
 
@@ -17,29 +16,15 @@ const Pin = styled.li`
 `;
 
 function UserPinsList() {
-  const map = useMap();
-  const [pins, setPins] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-
-  const loadData = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const pins = await getPins();
-      setPins(pins);
-      const markers = pins.map(({ lat, lng }) => {
-        const marker = L.marker([lat, lng]).addTo(map);
-        return marker;
-      });
-      map.fitBounds(L.featureGroup(markers).getBounds(), { padding: [40, 40] });
-    } catch (err) {
-      console.error(err);
-    }
-    setIsLoading(false);
-  }, [map]);
+  const { isLoading, map, markers, pins } = useMap();
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
-    loadData();
-  }, [loadData]);
+    if (isFirstLoad && map && markers.length) {
+      map.fitBounds(L.featureGroup(markers).getBounds(), { padding: [40, 40] });
+      setIsFirstLoad(false);
+    }
+  }, [isFirstLoad, map, markers]);
 
   return isLoading ? (
     <p>

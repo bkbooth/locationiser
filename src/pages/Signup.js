@@ -13,7 +13,7 @@ import { useTextInput } from '../utils/useTextInput';
 
 function Signup({ history }) {
   const auth = useAuth();
-  const map = useMap();
+  const { map } = useMap();
   const nameInput = useTextInput('');
   const emailInput = useTextInput('');
   const passwordInput = useTextInput('');

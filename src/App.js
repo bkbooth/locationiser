@@ -17,8 +17,8 @@ function App() {
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Auth>
-          <Map>
+        <Map>
+          <Auth>
             <Router>
               <Suspense fallback={<SuspenseFallback />}>
                 <Switch>
@@ -29,8 +29,8 @@ function App() {
                 </Switch>
               </Suspense>
             </Router>
-          </Map>
-        </Auth>
+          </Auth>
+        </Map>
       </ThemeProvider>
     </>
   );

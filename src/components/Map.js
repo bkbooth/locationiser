@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import L from 'leaflet';
 import styled from 'styled-components/macro';
+import { getPins } from '../api/pins';
 
 const LeafletMap = styled.div`
   height: 100%;
@@ -51,7 +52,14 @@ export function setMapInteractive(map, shouldBeInteractive) {
   }
 }
 
-export const MapContext = createContext(null);
+export const MapContext = createContext({
+  map: null,
+  pins: [],
+  markers: [],
+  isLoading: false,
+  loadPins: null,
+  clearPins: null,
+});
 
 export function useMap() {
   return useContext(MapContext);
@@ -59,6 +67,9 @@ export function useMap() {
 
 function Map({ children }) {
   const [map, setMap] = useState(null);
+  const [pins, setPins] = useState([]);
+  const [markers, setMarkers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const { lat, lng, zoom } = getRandomLocation();
@@ -87,8 +98,31 @@ function Map({ children }) {
     );
   }, []);
 
+  useEffect(() => {
+    if (map && pins.length) {
+      const markers = pins.map(({ lat, lng }) => L.marker([lat, lng]).addTo(map));
+      setMarkers(markers);
+    }
+  }, [map, pins]);
+
+  async function loadPins() {
+    setIsLoading(true);
+    try {
+      setPins(await getPins());
+    } catch (err) {
+      console.error(err);
+    }
+    setIsLoading(false);
+  }
+
+  function clearPins() {
+    markers.forEach(marker => map.removeLayer(marker));
+    setMarkers([]);
+    setPins([]);
+  }
+
   return (
-    <MapContext.Provider value={map}>
+    <MapContext.Provider value={{ map, pins, markers, isLoading, loadPins, clearPins }}>
       <LeafletMap id="leaflet-map" />
       <ContentWrapper>{children}</ContentWrapper>
     </MapContext.Provider>

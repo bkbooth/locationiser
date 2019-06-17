@@ -9,7 +9,7 @@ import UserToolbar from '../components/UserToolbar';
 
 function Home() {
   const { isAuthenticated, isLoading } = useAuth();
-  const map = useMap();
+  const { map } = useMap();
 
   useEffect(() => {
     if (isAuthenticated) {

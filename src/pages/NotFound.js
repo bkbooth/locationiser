@@ -5,7 +5,7 @@ import PageWrapper from '../components/PageWrapper';
 import { Heading } from '../components/styles/Heading';
 
 function NotFound() {
-  const map = useMap();
+  const { map } = useMap();
 
   useEffect(() => {
     const { lat, lng, zoom } = getRandomLocation();

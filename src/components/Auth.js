@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { getUser, login, logout, signup } from '../api/auth';
+import { useMap } from './Map';
 
 const initialState = {
   isLoading: true,
@@ -42,10 +43,12 @@ function reducer(state, action) {
 
 function Auth({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const map = useMap();
 
   useEffect(() => {
     getUser()
       .then(user => dispatch({ type: 'login', payload: user }))
+      .then(() => map.loadPins())
       .catch(err => console.error(err) || dispatch({ type: 'logout' }));
   }, []);
 
@@ -54,6 +57,7 @@ function Auth({ children }) {
     try {
       const user = await login(email, password);
       dispatch({ type: 'login', payload: user });
+      map.loadPins();
     } catch (err) {
       dispatch({ type: 'authenticating', payload: false });
       throw new Error(err);
@@ -65,6 +69,7 @@ function Auth({ children }) {
     try {
       const user = await signup(name, email, password);
       dispatch({ type: 'login', payload: user });
+      map.loadPins();
     } catch (err) {
       dispatch({ type: 'authenticating', payload: false });
       throw new Error(err);
@@ -74,6 +79,7 @@ function Auth({ children }) {
   function handleLogout() {
     logout();
     dispatch({ type: 'logout' });
+    map.clearPins();
   }
 
   return (
