@@ -50,7 +50,7 @@ function Auth({ children }) {
       .then(user => dispatch({ type: 'login', payload: user }))
       .then(() => map.loadPins())
       .catch(err => console.error(err) || dispatch({ type: 'logout' }));
-  }, []);
+  }, []); // eslint-disable-line
 
   async function handleLogin(email, password) {
     dispatch({ type: 'authenticating', payload: true });
