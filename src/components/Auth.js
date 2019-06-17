@@ -3,6 +3,7 @@ import { getUser, login, logout, signup } from '../api/auth';
 
 const initialState = {
   isLoading: true,
+  isAuthenticating: false,
   isAuthenticated: false,
   user: null,
 };
@@ -20,14 +21,15 @@ export function useAuth() {
 
 function reducer(state, action) {
   switch (action.type) {
-    case 'loading':
+    case 'authenticating':
       return {
         ...state,
-        isLoading: action.payload,
+        isAuthenticating: action.payload,
       };
     case 'login':
       return {
         isLoading: false,
+        isAuthenticating: false,
         isAuthenticated: true,
         user: action.payload,
       };
@@ -44,27 +46,27 @@ function Auth({ children }) {
   useEffect(() => {
     getUser()
       .then(user => dispatch({ type: 'login', payload: user }))
-      .catch(err => console.error(err) || dispatch({ type: 'loading', payload: false }));
+      .catch(err => console.error(err) || dispatch({ type: 'logout' }));
   }, []);
 
   async function handleLogin(email, password) {
-    dispatch({ type: 'loading', payload: true });
+    dispatch({ type: 'authenticating', payload: true });
     try {
       const user = await login(email, password);
       dispatch({ type: 'login', payload: user });
     } catch (err) {
-      dispatch({ type: 'loading', payload: false });
+      dispatch({ type: 'authenticating', payload: false });
       throw new Error(err);
     }
   }
 
   async function handleSignup(name, email, password) {
-    dispatch({ type: 'loading', payload: true });
+    dispatch({ type: 'authenticating', payload: true });
     try {
       const user = await signup(name, email, password);
       dispatch({ type: 'login', payload: user });
     } catch (err) {
-      dispatch({ type: 'loading', payload: false });
+      dispatch({ type: 'authenticating', payload: false });
       throw new Error(err);
     }
   }

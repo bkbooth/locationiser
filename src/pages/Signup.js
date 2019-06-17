@@ -17,7 +17,6 @@ function Signup({ history }) {
   const nameInput = useTextInput('');
   const emailInput = useTextInput('');
   const passwordInput = useTextInput('');
-  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
@@ -28,12 +27,10 @@ function Signup({ history }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    setIsLoading(true);
     auth
       .handleSignup(nameInput.value, emailInput.value, passwordInput.value)
       .then(() => history.push('/'))
-      .catch(err => setErrorMessage(err.message))
-      .then(() => setIsLoading(false));
+      .catch(err => setErrorMessage(err.message));
   }
 
   return (
@@ -62,8 +59,8 @@ function Signup({ history }) {
               <Input {...passwordInput} type="password" id="password" name="password" />
             </InputGroup>
             <InputGroup>
-              <PrimaryButton type="submit" disabled={isLoading}>
-                Sign{isLoading ? 'ing up' : 'up'}
+              <PrimaryButton type="submit" disabled={auth.isAuthenticating}>
+                Sign{auth.isAuthenticating ? 'ing up' : 'up'}
               </PrimaryButton>
             </InputGroup>
           </form>

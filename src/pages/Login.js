@@ -16,7 +16,6 @@ function Login({ history }) {
   const map = useMap();
   const emailInput = useTextInput('');
   const passwordInput = useTextInput('');
-  const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
@@ -28,12 +27,10 @@ function Login({ history }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    setIsLoading(true);
     auth
       .handleLogin(emailInput.value, passwordInput.value)
       .then(() => history.push('/'))
-      .catch(err => setErrorMessage(err.message))
-      .then(() => setIsLoading(false));
+      .catch(err => setErrorMessage(err.message));
   }
 
   return (
@@ -58,8 +55,8 @@ function Login({ history }) {
               <Input {...passwordInput} type="password" id="password" name="password" />
             </InputGroup>
             <InputGroup>
-              <PrimaryButton type="submit" disabled={isLoading}>
-                Log{isLoading ? 'ging in' : 'in'}
+              <PrimaryButton type="submit" disabled={auth.isAuthenticating}>
+                Log{auth.isAuthenticating ? 'ging in' : 'in'}
               </PrimaryButton>
             </InputGroup>
           </form>
