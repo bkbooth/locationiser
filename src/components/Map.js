@@ -102,6 +102,7 @@ function Map({ children }) {
     if (map && pins.length) {
       const markers = pins.map(({ lat, lng }) => L.marker([lat, lng]).addTo(map));
       setMarkers(markers);
+      map.fitBounds(L.featureGroup(markers).getBounds(), { padding: [40, 40] });
     }
   }, [map, pins]);
 

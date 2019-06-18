@@ -142,10 +142,7 @@ function UserToolbar({ history }) {
             <FontAwesomeIcon icon={faBars} />
           </SquareWhiteButton>
         </Header>
-        <Body hidden={true}>
-          {/* still need to render this so that pins are loaded */}
-          <UserPinsList />
-        </Body>
+        <Body />
         <Footer>
           <SquareWhiteButton onClick={handleLogout}>
             <FontAwesomeIcon icon={faSignOutAlt} rotation={180} />

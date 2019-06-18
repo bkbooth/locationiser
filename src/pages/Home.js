@@ -9,16 +9,16 @@ import UserToolbar from '../components/UserToolbar';
 
 function Home() {
   const { isAuthenticated, isLoading } = useAuth();
-  const { map } = useMap();
+  const { map, pins } = useMap();
 
   useEffect(() => {
     if (isAuthenticated) {
       setMapInteractive(map, true);
-    } else {
+    } else if (!pins.length) {
       const { lat, lng, zoom } = getRandomLocation();
       map.setView([lat, lng], zoom);
     }
-  }, [isAuthenticated, map]);
+  }, [isAuthenticated, map, pins]);
 
   return (
     <>
