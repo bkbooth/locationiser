@@ -14,6 +14,9 @@ function Home() {
   useEffect(() => {
     if (isAuthenticated) {
       setMapInteractive(map, true);
+      if (!pins.length) {
+        map.locate({ setView: true });
+      }
     } else if (!pins.length) {
       const { lat, lng, zoom } = getRandomLocation();
       map.setView([lat, lng], zoom);
