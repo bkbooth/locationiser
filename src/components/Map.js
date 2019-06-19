@@ -57,8 +57,10 @@ export const MapContext = createContext({
   pins: [],
   markers: [],
   isLoading: false,
+  isLocating: false,
   loadPins: null,
   clearPins: null,
+  locate: null,
 });
 
 export function useMap() {
@@ -70,32 +72,39 @@ function Map({ children }) {
   const [pins, setPins] = useState([]);
   const [markers, setMarkers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLocating, setIsLocating] = useState(false);
 
   useEffect(() => {
     const { lat, lng, zoom } = getRandomLocation();
-    setMap(
-      L.map('leaflet-map', {
-        center: [lat, lng],
-        zoom,
-        zoomControl: false,
-        dragging: false,
-        touchZoom: false,
-        doubleClickZoom: false,
-        scrollWheelZoom: false,
-        boxZoom: false,
-        keyboard: false,
-        tap: false,
-        layers: [
-          L.tileLayer(
-            'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
-            {
-              attribution:
-                '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, © <a href="https://carto.com/attribution/">CARTO</a>',
-            }
-          ),
-        ],
-      })
-    );
+    const map = L.map('leaflet-map', {
+      center: [lat, lng],
+      zoom,
+      zoomControl: false,
+      dragging: false,
+      touchZoom: false,
+      doubleClickZoom: false,
+      scrollWheelZoom: false,
+      boxZoom: false,
+      keyboard: false,
+      tap: false,
+      layers: [
+        L.tileLayer(
+          'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png',
+          {
+            attribution:
+              '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, © <a href="https://carto.com/attribution/">CARTO</a>',
+          }
+        ),
+      ],
+    });
+    map.on('locationfound', () => setIsLocating(false));
+    map.on('locationerror', () => setIsLocating(false));
+    setMap(map);
+
+    return () => {
+      map.remove();
+      setMap(null);
+    };
   }, []);
 
   useEffect(() => {
@@ -122,8 +131,15 @@ function Map({ children }) {
     setPins([]);
   }
 
+  function locate() {
+    setIsLocating(true);
+    map.locate({ setView: true });
+  }
+
   return (
-    <MapContext.Provider value={{ map, pins, markers, isLoading, loadPins, clearPins }}>
+    <MapContext.Provider
+      value={{ map, pins, markers, isLoading, isLocating, loadPins, clearPins, locate }}
+    >
       <LeafletMap id="leaflet-map" />
       <ContentWrapper>{children}</ContentWrapper>
     </MapContext.Provider>

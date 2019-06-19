@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faSignOut } from '@fortawesome/pro-solid-svg-icons';
+import { faBars, faLocation, faSignOut, faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
 import styled from 'styled-components/macro';
 import { useAuth } from './Auth';
 import Emoji, { emojis } from './Emoji';
+import { useMap } from './Map';
 import UserPinsList from './UserPinsList';
 import { WhiteButton } from './styles/Button';
 import worldMapEmoji from '../assets/world-map-emoji.png';
@@ -96,6 +97,7 @@ const Intro = styled.p`
 
 function UserToolbar({ history }) {
   const auth = useAuth();
+  const map = useMap();
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   function toggleIsCollapsed() {
@@ -120,6 +122,14 @@ function UserToolbar({ history }) {
           </SquareWhiteButton>
         </Header>
         <Body>
+          <WhiteButton
+            onClick={map.locate}
+            disabled={map.isLocating}
+            isFullWidth={true}
+            title="Locate user on map"
+          >
+            <FontAwesomeIcon icon={faLocation} /> Locate user
+          </WhiteButton>
           <Intro>
             <Emoji emoji={emojis.wave} /> Welcome back, {auth.user.name}!
           </Intro>
@@ -142,7 +152,19 @@ function UserToolbar({ history }) {
             <FontAwesomeIcon icon={faBars} />
           </SquareWhiteButton>
         </Header>
-        <Body />
+        <Body>
+          <SquareWhiteButton
+            onClick={map.locate}
+            disabled={map.isLocating}
+            title="Locate user on map"
+          >
+            {map.isLocating ? (
+              <FontAwesomeIcon icon={faSpinnerThird} spin={true} />
+            ) : (
+              <FontAwesomeIcon icon={faLocation} size="lg" />
+            )}
+          </SquareWhiteButton>
+        </Body>
         <Footer>
           <SquareWhiteButton onClick={handleLogout} title="Logout">
             <FontAwesomeIcon icon={faSignOut} rotation={180} />
