@@ -128,7 +128,15 @@ function UserToolbar({ history }) {
             isFullWidth={true}
             title="Locate user on map"
           >
-            <FontAwesomeIcon icon={faLocation} /> Locate user
+            {map.isLocating ? (
+              <>
+                <FontAwesomeIcon icon={faSpinnerThird} spin={true} /> Locating user
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faLocation} /> Locate user
+              </>
+            )}
           </WhiteButton>
           <Intro>
             <Emoji emoji={emojis.wave} /> Welcome back, {auth.user.name}!
