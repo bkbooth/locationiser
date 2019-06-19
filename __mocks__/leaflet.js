@@ -1,9 +1,13 @@
 const L = {
   map: jest.fn(() => ({
+    on: jest.fn(),
+    remove: jest.fn(),
     setView: jest.fn(),
     fitBounds: jest.fn(),
+    locate: jest.fn(),
     addControl: jest.fn(),
     removeControl: jest.fn(),
+    removeLayer: jest.fn(),
     zoomControl: null,
     dragging: {
       enable: jest.fn(),
