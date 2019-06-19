@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerAlt, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkerAlt, faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
 import styled from 'styled-components/macro';
 import { theme } from '../utils/theme';
 import { useMap } from './Map';
@@ -19,7 +19,7 @@ function UserPinsList() {
 
   return isLoading ? (
     <p>
-      <FontAwesomeIcon icon={faSpinner} spin={true} /> Loading...
+      <FontAwesomeIcon icon={faSpinnerThird} spin={true} /> Loading...
     </p>
   ) : pins.length ? (
     <PinList>

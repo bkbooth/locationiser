@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
 import { useAuth } from '../components/Auth';
 import { getRandomLocation, setMapInteractive, useMap } from '../components/Map';
 import PageWrapper from '../components/PageWrapper';
@@ -37,7 +37,7 @@ function Login({ history }) {
     <PageWrapper>
       {auth.isLoading ? (
         <p>
-          <FontAwesomeIcon icon={faSpinner} spin={true} /> Loading...
+          <FontAwesomeIcon icon={faSpinnerThird} spin={true} /> Loading...
         </p>
       ) : auth.isAuthenticated ? (
         <Redirect to="/" />
@@ -56,7 +56,13 @@ function Login({ history }) {
             </InputGroup>
             <InputGroup>
               <PrimaryButton type="submit" disabled={auth.isAuthenticating}>
-                Log{auth.isAuthenticating ? 'ging in' : 'in'}
+                {auth.isAuthenticating ? (
+                  <>
+                    <FontAwesomeIcon icon={faSpinnerThird} spin={true} /> Logging in
+                  </>
+                ) : (
+                  'Login'
+                )}
               </PrimaryButton>
             </InputGroup>
           </form>

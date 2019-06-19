@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faSignOutAlt } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faSignOut } from '@fortawesome/pro-solid-svg-icons';
 import styled from 'styled-components/macro';
 import { useAuth } from './Auth';
 import Emoji, { emojis } from './Emoji';
@@ -115,7 +115,7 @@ function UserToolbar({ history }) {
             <Logo src={worldMapEmoji} alt="world map emoji" />
             locations
           </Title>
-          <SquareWhiteButton onClick={toggleIsCollapsed}>
+          <SquareWhiteButton onClick={toggleIsCollapsed} title="Hide sidebar">
             <FontAwesomeIcon icon={faBars} />
           </SquareWhiteButton>
         </Header>
@@ -127,7 +127,7 @@ function UserToolbar({ history }) {
         </Body>
         <Footer>
           <WhiteButton onClick={handleLogout} isFullWidth={true}>
-            <FontAwesomeIcon icon={faSignOutAlt} rotation={180} /> Logout
+            <FontAwesomeIcon icon={faSignOut} rotation={180} /> Logout
           </WhiteButton>
         </Footer>
       </>
@@ -138,14 +138,14 @@ function UserToolbar({ history }) {
     return (
       <>
         <Header>
-          <SquareWhiteButton onClick={toggleIsCollapsed}>
+          <SquareWhiteButton onClick={toggleIsCollapsed} title="Show sidebar">
             <FontAwesomeIcon icon={faBars} />
           </SquareWhiteButton>
         </Header>
         <Body />
         <Footer>
-          <SquareWhiteButton onClick={handleLogout}>
-            <FontAwesomeIcon icon={faSignOutAlt} rotation={180} />
+          <SquareWhiteButton onClick={handleLogout} title="Logout">
+            <FontAwesomeIcon icon={faSignOut} rotation={180} />
           </SquareWhiteButton>
         </Footer>
       </>
