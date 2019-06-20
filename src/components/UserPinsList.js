@@ -14,8 +14,24 @@ const Pin = styled.li`
   margin: ${({ theme }) => theme.sizes.md} ${({ theme }) => theme.sizes.nil};
 `;
 
+const UnstyledLink = styled.a`
+  color: unset;
+  text-decoration: none;
+`;
+
+const Truncated = styled.div`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 function UserPinsList() {
-  const { isLoading, pins } = useMap();
+  const { isLoading, pins, showPin } = useMap();
+
+  function handlePinClick(e) {
+    e.preventDefault();
+    showPin(e.currentTarget.dataset.pinId);
+  }
 
   return isLoading ? (
     <p>
@@ -25,14 +41,15 @@ function UserPinsList() {
     <PinList>
       {pins.map(pin => (
         <Pin key={pin.id}>
-          <FontAwesomeIcon
-            icon={faMapMarkerAlt}
-            color={theme.colours.primary['500']}
-            style={{ marginRight: theme.sizes.xs }}
-          />
-          <b>{pin.title}</b>
-          <br />
-          {pin.description}
+          <UnstyledLink onClick={handlePinClick} data-pin-id={pin.id} href="#">
+            <FontAwesomeIcon
+              icon={faMapMarkerAlt}
+              color={theme.colours.primary['500']}
+              style={{ marginRight: theme.sizes.xs }}
+            />
+            <b>{pin.title}</b>
+            <Truncated>{pin.description}</Truncated>
+          </UnstyledLink>
         </Pin>
       ))}
     </PinList>

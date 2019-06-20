@@ -69,12 +69,12 @@ export function setMapInteractive(map, shouldBeInteractive) {
 export const MapContext = createContext({
   map: null,
   pins: [],
-  markers: [],
   isLoading: false,
   isLocating: false,
   loadPins: null,
   clearPins: null,
   locate: null,
+  showPin: null,
 });
 
 export function useMap() {
@@ -84,7 +84,6 @@ export function useMap() {
 function Map({ children }) {
   const [map, setMap] = useState(null);
   const [pins, setPins] = useState([]);
-  const [markers, setMarkers] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
 
@@ -123,8 +122,15 @@ function Map({ children }) {
 
   useEffect(() => {
     if (map && pins.length) {
-      const markers = pins.map(({ lat, lng }) => L.marker([lat, lng]).addTo(map));
-      setMarkers(markers);
+      let markers = [];
+      pins.forEach(pin => {
+        const marker = L.marker([pin.lat, pin.lng])
+          .addTo(map)
+          .bindPopup(`<b>${pin.title}</b><br />${pin.description}`);
+
+        pin.marker = marker;
+        markers.push(marker);
+      });
       map.fitBounds(L.featureGroup(markers).getBounds(), { padding: [40, 40] });
     }
   }, [map, pins]);
@@ -140,8 +146,7 @@ function Map({ children }) {
   }
 
   function clearPins() {
-    markers.forEach(marker => map.removeLayer(marker));
-    setMarkers([]);
+    pins.forEach(({ marker }) => map.removeLayer(marker));
     setPins([]);
   }
 
@@ -150,9 +155,15 @@ function Map({ children }) {
     map.locate({ setView: true });
   }
 
+  function showPin(pinId) {
+    const pin = pins.find(pin => pin.id === pinId);
+    map.setView([pin.lat, pin.lng], 16, { animate: false });
+    pin.marker.openPopup();
+  }
+
   return (
     <MapContext.Provider
-      value={{ map, pins, markers, isLoading, isLocating, loadPins, clearPins, locate }}
+      value={{ map, pins, isLoading, isLocating, loadPins, clearPins, locate, showPin }}
     >
       <LeafletMap id="leaflet-map" />
       <ContentWrapper>{children}</ContentWrapper>

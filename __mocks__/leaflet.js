@@ -44,6 +44,8 @@ const L = {
   },
   marker: jest.fn(() => ({
     addTo: jest.fn(),
+    bindPopup: jest.fn(),
+    openPopup: jest.fn(),
   })),
   featureGroup: jest.fn(() => ({
     getBounds: jest.fn(),
