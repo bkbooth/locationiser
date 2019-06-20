@@ -30,6 +30,14 @@ const GlobalStyle = createGlobalStyle`
       opacity: 0.8;
     }
   }
+
+  /* Reset box model inside Leaflet container */
+  #leaflet-map {
+    box-sizing: initial;
+  }
+  #leaflet-map *, #leaflet-map *:before, #leaflet-map *:after {
+    box-sizing: inherit;
+  }
 `;
 
 export default GlobalStyle;
