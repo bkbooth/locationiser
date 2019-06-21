@@ -126,12 +126,16 @@ function Map({ children }) {
       pins.forEach(pin => {
         const marker = L.marker([pin.lat, pin.lng])
           .addTo(map)
-          .bindPopup(`<b>${pin.title}</b><br />${pin.description}`);
+          .bindPopup(`<b>${pin.title}</b><br />${pin.description}`, {
+            maxWidth: 180,
+            autoPanPaddingTopLeft: [90, 10],
+            autoPanPaddingBottomRight: [10, 10],
+          });
 
         pin.marker = marker;
         markers.push(marker);
       });
-      map.fitBounds(L.featureGroup(markers).getBounds(), { padding: [40, 40] });
+      map.fitBounds(L.featureGroup(markers).getBounds(), { padding: [80, 80] });
     }
   }, [map, pins]);
 
