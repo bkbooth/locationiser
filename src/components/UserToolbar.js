@@ -6,6 +6,7 @@ import styled from 'styled-components/macro';
 import { useAuth } from './Auth';
 import Emoji, { emojis } from './Emoji';
 import { useMap } from './Map';
+import UserPinsCount from './UserPinsCount';
 import UserPinsList from './UserPinsList';
 import { WhiteButton } from './styles/Button';
 import worldMapEmoji from '../assets/world-map-emoji.png';
@@ -179,6 +180,7 @@ function UserToolbar({ history }) {
               <FontAwesomeIcon icon={faLocation} size="lg" />
             )}
           </SquareWhiteButton>
+          <UserPinsCount />
         </Body>
         <Footer>
           <SquareWhiteButton onClick={handleLogout} title="Logout">

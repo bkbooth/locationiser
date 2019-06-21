@@ -2,6 +2,7 @@ export const theme = {
   colours: {
     primary: {
       '500': '#0094c0',
+      '600': '#007da2',
     },
     shade: {
       '100': '#101010',
