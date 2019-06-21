@@ -60,13 +60,18 @@ const Footer = styled.footer`
 const Body = styled.main`
   flex: 1;
   overflow-y: auto;
-  margin: ${({ theme }) => theme.sizes.md} ${({ theme }) => theme.sizes.nil};
-  padding: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.md};
+  margin: ${({ theme }) => theme.sizes.sm} ${({ theme }) => theme.sizes.nil};
+  padding: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.sm};
   *:first-child {
     margin-top: ${({ theme }) => theme.sizes.nil};
   }
   *:last-child {
     margin-bottom: ${({ theme }) => theme.sizes.nil};
+  }
+
+  @media screen and (min-width: ${EXTRA_WIDTH}) {
+    margin: ${({ theme }) => theme.sizes.md} ${({ theme }) => theme.sizes.nil};
+    padding: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.md};
   }
 `;
 
