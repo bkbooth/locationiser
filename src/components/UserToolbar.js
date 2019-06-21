@@ -146,7 +146,7 @@ function UserToolbar({ history }) {
           <Intro>
             <Emoji emoji={emojis.wave} /> Welcome back, {auth.user.name}!
           </Intro>
-          <UserPinsList />
+          <UserPinsList closeUserToolbar={toggleIsCollapsed} />
         </Body>
         <Footer>
           <WhiteButton onClick={handleLogout} isFullWidth={true}>

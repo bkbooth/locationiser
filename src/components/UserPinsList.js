@@ -25,12 +25,13 @@ const Truncated = styled.div`
   text-overflow: ellipsis;
 `;
 
-function UserPinsList() {
+function UserPinsList({ closeUserToolbar }) {
   const { isLoading, pins, showPin } = useMap();
 
   function handlePinClick(e) {
     e.preventDefault();
     showPin(e.currentTarget.dataset.pinId);
+    closeUserToolbar();
   }
 
   return isLoading ? (
