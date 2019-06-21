@@ -13,6 +13,11 @@ export const PrimaryButton = styled.button`
   cursor: pointer;
   transition: all ${({ theme }) => theme.speeds.fast};
 
+  margin-bottom: ${({ theme }) => theme.sizes.sm};
+  &:last-child {
+    margin-bottom: ${({ theme }) => theme.sizes.nil};
+  }
+
   &:hover,
   &:focus {
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.4);

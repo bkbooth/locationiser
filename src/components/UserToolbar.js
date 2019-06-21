@@ -98,6 +98,8 @@ const Logo = styled.img`
 const Intro = styled.p`
   height: ${({ theme }) => theme.sizes.xl};
   line-height: ${({ theme }) => theme.sizes.xl};
+  margin-top: ${({ theme }) => theme.sizes.nil};
+  margin-bottom: ${({ theme }) => theme.sizes.md};
 `;
 
 function UserToolbar({ history }) {
