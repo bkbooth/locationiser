@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faLocation, faSignOut, faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
+import {
+  faBars,
+  faLocation,
+  faMapMarkerPlus,
+  faSignOut,
+  faSpinnerThird,
+} from '@fortawesome/pro-solid-svg-icons';
 import styled from 'styled-components/macro';
 import { useAuth } from './Auth';
 import Emoji, { emojis } from './Emoji';
@@ -117,6 +123,17 @@ function UserToolbar({ history }) {
     history.push('/login');
   }
 
+  function handleAddPin() {
+    const { lat, lng } = map.map.getCenter();
+    map.addPin({
+      lat,
+      lng,
+      // TODO: open a modal/popup to get title and description
+      title: 'This is a new pin!',
+      description: `I'm adding a pin here because... reasons! 🎉`,
+    });
+  }
+
   function renderFullToolbar() {
     return (
       <>
@@ -145,6 +162,13 @@ function UserToolbar({ history }) {
                 <FontAwesomeIcon icon={faLocation} /> Locate user
               </>
             )}
+          </WhiteButton>
+          <WhiteButton
+            onClick={handleAddPin}
+            isFullWidth={true}
+            title="Add a pin at the current location"
+          >
+            <FontAwesomeIcon icon={faMapMarkerPlus} /> Add pin
           </WhiteButton>
           <Intro>
             <Emoji emoji={emojis.wave} /> Welcome back, {auth.user.name}!
@@ -179,6 +203,9 @@ function UserToolbar({ history }) {
             ) : (
               <FontAwesomeIcon icon={faLocation} size="lg" />
             )}
+          </SquareWhiteButton>
+          <SquareWhiteButton onClick={handleAddPin} title="Add a pin at the current location">
+            <FontAwesomeIcon icon={faMapMarkerPlus} size="lg" />
           </SquareWhiteButton>
           <UserPinsCount />
         </Body>

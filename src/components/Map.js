@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import L from 'leaflet';
 import styled from 'styled-components/macro';
-import { getPins } from '../api/pins';
+import { createPin, getPins } from '../api/pins';
 
 const LeafletMap = styled.div`
   height: 100%;
@@ -75,6 +75,7 @@ export const MapContext = createContext({
   clearPins: null,
   locate: null,
   showPin: null,
+  addPin: null,
 });
 
 export function useMap() {
@@ -127,19 +128,21 @@ function Map({ children }) {
     };
   }, []);
 
+  function addMarkerForPin(pin) {
+    pin.marker = L.marker([pin.lat, pin.lng])
+      .addTo(map)
+      .bindPopup(buildPopupContent(pin), {
+        maxWidth: 180,
+        autoPanPaddingTopLeft: [90, 10],
+        autoPanPaddingBottomRight: [10, 10],
+      });
+  }
+
   useEffect(() => {
     if (map && pins.length) {
-      pins.forEach(pin => {
-        pin.marker = L.marker([pin.lat, pin.lng])
-          .addTo(map)
-          .bindPopup(buildPopupContent(pin), {
-            maxWidth: 180,
-            autoPanPaddingTopLeft: [90, 10],
-            autoPanPaddingBottomRight: [10, 10],
-          });
-      });
+      pins.forEach(addMarkerForPin);
     }
-  }, [map, pins]);
+  }, [map, pins]); // eslint-disable-line
 
   async function loadPins() {
     setIsLoading(true);
@@ -167,9 +170,15 @@ function Map({ children }) {
     pin.marker.openPopup();
   }
 
+  async function addPin({ lat, lng, title, description }) {
+    const pin = await createPin({ lat, lng, title, description });
+    addMarkerForPin(pin);
+    setPins([pin, ...pins]);
+  }
+
   return (
     <MapContext.Provider
-      value={{ map, pins, isLoading, isLocating, loadPins, clearPins, locate, showPin }}
+      value={{ map, pins, isLoading, isLocating, loadPins, clearPins, locate, showPin, addPin }}
     >
       <LeafletMap id="leaflet-map" />
       <ContentWrapper>{children}</ContentWrapper>
