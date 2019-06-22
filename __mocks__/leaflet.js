@@ -5,6 +5,7 @@ const L = {
     setView: jest.fn(),
     fitBounds: jest.fn(),
     locate: jest.fn(),
+    getCenter: jest.fn(),
     addControl: jest.fn(),
     removeControl: jest.fn(),
     removeLayer: jest.fn(),
