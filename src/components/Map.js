@@ -129,7 +129,7 @@ function Map({ children }) {
   }, []);
 
   function addMarkerForPin(pin) {
-    pin.marker = L.marker([pin.lat, pin.lng])
+    pin.marker = L.marker([pin.lat, pin.lng], { title: pin.title })
       .addTo(map)
       .bindPopup(buildPopupContent(pin), {
         maxWidth: 180,
