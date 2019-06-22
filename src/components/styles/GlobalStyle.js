@@ -31,12 +31,24 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  /* Reset box model inside Leaflet container */
   #leaflet-map {
-    box-sizing: initial;
-  }
-  #leaflet-map *, #leaflet-map *:before, #leaflet-map *:after {
-    box-sizing: inherit;
+    .leaflet-popup-content {
+      color: ${theme.colours.shade['100']};
+      font-family: ${theme.fonts.sans};
+      font-size: 0.9rem;
+      line-height: 1.3rem;
+      margin: ${theme.sizes.sm} ${theme.sizes.md};
+    }
+    a.leaflet-popup-close-button {
+      width: ${theme.sizes.md};
+      height: ${theme.sizes.md};
+      color: ${theme.colours.shade['600']};
+    }
+    .leaflet-popup-title {
+      color: ${theme.colours.shade['400']};
+      font-weight: bold;
+      margin-bottom: ${theme.sizes.xs};
+    }
   }
 `;
 

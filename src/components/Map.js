@@ -81,6 +81,13 @@ export function useMap() {
   return useContext(MapContext);
 }
 
+function buildPopupContent(pin) {
+  return `
+    <div class="leaflet-popup-title">${pin.title}</div>
+    <div class="leaflet-popup-description">${pin.description}</div>
+  `;
+}
+
 function Map({ children }) {
   const [map, setMap] = useState(null);
   const [pins, setPins] = useState([]);
@@ -125,7 +132,7 @@ function Map({ children }) {
       pins.forEach(pin => {
         pin.marker = L.marker([pin.lat, pin.lng])
           .addTo(map)
-          .bindPopup(`<b>${pin.title}</b><br />${pin.description}`, {
+          .bindPopup(buildPopupContent(pin), {
             maxWidth: 180,
             autoPanPaddingTopLeft: [90, 10],
             autoPanPaddingBottomRight: [10, 10],
