@@ -122,20 +122,15 @@ function Map({ children }) {
 
   useEffect(() => {
     if (map && pins.length) {
-      let markers = [];
       pins.forEach(pin => {
-        const marker = L.marker([pin.lat, pin.lng])
+        pin.marker = L.marker([pin.lat, pin.lng])
           .addTo(map)
           .bindPopup(`<b>${pin.title}</b><br />${pin.description}`, {
             maxWidth: 180,
             autoPanPaddingTopLeft: [90, 10],
             autoPanPaddingBottomRight: [10, 10],
           });
-
-        pin.marker = marker;
-        markers.push(marker);
       });
-      map.fitBounds(L.featureGroup(markers).getBounds(), { padding: [80, 80] });
     }
   }, [map, pins]);
 
