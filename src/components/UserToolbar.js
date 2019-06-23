@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBars,
@@ -109,18 +108,13 @@ const Intro = styled.p`
   margin-bottom: ${({ theme }) => theme.sizes.md};
 `;
 
-function UserToolbar({ history }) {
+function UserToolbar() {
   const auth = useAuth();
   const map = useMap();
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   function toggleIsCollapsed() {
     setIsCollapsed(isCollapsed => !isCollapsed);
-  }
-
-  function handleLogout() {
-    auth.handleLogout();
-    history.push('/login');
   }
 
   function handleAddPin() {
@@ -176,7 +170,7 @@ function UserToolbar({ history }) {
           <UserPinsList closeUserToolbar={toggleIsCollapsed} />
         </Body>
         <Footer>
-          <WhiteButton onClick={handleLogout} isFullWidth={true}>
+          <WhiteButton onClick={auth.handleLogout} isFullWidth={true}>
             <FontAwesomeIcon icon={faSignOut} rotation={180} /> Logout
           </WhiteButton>
         </Footer>
@@ -210,7 +204,7 @@ function UserToolbar({ history }) {
           <UserPinsCount />
         </Body>
         <Footer>
-          <SquareWhiteButton onClick={handleLogout} title="Logout">
+          <SquareWhiteButton onClick={auth.handleLogout} title="Logout">
             <FontAwesomeIcon icon={faSignOut} rotation={180} />
           </SquareWhiteButton>
         </Footer>
@@ -225,4 +219,4 @@ function UserToolbar({ history }) {
   );
 }
 
-export default withRouter(UserToolbar);
+export default UserToolbar;

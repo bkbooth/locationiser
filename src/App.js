@@ -17,9 +17,9 @@ function App() {
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Map>
-          <Auth>
-            <Router>
+        <Router>
+          <Map>
+            <Auth>
               <Suspense fallback={<SuspenseFallback />}>
                 <Switch>
                   <Route exact path="/" component={Home} />
@@ -28,9 +28,9 @@ function App() {
                   <Route component={NotFound} />
                 </Switch>
               </Suspense>
-            </Router>
-          </Auth>
-        </Map>
+            </Auth>
+          </Map>
+        </Router>
       </ThemeProvider>
     </>
   );

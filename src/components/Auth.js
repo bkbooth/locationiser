@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
+import { withRouter } from 'react-router-dom';
 import { getUser, login, logout, signup } from '../api/auth';
 import { useMap } from './Map';
 
@@ -41,7 +42,7 @@ function reducer(state, action) {
   }
 }
 
-function Auth({ children }) {
+function Auth({ history, children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
   const map = useMap();
 
@@ -80,6 +81,7 @@ function Auth({ children }) {
     logout();
     dispatch({ type: 'logout' });
     map.clearPins();
+    history.push('/login');
   }
 
   return (
@@ -89,4 +91,4 @@ function Auth({ children }) {
   );
 }
 
-export default Auth;
+export default withRouter(Auth);
