@@ -1,8 +1,6 @@
-import React from 'react';
 import styled from 'styled-components/macro';
-import worldMapEmoji from '../assets/world-map-emoji.png';
 
-const CenterPage = styled.div`
+export const CenterPage = styled.div`
   align-self: center;
   width: 100%;
   max-height: calc(100% - 2 * ${({ theme }) => theme.sizes.md});
@@ -18,7 +16,7 @@ const CenterPage = styled.div`
   }
 `;
 
-const ContentWrapper = styled.div`
+export const ContentWrapper = styled.div`
   padding: ${({ theme }) => theme.sizes.lg} ${({ theme }) => theme.sizes.md};
 
   *:first-child {
@@ -29,7 +27,7 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const Header = styled.header`
+export const Header = styled.header`
   position: sticky;
   top: 0;
   left: 0;
@@ -43,7 +41,7 @@ const Header = styled.header`
     ${({ theme }) => theme.sizes.sm} rgba(0, 0, 0, 0.4);
 `;
 
-const Title = styled.h1`
+export const Title = styled.h1`
   display: flex;
   align-items: center;
   margin: ${({ theme }) => theme.sizes.nil};
@@ -51,24 +49,8 @@ const Title = styled.h1`
   letter-spacing: 0.05rem;
 `;
 
-const Logo = styled.img`
+export const Logo = styled.img`
   width: ${({ theme }) => theme.sizes.xl};
   height: auto;
   margin-right: ${({ theme }) => theme.sizes.sm};
 `;
-
-function PageWrapper({ children }) {
-  return (
-    <CenterPage>
-      <Header>
-        <Title>
-          <Logo src={worldMapEmoji} alt="world map emoji" />
-          locations
-        </Title>
-      </Header>
-      <ContentWrapper>{children}</ContentWrapper>
-    </CenterPage>
-  );
-}
-
-export default PageWrapper;

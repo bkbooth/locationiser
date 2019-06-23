@@ -1,26 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import L from 'leaflet';
-import styled from 'styled-components/macro';
-import { createPin, getPins } from '../api/pins';
-
-const LeafletMap = styled.div`
-  height: 100%;
-  z-index: 1;
-`;
-
-const ContentWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 2;
-  display: flex;
-  pointer-events: none;
-  > * {
-    pointer-events: auto;
-  }
-`;
+import { createPin, getPins } from 'api/pins';
+import * as S from './styles';
 
 export const presetLocations = [
   { lat: -33.865143, lng: 151.2099, zoom: 13 }, // Sydney
@@ -180,8 +161,8 @@ function Map({ children }) {
     <MapContext.Provider
       value={{ map, pins, isLoading, isLocating, loadPins, clearPins, locate, showPin, addPin }}
     >
-      <LeafletMap id="leaflet-map" />
-      <ContentWrapper>{children}</ContentWrapper>
+      <S.LeafletMap id="leaflet-map" />
+      <S.ContentWrapper>{children}</S.ContentWrapper>
     </MapContext.Provider>
   );
 }

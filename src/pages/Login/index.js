@@ -2,19 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
-import { useAuth } from '../components/Auth';
-import { getRandomLocation, useMap } from '../components/Map';
-import PageWrapper from '../components/PageWrapper';
-import { PrimaryButton } from '../components/styles/Button';
-import { Error } from '../components/styles/Error';
-import { Heading } from '../components/styles/Heading';
-import { Input, InputGroup, Label } from '../components/styles/Input';
-import { useTextInput } from '../utils/useTextInput';
+import { useTextInput } from 'utils/useTextInput';
+import { useAuth } from 'components/Auth';
+import { getRandomLocation, setMapInteractive, useMap } from 'components/Map';
+import PageWrapper from 'components/PageWrapper';
+import { PrimaryButton } from 'components/styles/Button';
+import { Error } from 'components/styles/Error';
+import { Heading } from 'components/styles/Heading';
+import { Input, InputGroup, Label } from 'components/styles/Input';
 
-function Signup({ history }) {
+function Login({ history }) {
   const auth = useAuth();
   const { map } = useMap();
-  const nameInput = useTextInput('');
   const emailInput = useTextInput('');
   const passwordInput = useTextInput('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -22,13 +21,14 @@ function Signup({ history }) {
   useEffect(() => {
     const { lat, lng, zoom } = getRandomLocation();
     map.setView([lat, lng], zoom);
+    setMapInteractive(map, false);
   }, [map]);
 
   function handleSubmit(event) {
     event.preventDefault();
 
     auth
-      .handleSignup(nameInput.value, emailInput.value, passwordInput.value)
+      .handleLogin(emailInput.value, passwordInput.value)
       .then(() => history.push('/'))
       .catch(err => setErrorMessage(err.message));
   }
@@ -43,13 +43,9 @@ function Signup({ history }) {
         <Redirect to="/" />
       ) : (
         <>
-          <Heading>Signup for an account</Heading>
+          <Heading>Login to your account</Heading>
           <form onSubmit={handleSubmit}>
             {errorMessage && <Error>{errorMessage}</Error>}
-            <InputGroup>
-              <Label htmlFor="name">Name</Label>
-              <Input {...nameInput} type="text" id="name" name="name" />
-            </InputGroup>
             <InputGroup>
               <Label htmlFor="email">Email</Label>
               <Input {...emailInput} type="email" id="email" name="email" />
@@ -62,16 +58,16 @@ function Signup({ history }) {
               <PrimaryButton type="submit" disabled={auth.isAuthenticating}>
                 {auth.isAuthenticating ? (
                   <>
-                    <FontAwesomeIcon icon={faSpinnerThird} spin={true} /> Signing up
+                    <FontAwesomeIcon icon={faSpinnerThird} spin={true} /> Logging in
                   </>
                 ) : (
-                  'Signup'
+                  'Login'
                 )}
               </PrimaryButton>
             </InputGroup>
           </form>
           <p>
-            Already have an account? Please <Link to="/login">login</Link>.
+            Don't have an account? Please <Link to="/signup">signup</Link>.
           </p>
         </>
       )}
@@ -79,4 +75,4 @@ function Signup({ history }) {
   );
 }
 
-export default withRouter(Signup);
+export default withRouter(Login);

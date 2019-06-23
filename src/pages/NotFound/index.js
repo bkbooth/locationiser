@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getRandomLocation, useMap } from '../components/Map';
-import PageWrapper from '../components/PageWrapper';
-import { Heading } from '../components/styles/Heading';
+import { getRandomLocation, useMap } from 'components/Map';
+import PageWrapper from 'components/PageWrapper';
+import { Heading } from 'components/styles/Heading';
 
 function NotFound() {
   const { map } = useMap();

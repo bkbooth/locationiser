@@ -1,6 +1,6 @@
 import React from 'react';
-import { renderWithTheme } from '../utils/renderWithTheme';
-import SuspenseFallback from './SuspenseFallback';
+import { renderWithTheme } from 'utils/renderWithTheme';
+import SuspenseFallback from './index';
 
 it('renders correctly', () => {
   const { container } = renderWithTheme(<SuspenseFallback />);

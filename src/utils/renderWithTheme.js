@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components/macro';
-import { theme } from './theme';
+import { theme } from 'utils/theme';
 
 function WithThemeProvider({ children }) {
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>;

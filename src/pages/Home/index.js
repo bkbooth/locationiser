@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
-import { useAuth } from '../components/Auth';
-import { getRandomLocation, setMapInteractive, useMap } from '../components/Map';
-import PageWrapper from '../components/PageWrapper';
-import UserToolbar from '../components/UserToolbar';
+import { useAuth } from 'components/Auth';
+import { getRandomLocation, setMapInteractive, useMap } from 'components/Map';
+import PageWrapper from 'components/PageWrapper';
+import UserToolbar from 'pages/Home/UserToolbar';
 
 function Home() {
   const { isAuthenticated, isLoading } = useAuth();

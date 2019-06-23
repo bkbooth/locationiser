@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
-import { getUser, login, logout, signup } from '../api/auth';
-import { useMap } from './Map';
+import { getUser, login, logout, signup } from 'api/auth';
+import { useMap } from 'components/Map';
 
 const initialState = {
   isLoading: true,

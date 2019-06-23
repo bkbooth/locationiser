@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
-import PageWrapper from './PageWrapper';
+import PageWrapper from 'components/PageWrapper';
 
 function SuspenseFallback() {
   return (

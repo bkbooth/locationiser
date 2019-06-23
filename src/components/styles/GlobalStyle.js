@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components/macro';
-import { theme } from '../../utils/theme';
+import { theme } from 'utils/theme';
 
 const GlobalStyle = createGlobalStyle`
   html {

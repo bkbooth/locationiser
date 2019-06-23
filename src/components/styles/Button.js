@@ -38,3 +38,9 @@ export const WhiteButton = styled(PrimaryButton)`
     background: ${({ theme }) => theme.colours.shade['800']};
   }
 `;
+
+export const SquareWhiteButton = styled(WhiteButton)`
+  width: ${({ theme }) => theme.sizes.xl};
+  height: ${({ theme }) => theme.sizes.xl};
+  padding: ${({ theme }) => theme.sizes.sm};
+`;
