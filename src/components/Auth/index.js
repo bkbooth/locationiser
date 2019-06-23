@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
 import { getUser, login, logout, signup } from 'api/auth';
 import { useMap } from 'components/Map';
+import { AuthContext } from 'components/Auth/AuthContext';
 
 const initialState = {
   isLoading: true,
@@ -9,17 +10,6 @@ const initialState = {
   isAuthenticated: false,
   user: null,
 };
-
-export const AuthContext = createContext({
-  ...initialState,
-  handleLogin: null,
-  handleLogout: null,
-  handleSignup: null,
-});
-
-export function useAuth() {
-  return useContext(AuthContext);
-}
 
 function reducer(state, action) {
   switch (action.type) {
@@ -92,3 +82,4 @@ function Auth({ history, children }) {
 }
 
 export default withRouter(Auth);
+export { useAuth } from './AuthContext';
