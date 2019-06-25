@@ -7,5 +7,9 @@ export function useTextInput(initialValue) {
     setValue(event.currentTarget.value);
   }
 
-  return { value, onChange };
+  function resetValue() {
+    setValue(initialValue);
+  }
+
+  return { value, onChange, resetValue };
 }

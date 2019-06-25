@@ -26,14 +26,8 @@ function UserToolbar() {
   }
 
   function handleAddPin() {
-    const { lat, lng } = map.map.getCenter();
-    map.addPin({
-      lat,
-      lng,
-      // TODO: open a modal/popup to get title and description
-      title: 'This is a new pin!',
-      description: `I'm adding a pin here because... reasons! 🎉`,
-    });
+    map.addPin();
+    setIsCollapsed(true);
   }
 
   function renderFullToolbar() {
@@ -67,6 +61,7 @@ function UserToolbar() {
           </WhiteButton>
           <WhiteButton
             onClick={handleAddPin}
+            disabled={map.isAddingPin}
             isFullWidth={true}
             title="Add a pin at the current location"
           >
@@ -106,7 +101,11 @@ function UserToolbar() {
               <FontAwesomeIcon icon={faLocation} size="lg" />
             )}
           </SquareWhiteButton>
-          <SquareWhiteButton onClick={handleAddPin} title="Add a pin at the current location">
+          <SquareWhiteButton
+            onClick={handleAddPin}
+            disabled={map.isAddingPin}
+            title="Add a pin at the current location"
+          >
             <FontAwesomeIcon icon={faMapMarkerPlus} size="lg" />
           </SquareWhiteButton>
           <PinsCount />

@@ -12,6 +12,12 @@ export const theme = {
       '800': '#ececec',
       '900': '#fbfbfb',
     },
+    positive: {
+      '500': '#38c000',
+    },
+    negative: {
+      '500': '#c00000',
+    },
   },
   fonts: {
     sans: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif`,
@@ -27,5 +33,6 @@ export const theme = {
   },
   speeds: {
     fast: '0.2s',
+    slow: '0.5s',
   },
 };

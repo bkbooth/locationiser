@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import L from 'leaflet';
-import { createPin, getPins } from 'api/pins';
+import { getPins } from 'api/pins';
+import CreatePin from './CreatePin';
 import { getRandomLocation } from './locations';
+import { defaultIcon } from './icons';
 import { MapContext } from './MapContext';
 import * as S from './index.styles';
+
+L.Marker.prototype.options.icon = defaultIcon;
 
 export function setMapInteractive(map, shouldBeInteractive) {
   const action = shouldBeInteractive ? 'enable' : 'disable';
@@ -35,6 +39,7 @@ function Map({ children }) {
   const [pins, setPins] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
+  const [isAddingPin, setIsAddingPin] = useState(false);
 
   useEffect(() => {
     const { lat, lng, zoom } = getRandomLocation();
@@ -111,18 +116,38 @@ function Map({ children }) {
     pin.marker.openPopup();
   }
 
-  async function addPin({ lat, lng, title, description }) {
-    const pin = await createPin({ lat, lng, title, description });
+  function addPin() {
+    setIsAddingPin(true);
+  }
+
+  function handleAddCreatedPin(pin) {
     addMarkerForPin(pin);
+    pin.marker.openPopup();
     setPins([pin, ...pins]);
   }
 
   return (
     <MapContext.Provider
-      value={{ map, pins, isLoading, isLocating, loadPins, clearPins, locate, showPin, addPin }}
+      value={{
+        map,
+        pins,
+        isLoading,
+        isLocating,
+        isAddingPin,
+        loadPins,
+        clearPins,
+        locate,
+        showPin,
+        addPin,
+      }}
     >
       <S.LeafletMap id="leaflet-map" />
       <S.ContentWrapper>{children}</S.ContentWrapper>
+      <CreatePin
+        isAddingPin={isAddingPin}
+        setIsAddingPin={setIsAddingPin}
+        onSavePin={handleAddCreatedPin}
+      />
     </MapContext.Provider>
   );
 }
