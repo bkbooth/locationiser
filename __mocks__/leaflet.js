@@ -1,3 +1,5 @@
+import Leaflet from 'leaflet';
+
 const L = {
   map: jest.fn(() => ({
     on: jest.fn(),
@@ -41,16 +43,20 @@ const L = {
   })),
   tileLayer: jest.fn(),
   control: {
-    zoom: jest.fn(() => Object.create()),
+    zoom: jest.fn(() => ({})),
   },
   marker: jest.fn(() => ({
     addTo: jest.fn(),
     bindPopup: jest.fn(),
     openPopup: jest.fn(),
+    getLatLng: jest.fn(),
+    remove: jest.fn(),
   })),
   featureGroup: jest.fn(() => ({
     getBounds: jest.fn(),
   })),
+  Icon: Leaflet.Icon,
+  Marker: Leaflet.Marker,
 };
 
 export default L;
