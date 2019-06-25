@@ -10,7 +10,7 @@ function PinsCount() {
 
   return (
     <S.Wrapper title={(isLoading ? 'Number of' : pins.length) + ' pins'}>
-      <FontAwesomeIcon icon={faMapMarker} size="2x" color={theme.colours.primary['600']} />
+      <FontAwesomeIcon icon={faMapMarker} size="2x" color={theme.colours.primary['500']} />
       {!isLoading && <S.Badge>{pins.length}</S.Badge>}
     </S.Wrapper>
   );
