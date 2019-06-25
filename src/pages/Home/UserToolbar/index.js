@@ -11,10 +11,10 @@ import { useAuth } from 'components/Auth';
 import Emoji, { emojis } from 'components/Emoji';
 import { useMap } from 'components/Map';
 import { SquareWhiteButton, WhiteButton } from 'components/styles/Button';
-import PinsCount from 'pages/Home/PinsCount';
-import PinsList from 'pages/Home/PinsList';
 import worldMapEmoji from 'assets/world-map-emoji.png';
-import * as S from './styles';
+import PinsCount from '../PinsCount';
+import PinsList from '../PinsList';
+import * as S from './index.styles';
 
 function UserToolbar() {
   const auth = useAuth();

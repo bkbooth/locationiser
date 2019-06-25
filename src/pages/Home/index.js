@@ -5,7 +5,7 @@ import { faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
 import { useAuth } from 'components/Auth';
 import { getRandomLocation, setMapInteractive, useMap } from 'components/Map';
 import PageWrapper from 'components/PageWrapper';
-import UserToolbar from 'pages/Home/UserToolbar';
+import UserToolbar from './UserToolbar';
 
 function Home() {
   const { isAuthenticated, isLoading } = useAuth();

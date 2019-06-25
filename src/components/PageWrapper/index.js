@@ -1,6 +1,6 @@
 import React from 'react';
 import worldMapEmoji from 'assets/world-map-emoji.png';
-import * as S from './styles';
+import * as S from './index.styles';
 
 function PageWrapper({ children }) {
   return (

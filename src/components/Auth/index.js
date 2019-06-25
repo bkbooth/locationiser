@@ -2,7 +2,7 @@ import React, { useEffect, useReducer } from 'react';
 import { withRouter } from 'react-router-dom';
 import { getUser, login, logout, signup } from 'api/auth';
 import { useMap } from 'components/Map';
-import { AuthContext } from 'components/Auth/AuthContext';
+import { AuthContext } from './AuthContext';
 
 const initialState = {
   isLoading: true,

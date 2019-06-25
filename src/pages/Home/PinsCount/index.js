@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarker } from '@fortawesome/pro-solid-svg-icons';
 import { theme } from 'utils/theme';
 import { useMap } from 'components/Map';
-import * as S from './styles';
+import * as S from './index.styles';
 
 function PinsCount() {
   const { isLoading, pins } = useMap();

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import L from 'leaflet';
 import { createPin, getPins } from 'api/pins';
-import { getRandomLocation } from 'components/Map/locations';
-import { MapContext } from 'components/Map/MapContext';
-import * as S from './styles';
+import { getRandomLocation } from './locations';
+import { MapContext } from './MapContext';
+import * as S from './index.styles';
 
 export function setMapInteractive(map, shouldBeInteractive) {
   const action = shouldBeInteractive ? 'enable' : 'disable';
