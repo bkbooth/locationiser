@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBars,
@@ -21,13 +21,12 @@ function UserToolbar() {
   const map = useMap();
   const [isCollapsed, setIsCollapsed] = useState(true);
 
+  useEffect(() => {
+    if (map.isAddingPin) setIsCollapsed(true);
+  }, [map.isAddingPin]);
+
   function toggleIsCollapsed() {
     setIsCollapsed(isCollapsed => !isCollapsed);
-  }
-
-  function handleAddPin() {
-    map.addPin();
-    setIsCollapsed(true);
   }
 
   function renderFullToolbar() {
@@ -60,8 +59,7 @@ function UserToolbar() {
             )}
           </WhiteButton>
           <WhiteButton
-            onClick={handleAddPin}
-            disabled={map.isAddingPin}
+            onClick={map.addPin}
             isFullWidth={true}
             title="Add a pin at the current location"
           >
@@ -85,14 +83,18 @@ function UserToolbar() {
     return (
       <>
         <S.Header>
-          <SquareWhiteButton onClick={toggleIsCollapsed} title="Show sidebar">
+          <SquareWhiteButton
+            onClick={toggleIsCollapsed}
+            disabled={map.isAddingPin}
+            title="Show sidebar"
+          >
             <FontAwesomeIcon icon={faBars} />
           </SquareWhiteButton>
         </S.Header>
         <S.Body>
           <SquareWhiteButton
             onClick={map.locate}
-            disabled={map.isLocating}
+            disabled={map.isLocating || map.isAddingPin}
             title="Locate user on map"
           >
             {map.isLocating ? (
@@ -102,7 +104,7 @@ function UserToolbar() {
             )}
           </SquareWhiteButton>
           <SquareWhiteButton
-            onClick={handleAddPin}
+            onClick={map.addPin}
             disabled={map.isAddingPin}
             title="Add a pin at the current location"
           >
