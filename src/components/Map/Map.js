@@ -120,6 +120,10 @@ function Map({ children }) {
     setIsAddingPin(true);
   }
 
+  function stopAddingPin() {
+    setIsAddingPin(false);
+  }
+
   function handleAddCreatedPin(pin) {
     addMarkerForPin(pin);
     pin.marker.openPopup();
@@ -139,6 +143,7 @@ function Map({ children }) {
         locate,
         showPin,
         addPin,
+        stopAddingPin,
       }}
     >
       <S.LeafletMap id="leaflet-map" />

@@ -70,6 +70,7 @@ function Auth({ history, children }) {
   function handleLogout() {
     logout();
     dispatch({ type: 'logout' });
+    map.stopAddingPin();
     map.clearPins();
     history.push('/login');
   }

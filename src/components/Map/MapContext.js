@@ -10,6 +10,7 @@ export const MapContext = createContext({
   locate: null,
   showPin: null,
   addPin: null,
+  stopAddingPin: null,
 });
 
 export function useMap() {
