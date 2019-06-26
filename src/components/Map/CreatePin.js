@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkerPlus } from '@fortawesome/pro-solid-svg-icons';
+import {
+  faCheck,
+  faMapMarkerPlus,
+  faSpinnerThird,
+  faTimes,
+} from '@fortawesome/pro-solid-svg-icons';
 import L from 'leaflet';
 import { createPin } from 'api/pins';
 import { theme } from 'utils/theme';
@@ -14,6 +19,7 @@ import * as S from './CreatePin.styles';
 function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
   const { map } = useMap();
   const [newPinMarker, setNewPinMarker] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
   const titleInput = useTextInput('');
   const descriptionInput = useTextInput('');
 
@@ -45,12 +51,14 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    setIsSaving(true);
     const pin = await createPin({
       title: titleInput.value,
       description: descriptionInput.value,
       ...newPinMarker.getLatLng(),
     });
     onSavePin(pin);
+    setIsSaving(false);
     resetForm();
   }
 
@@ -59,7 +67,7 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
     resetForm();
   }
 
-  const isDisabled = !(newPinMarker && titleInput.value && descriptionInput.value);
+  const isDisabled = isSaving || !(newPinMarker && titleInput.value && descriptionInput.value);
 
   return (
     <S.Wrapper isShowing={isAddingPin}>
@@ -79,9 +87,16 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
         </InputGroup>
         <S.ButtonGroup>
           <PrimaryButton type="submit" disabled={isDisabled}>
-            Create
+            {isSaving ? (
+              <FontAwesomeIcon icon={faSpinnerThird} spin={true} />
+            ) : (
+              <FontAwesomeIcon icon={faCheck} />
+            )}{' '}
+            Creat{isSaving ? 'ing' : 'e'}
           </PrimaryButton>
-          <WhiteButton onClick={handleCancel}>Cancel</WhiteButton>
+          <WhiteButton onClick={handleCancel} disabled={isSaving}>
+            <FontAwesomeIcon icon={faTimes} /> Cancel
+          </WhiteButton>
         </S.ButtonGroup>
       </form>
     </S.Wrapper>
