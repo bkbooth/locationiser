@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-.c15 {
+.c11 {
   text-transform: uppercase;
   font-size: 0.7rem;
   -webkit-letter-spacing: 0.05rem;
@@ -20,21 +20,21 @@ exports[`renders correctly 1`] = `
   margin-bottom: 10px;
 }
 
-.c15:last-child {
+.c11:last-child {
   margin-bottom: 0;
 }
 
-.c15:hover,
-.c15:focus {
+.c11:hover,
+.c11:focus {
   box-shadow: 1px 1px 10px rgba(0,0,0,0.4);
   outline: none;
 }
 
-.c15:disabled {
+.c11:disabled {
   opacity: 0.7;
 }
 
-.c17 {
+.c13 {
   text-transform: uppercase;
   font-size: 0.7rem;
   -webkit-letter-spacing: 0.05rem;
@@ -56,52 +56,33 @@ exports[`renders correctly 1`] = `
   border: 1px solid #656565;
 }
 
-.c17:last-child {
+.c13:last-child {
   margin-bottom: 0;
 }
 
-.c17:hover,
-.c17:focus {
+.c13:hover,
+.c13:focus {
   box-shadow: 1px 1px 10px rgba(0,0,0,0.4);
   outline: none;
 }
 
-.c17:disabled {
+.c13:disabled {
   opacity: 0.7;
 }
 
-.c17:disabled {
+.c13:disabled {
   background: #ececec;
 }
 
-.c10 {
-  display: inline-block;
-  width: 110px;
-  vertical-align: top;
-  margin-top: 5px;
-}
-
-.c11 {
-  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;
-  font-size: 1rem;
-  background: #fbfbfb;
-  color: #101010;
-  border: 1px solid #656565;
-  border-radius: 5px;
-  padding: 5px;
-}
-
-.c12 {
-  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen-Sans,Ubuntu,Cantarell,'Helvetica Neue',sans-serif;
-  font-size: 1rem;
-  background: #fbfbfb;
-  color: #101010;
-  border: 1px solid #656565;
-  border-radius: 5px;
-  padding: 5px;
-}
-
-.c9 {
+.c8 {
+  text-transform: uppercase;
+  color: #575757;
+  margin-top: 0;
+  font-size: 1.1rem;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
   margin-bottom: 10px;
 }
 
@@ -122,20 +103,7 @@ exports[`renders correctly 1`] = `
   transition: transform 0.5s;
 }
 
-.c8 {
-  font-size: 1.5rem;
-  -webkit-letter-spacing: 0.1rem;
-  -moz-letter-spacing: 0.1rem;
-  -ms-letter-spacing: 0.1rem;
-  letter-spacing: 0.1rem;
-  text-transform: uppercase;
-  color: #575757;
-  margin-top: 0;
-  margin-bottom: 30px;
-  margin-bottom: 10px;
-}
-
-.c13 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -147,16 +115,16 @@ exports[`renders correctly 1`] = `
   margin-top: 20px;
 }
 
-.c13 .c14,
-.c13 .c16 {
+.c9 .c10,
+.c9 .c12 {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   margin-bottom: 0;
 }
 
-.c13 .c14:first-child,
-.c13 .c16:first-child {
+.c9 .c10:first-child,
+.c9 .c12:first-child {
   margin-right: 10px;
 }
 
@@ -314,11 +282,11 @@ exports[`renders correctly 1`] = `
   <div
     class="c7"
   >
-    <h1
+    <h3
       class="c8"
     >
       Create new pin
-    </h1>
+    </h3>
     <p>
       Drag 
       <svg
@@ -337,59 +305,53 @@ exports[`renders correctly 1`] = `
           fill="currentColor"
         />
       </svg>
-       marker on map to desired location
+       
+      marker on map to desired location
     </p>
-    <form>
-      <div
-        class="c9"
+    <div
+      class="c9"
+    >
+      <button
+        class="c10 c11"
       >
-        <label
-          class="c10"
-          for="title"
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-arrow-right fa-w-14 "
+          data-icon="arrow-right"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 448 512"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Title
-        </label>
-        <input
-          class="c11"
-          id="title"
-          name="title"
-          type="text"
-          value=""
-        />
-      </div>
-      <div
-        class="c9"
+          <path
+            d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"
+            fill="currentColor"
+          />
+        </svg>
+         Continue
+      </button>
+      <button
+        class="c10 c12 c13"
       >
-        <label
-          class="c10"
-          for="description"
+        <svg
+          aria-hidden="true"
+          class="svg-inline--fa fa-times fa-w-11 "
+          data-icon="times"
+          data-prefix="fas"
+          focusable="false"
+          role="img"
+          viewBox="0 0 352 512"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          Description
-        </label>
-        <textarea
-          class="c12"
-          id="description"
-          name="description"
-          rows="3"
-        />
-      </div>
-      <div
-        class="c13"
-      >
-        <button
-          class="c14 c15"
-          disabled=""
-          type="submit"
-        >
-          Create
-        </button>
-        <button
-          class="c14 c16 c17"
-        >
-          Cancel
-        </button>
-      </div>
-    </form>
+          <path
+            d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+            fill="currentColor"
+          />
+        </svg>
+         Cancel
+      </button>
+    </div>
   </div>
 </div>
 `;
