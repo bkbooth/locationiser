@@ -43,7 +43,7 @@ function Login({ history }) {
         <Redirect to="/" />
       ) : (
         <>
-          <Heading>Login to your account</Heading>
+          <Heading size="lg">Login to your account</Heading>
           <form onSubmit={handleSubmit}>
             {errorMessage && <Error>{errorMessage}</Error>}
             <InputGroup>

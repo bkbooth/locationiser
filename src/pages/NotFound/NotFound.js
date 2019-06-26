@@ -14,7 +14,7 @@ function NotFound() {
 
   return (
     <PageWrapper>
-      <Heading>Page not found</Heading>
+      <Heading size="lg">Page not found</Heading>
       <p>
         We couldn't find the page you're looking for. Back to <Link to="/">home</Link>.
       </p>

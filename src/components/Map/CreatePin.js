@@ -11,6 +11,7 @@ import { createPin } from 'api/pins';
 import { theme } from 'utils/theme';
 import { useTextInput } from 'utils/useTextInput';
 import { PrimaryButton, WhiteButton } from 'components/styles/Button';
+import { Heading } from 'components/styles/Heading';
 import { Input, InputGroup, Label, TextArea } from 'components/styles/Input';
 import { newPinIcon } from './icons';
 import { useMap } from './MapContext';
@@ -71,7 +72,7 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
 
   return (
     <S.Wrapper isShowing={isAddingPin}>
-      <S.Heading>Create new pin</S.Heading>
+      <Heading size="sm">Create new pin</Heading>
       <p>
         Drag <FontAwesomeIcon icon={faMapMarkerPlus} color={theme.colours.positive['500']} /> marker
         on map to desired location

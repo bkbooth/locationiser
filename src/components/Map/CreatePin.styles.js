@@ -1,6 +1,5 @@
 import styled from 'styled-components/macro';
 import { PrimaryButton, WhiteButton } from 'components/styles/Button';
-import { Heading as CommonHeading } from 'components/styles/Heading';
 
 const WRAPPER_WIDTH = 350;
 
@@ -20,10 +19,6 @@ export const Wrapper = styled.div`
     left: calc(50% - ${Math.floor(WRAPPER_WIDTH / 2)}px);
     width: ${WRAPPER_WIDTH}px;
   }
-`;
-
-export const Heading = styled(CommonHeading)`
-  margin-bottom: ${({ theme }) => theme.sizes.sm};
 `;
 
 export const ButtonGroup = styled.div`
