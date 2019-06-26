@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Redirect, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
+import { faSpinnerThird, faUserPlus } from '@fortawesome/pro-solid-svg-icons';
 import { useTextInput } from 'utils/useTextInput';
 import { useAuth } from 'components/Auth';
 import { getRandomLocation, useMap } from 'components/Map';
@@ -65,7 +65,9 @@ function Signup({ history }) {
                     <FontAwesomeIcon icon={faSpinnerThird} spin={true} /> Signing up
                   </>
                 ) : (
-                  'Signup'
+                  <>
+                    <FontAwesomeIcon icon={faUserPlus} /> Signup
+                  </>
                 )}
               </PrimaryButton>
             </InputGroup>
