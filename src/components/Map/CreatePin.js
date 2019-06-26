@@ -22,6 +22,7 @@ const CREATE_PIN_STEPS = { moveMarker: 0, enterDetails: 1 };
 
 function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
   const { map } = useMap();
+  const [newPinLatLng, setNewPinLatLng] = useState(null);
   const [newPinMarker, setNewPinMarker] = useState(null);
   const [step, setStep] = useState(CREATE_PIN_STEPS.moveMarker);
   const [isSaving, setIsSaving] = useState(false);
@@ -30,12 +31,20 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
 
   useEffect(() => {
     if (!map) return;
+    map.on('click', event => {
+      setNewPinLatLng(event.latlng);
+      setIsAddingPin(true);
+    });
+  }, [map]); // eslint-disable-line
+
+  useEffect(() => {
+    if (!map) return;
     if (newPinMarker) {
       newPinMarker.remove();
       setNewPinMarker(null);
     }
     if (isAddingPin) {
-      const marker = L.marker(map.getCenter(), {
+      const marker = L.marker(newPinLatLng || map.getCenter(), {
         icon: newPinIcon,
         title: 'New pin',
         zIndexOffset: 1000,
@@ -50,6 +59,7 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
 
   function resetForm() {
     setIsAddingPin(false);
+    setNewPinLatLng(null);
     setStep(CREATE_PIN_STEPS.moveMarker);
     titleInput.resetValue();
     descriptionInput.resetValue();
