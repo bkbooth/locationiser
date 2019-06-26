@@ -110,7 +110,7 @@ function UserToolbar() {
           >
             <FontAwesomeIcon icon={faMapMarkerPlus} size="lg" />
           </SquareWhiteButton>
-          <PinsCount />
+          <PinsCount onClick={toggleIsCollapsed} />
         </S.Body>
         <S.Footer>
           <SquareWhiteButton onClick={auth.handleLogout} title="Logout">
