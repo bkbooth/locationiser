@@ -38,7 +38,7 @@ exports[`renders correctly 1`] = `
   display: -ms-flexbox;
   display: flex;
   padding: 0 20px;
-  background: #0094c0;
+  background: #c73794;
   color: #fbfbfb;
   box-shadow: 0 5px 10px rgba(0,0,0,0.4);
 }
@@ -58,6 +58,7 @@ exports[`renders correctly 1`] = `
   -moz-letter-spacing: 0.05rem;
   -ms-letter-spacing: 0.05rem;
   letter-spacing: 0.05rem;
+  text-shadow: 1px 1px 5px rgba(0,0,0,0.4);
 }
 
 .c3 {
