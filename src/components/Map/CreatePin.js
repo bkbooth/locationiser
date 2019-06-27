@@ -114,11 +114,22 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
           <form onSubmit={handleSubmit}>
             <InputGroup>
               <Label htmlFor="title">Title</Label>
-              <Input {...titleInput} type="text" id="title" name="title" />
+              <Input {...titleInput} type="text" id="title" name="title" placeholder="eg. Home" />
             </InputGroup>
             <InputGroup>
-              <Label htmlFor="description">Description</Label>
-              <TextArea {...descriptionInput} rows="2" id="description" name="description" />
+              <Label
+                htmlFor="description"
+                style={{ alignSelf: 'flex-start', marginTop: theme.sizes.sm }}
+              >
+                Description
+              </Label>
+              <TextArea
+                {...descriptionInput}
+                rows="2"
+                id="description"
+                name="description"
+                placeholder="eg. This is where I live"
+              />
             </InputGroup>
             <S.ButtonGroup>
               <PrimaryButton type="submit" disabled={isDisabled}>

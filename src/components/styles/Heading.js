@@ -25,7 +25,7 @@ const H3 = styled.h3`
   ${headingCommon};
   font-size: 1.1rem;
   letter-spacing: 0.1rem;
-  margin-bottom: ${({ theme }) => theme.sizes.sm};
+  margin-bottom: ${({ theme }) => theme.sizes.md};
 `;
 
 export function Heading({ size, children }) {

@@ -1,7 +1,5 @@
 import styled from 'styled-components/macro';
 
-const EXTRA_WIDTH = '376px';
-
 export const Wrapper = styled.div`
   position: relative;
   display: flex;
@@ -14,7 +12,7 @@ export const Wrapper = styled.div`
   box-shadow: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.nil}
     ${({ theme }) => theme.sizes.xl} rgba(0, 0, 0, 0.3);
 
-  @media screen and (min-width: ${EXTRA_WIDTH}) {
+  @media screen and (min-width: ${({ theme }) => theme.screens.sm}) {
     width: ${({ isCollapsed }) => (isCollapsed ? '80px' : '320px')};
   }
 `;
@@ -28,7 +26,7 @@ export const Header = styled.header`
   background: ${({ theme }) => theme.colours.primary['500']};
   color: ${({ theme }) => theme.colours.shade['900']};
 
-  @media screen and (min-width: ${EXTRA_WIDTH}) {
+  @media screen and (min-width: ${({ theme }) => theme.screens.sm}) {
     height: 70px;
     padding: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.md};
   }
@@ -41,7 +39,7 @@ export const Footer = styled.footer`
   justify-content: space-between;
   padding: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.sm};
 
-  @media screen and (min-width: ${EXTRA_WIDTH}) {
+  @media screen and (min-width: ${({ theme }) => theme.screens.sm}) {
     height: 70px;
     padding: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.md};
   }
@@ -59,7 +57,7 @@ export const Body = styled.main`
     margin-bottom: ${({ theme }) => theme.sizes.nil};
   }
 
-  @media screen and (min-width: ${EXTRA_WIDTH}) {
+  @media screen and (min-width: ${({ theme }) => theme.screens.sm}) {
     margin: ${({ theme }) => theme.sizes.md} ${({ theme }) => theme.sizes.nil};
     padding: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.md};
   }

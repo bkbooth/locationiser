@@ -10,7 +10,7 @@ export const CenterPage = styled.div`
   background: ${({ theme }) => theme.colours.shade['900']};
   box-shadow: 0 ${({ theme }) => theme.sizes.sm} ${({ theme }) => theme.sizes.xl} rgba(0, 0, 0, 0.3);
 
-  @media screen and (min-width: 540px) {
+  @media screen and (min-width: ${({ theme }) => theme.screens.md}) {
     width: 500px;
     margin: ${({ theme }) => theme.sizes.md} auto;
   }
@@ -47,6 +47,8 @@ export const Title = styled.h1`
   margin: ${({ theme }) => theme.sizes.nil};
   font-size: 1.7rem;
   letter-spacing: 0.05rem;
+  text-shadow: ${({ theme }) => theme.sizes.xxs} ${({ theme }) => theme.sizes.xxs}
+    ${({ theme }) => theme.sizes.xs} rgba(0, 0, 0, 0.4);
 `;
 
 export const Logo = styled.img`
