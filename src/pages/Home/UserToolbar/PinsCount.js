@@ -18,7 +18,7 @@ function PinsCount({ disabled, onClick }) {
         icon={faMapMarker}
         size="2x"
         transform="grow-4"
-        color={theme.colours.primary['500']}
+        color={theme.colours.secondary['500']}
       />
       {!isLoading && <S.Badge>{pins.length}</S.Badge>}
     </S.Button>

@@ -1,6 +1,10 @@
 export const theme = {
   colours: {
     primary: {
+      '500': '#c73794',
+      '600': '#9a2b72',
+    },
+    secondary: {
       '500': '#0094c0',
       '600': '#007192',
     },
@@ -32,6 +36,10 @@ export const theme = {
     md: '20px',
     lg: '30px',
     xl: '40px',
+  },
+  screens: {
+    sm: '376px',
+    md: '540px',
   },
   speeds: {
     fast: '0.2s',

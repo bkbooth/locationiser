@@ -25,7 +25,7 @@ function PinsList({ closeUserToolbar }) {
           <S.UnstyledLink onClick={handlePinClick} data-pin-id={pin.id} href="#">
             <FontAwesomeIcon
               icon={faMapMarkerAlt}
-              color={theme.colours.primary['500']}
+              color={theme.colours.secondary['500']}
               style={{ marginRight: theme.sizes.xs }}
             />
             <b>{pin.title}</b>
