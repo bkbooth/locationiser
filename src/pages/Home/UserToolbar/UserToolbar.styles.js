@@ -25,6 +25,8 @@ export const Header = styled.header`
   padding: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.sm};
   background: ${({ theme }) => theme.colours.primary['500']};
   color: ${({ theme }) => theme.colours.shade['900']};
+  box-shadow: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.xs}
+    ${({ theme }) => theme.sizes.sm} rgba(0, 0, 0, 0.4);
 
   @media screen and (min-width: ${({ theme }) => theme.screens.sm}) {
     height: 70px;
@@ -48,8 +50,7 @@ export const Footer = styled.footer`
 export const Body = styled.main`
   flex: 1;
   overflow-y: auto;
-  margin: ${({ theme }) => theme.sizes.sm} ${({ theme }) => theme.sizes.nil};
-  padding: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.sm};
+  padding: ${({ theme }) => theme.sizes.sm};
   *:first-child {
     margin-top: ${({ theme }) => theme.sizes.nil};
   }
@@ -58,8 +59,7 @@ export const Body = styled.main`
   }
 
   @media screen and (min-width: ${({ theme }) => theme.screens.sm}) {
-    margin: ${({ theme }) => theme.sizes.md} ${({ theme }) => theme.sizes.nil};
-    padding: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.md};
+    padding: ${({ theme }) => theme.sizes.md};
   }
 `;
 
@@ -69,6 +69,8 @@ export const Title = styled.h1`
   margin: ${({ theme }) => theme.sizes.nil};
   font-size: 1.7rem;
   letter-spacing: 0.05rem;
+  text-shadow: ${({ theme }) => theme.sizes.xxs} ${({ theme }) => theme.sizes.xxs}
+    ${({ theme }) => theme.sizes.xs} rgba(0, 0, 0, 0.4);
 `;
 
 export const Logo = styled.img`
