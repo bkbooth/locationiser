@@ -5,11 +5,15 @@ import { theme } from 'utils/theme';
 import { useMap } from 'components/Map';
 import * as S from './PinsCount.styles';
 
-function PinsCount({ onClick }) {
+function PinsCount({ disabled, onClick }) {
   const { isLoading, pins } = useMap();
 
   return (
-    <S.Button onClick={onClick} title={(isLoading ? 'Number of' : pins.length) + ' pins'}>
+    <S.Button
+      onClick={onClick}
+      disabled={disabled}
+      title={(isLoading ? 'Number of' : pins.length) + ' pins'}
+    >
       <FontAwesomeIcon
         icon={faMapMarker}
         size="2x"
