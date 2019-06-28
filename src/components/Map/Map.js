@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import L from 'leaflet';
+import moment from 'moment';
 import { getPins } from 'api/pins';
 import CreatePin from './CreatePin';
 import { getRandomLocation } from './locations';
@@ -28,9 +29,11 @@ export function setMapInteractive(map, shouldBeInteractive) {
 }
 
 function buildPopupContent(pin) {
+  const createdAt = moment(pin.createdAt);
   return `
     <div class="leaflet-popup-title">${pin.title}</div>
     <div class="leaflet-popup-description">${pin.description.replace(/\n|\r|\r\n/g, '<br />')}</div>
+    <div class="leaflet-popup-date" title="${createdAt.format('LLL')}">${createdAt.fromNow()}</div>
   `;
 }
 

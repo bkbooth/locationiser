@@ -49,6 +49,11 @@ const GlobalStyle = createGlobalStyle`
       font-weight: bold;
       margin-bottom: ${theme.sizes.xs};
     }
+    .leaflet-popup-date {
+      font-size: 0.8rem;
+      color: ${theme.colours.shade['500']};
+      margin-top: ${theme.sizes.xs};
+    }
   }
 `;
 
