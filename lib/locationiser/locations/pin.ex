@@ -12,7 +12,7 @@ defmodule Locationiser.Locations.Pin do
 
     belongs_to(:user, Locationiser.Accounts.User)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false

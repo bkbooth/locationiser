@@ -12,7 +12,7 @@ defmodule Locationiser.Accounts.User do
     field(:password, :string, virtual: true)
     field(:password_hash, :string)
 
-    timestamps()
+    timestamps(type: :utc_datetime)
   end
 
   @doc false
