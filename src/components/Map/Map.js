@@ -30,7 +30,7 @@ export function setMapInteractive(map, shouldBeInteractive) {
 function buildPopupContent(pin) {
   return `
     <div class="leaflet-popup-title">${pin.title}</div>
-    <div class="leaflet-popup-description">${pin.description}</div>
+    <div class="leaflet-popup-description">${pin.description.replace(/\n|\r|\r\n/g, '<br />')}</div>
   `;
 }
 
