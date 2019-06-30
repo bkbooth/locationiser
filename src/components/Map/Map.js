@@ -84,7 +84,8 @@ function Map({ children }) {
         maxWidth: 180,
         autoPanPaddingTopLeft: [90, 10],
         autoPanPaddingBottomRight: [10, 10],
-      });
+      })
+      .on('click', () => map.setView([pin.lat, pin.lng], pin.zoom || 16, { animate: true }));
   }
 
   useEffect(() => {
@@ -115,8 +116,9 @@ function Map({ children }) {
 
   function showPin(pinId) {
     const pin = pins.find(pin => pin.id === pinId);
-    map.setView([pin.lat, pin.lng], 16, { animate: false });
-    pin.marker.openPopup();
+    map.closePopup();
+    map.setView([pin.lat, pin.lng], pin.zoom || 16, { animate: true });
+    setTimeout(() => pin.marker.openPopup(), 300);
   }
 
   function addPin() {

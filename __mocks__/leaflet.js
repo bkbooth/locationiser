@@ -8,9 +8,11 @@ const L = {
     fitBounds: jest.fn(),
     locate: jest.fn(),
     getCenter: jest.fn(),
+    getZoom: jest.fn(),
     addControl: jest.fn(),
     removeControl: jest.fn(),
     removeLayer: jest.fn(),
+    closePopup: jest.fn(),
     zoomControl: null,
     dragging: {
       enable: jest.fn(),

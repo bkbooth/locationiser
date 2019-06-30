@@ -70,9 +70,10 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
 
     setIsSaving(true);
     const pin = await createPin({
+      ...newPinMarker.getLatLng(),
+      zoom: map.getZoom(),
       title: titleInput.value,
       description: descriptionInput.value,
-      ...newPinMarker.getLatLng(),
     });
     onSavePin(pin);
     setIsSaving(false);
