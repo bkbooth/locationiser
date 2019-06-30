@@ -15,6 +15,7 @@ defmodule LocationiserWeb.PinView do
       id: pin.id,
       lat: pin.lat,
       lng: pin.lng,
+      zoom: pin.zoom,
       title: pin.title,
       description: pin.description,
       createdAt: pin.inserted_at,

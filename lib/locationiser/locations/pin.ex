@@ -7,6 +7,7 @@ defmodule Locationiser.Locations.Pin do
   schema "pins" do
     field(:lat, :decimal)
     field(:lng, :decimal)
+    field(:zoom, :integer)
     field(:title, :string)
     field(:description, :string)
 
@@ -18,8 +19,8 @@ defmodule Locationiser.Locations.Pin do
   @doc false
   def changeset(pin, attrs) do
     pin
-    |> cast(attrs, [:lat, :lng, :title, :description])
-    |> validate_required([:lat, :lng, :title, :description])
+    |> cast(attrs, [:lat, :lng, :zoom, :title, :description])
+    |> validate_required([:lat, :lng, :zoom, :title, :description])
     |> cast_assoc(:user)
   end
 end

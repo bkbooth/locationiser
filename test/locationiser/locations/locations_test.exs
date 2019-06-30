@@ -13,6 +13,7 @@ defmodule Locationiser.LocationsTest do
     assert {:ok, %Pin{} = pin} = Locations.create_pin(owner, valid_pin())
     assert pin.lat == Decimal.new("-34.423015")
     assert pin.lng == Decimal.new("150.907125")
+    assert pin.zoom == 16
     assert pin.title == "A Pin"
     assert pin.description == "A description of a pin"
   end
@@ -61,11 +62,12 @@ defmodule Locationiser.LocationsTest do
     end
 
     test "update_pin/2 with valid data updates the pin", %{owned_pin: %Pin{id: id} = pin} do
-      attrs = %{lat: "-33.820457", lng: "151.297659"}
+      attrs = %{lat: "-33.820457", lng: "151.297659", zoom: 17}
       assert {:ok, %Pin{} = pin} = Locations.update_pin(pin, attrs)
       assert pin.id == id
       assert pin.lat == Decimal.new("-33.820457")
       assert pin.lng == Decimal.new("151.297659")
+      assert pin.zoom == 17
     end
 
     test "update_pin/2 with invalid data returns error changeset", %{owned_pin: pin} do

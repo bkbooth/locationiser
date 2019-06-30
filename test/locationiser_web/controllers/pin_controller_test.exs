@@ -17,6 +17,7 @@ defmodule LocationiserWeb.PinControllerTest do
     assert data["id"] == id
     assert data["lat"] == "-34.423015"
     assert data["lng"] == "150.907125"
+    assert data["zoom"] == 16
     assert data["title"] == "A Pin"
     assert data["description"] == "A description of a pin"
   end
@@ -46,7 +47,7 @@ defmodule LocationiserWeb.PinControllerTest do
       pin: %Pin{id: id} = pin,
       user: user
     } do
-      attrs = %{lat: "-33.820457", lng: "151.297659"}
+      attrs = %{lat: "-33.820457", lng: "151.297659", zoom: 17}
       conn = put(conn, pin_path(conn, :update, pin), pin: attrs)
       assert %{"id" => ^id} = json_response(conn, 200)["data"]
 
@@ -59,6 +60,7 @@ defmodule LocationiserWeb.PinControllerTest do
       assert data["id"] == id
       assert data["lat"] == "-33.820457"
       assert data["lng"] == "151.297659"
+      assert data["zoom"] == 17
     end
 
     @tag :authorize

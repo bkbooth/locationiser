@@ -25,13 +25,14 @@ defmodule Locationiser.TestFixtures do
     %{
       lat: "-34.423015",
       lng: "150.907125",
+      zoom: 16,
       title: "A Pin",
       description: "A description of a pin"
     }
   end
 
   def invalid_pin do
-    %{lat: nil, lng: nil, title: nil, description: nil}
+    %{lat: nil, lng: nil, zoom: nil, title: nil, description: nil}
   end
 
   def pin_fixture(%Accounts.User{} = owner, attrs \\ %{}) do
