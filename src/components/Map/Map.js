@@ -32,7 +32,12 @@ function buildPopupContent(pin) {
   const createdAt = moment(pin.createdAt);
   return `
     <div class="leaflet-popup-title">${pin.title}</div>
-    <div class="leaflet-popup-description">${pin.description.replace(/\n|\r|\r\n/g, '<br />')}</div>
+    ${
+      pin.description
+        ? `<div class="leaflet-popup-description">
+            ${pin.description.replace(/\n|\r|\r\n/g, '<br />')}</div>`
+        : ''
+    }
     <div class="leaflet-popup-date" title="${createdAt.format('LLL')}">${createdAt.fromNow()}</div>
   `;
 }

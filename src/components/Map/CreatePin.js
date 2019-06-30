@@ -89,7 +89,7 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
     resetForm();
   }
 
-  const isDisabled = isSaving || !(newPinMarker && titleInput.value && descriptionInput.value);
+  const isDisabled = isSaving || !(newPinMarker && titleInput.value);
 
   function renderStep(step) {
     switch (step) {
