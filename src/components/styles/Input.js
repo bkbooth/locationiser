@@ -40,4 +40,5 @@ export const Input = styled.input`
 
 export const TextArea = styled.textarea`
   ${commonInputStyles};
+  resize: none;
 `;
