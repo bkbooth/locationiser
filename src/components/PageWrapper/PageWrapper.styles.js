@@ -1,6 +1,7 @@
+import { animated } from 'react-spring';
 import styled from 'styled-components/macro';
 
-export const CenterPage = styled.div`
+export const CenterPage = styled(animated.div)`
   align-self: center;
   width: 100%;
   max-height: calc(100% - 2 * ${({ theme }) => theme.sizes.md});
