@@ -17,30 +17,37 @@ const L = {
     dragging: {
       enable: jest.fn(),
       disable: jest.fn(),
+      enabled: jest.fn(),
     },
     touchZoom: {
       enable: jest.fn(),
       disable: jest.fn(),
+      enabled: jest.fn(),
     },
     doubleClickZoom: {
       enable: jest.fn(),
       disable: jest.fn(),
+      enabled: jest.fn(),
     },
     scrollWheelZoom: {
       enable: jest.fn(),
       disable: jest.fn(),
+      enabled: jest.fn(),
     },
     boxZoom: {
       enable: jest.fn(),
       disable: jest.fn(),
+      enabled: jest.fn(),
     },
     keyboard: {
       enable: jest.fn(),
       disable: jest.fn(),
+      enabled: jest.fn(),
     },
     tap: {
       enable: jest.fn(),
       disable: jest.fn(),
+      enabled: jest.fn(),
     },
   })),
   tileLayer: jest.fn(),

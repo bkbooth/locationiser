@@ -34,8 +34,10 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
   useEffect(() => {
     if (!map) return;
     map.on('click', event => {
-      setNewPinLatLng(event.latlng);
-      setIsAddingPin(true);
+      if (map.dragging.enabled()) {
+        setNewPinLatLng(event.latlng);
+        setIsAddingPin(true);
+      }
     });
   }, [map]); // eslint-disable-line
 
@@ -163,8 +165,8 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
     ({ item, props, key }) =>
       item && (
         <BottomWrapper style={props} key={key}>
-      <Heading size="sm">Create new pin</Heading>
-      {renderStep(step)}
+          <Heading size="sm">Create new pin</Heading>
+          {renderStep(step)}
         </BottomWrapper>
       )
   );
