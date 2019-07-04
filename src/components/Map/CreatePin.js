@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTransition } from 'react-spring';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRight,
@@ -11,6 +12,7 @@ import L from 'leaflet';
 import { createPin } from 'api/pins';
 import { theme } from 'utils/theme';
 import { useTextInput } from 'utils/useTextInput';
+import { BottomWrapper } from 'components/styles/BottomWrapper';
 import { PrimaryButton, WhiteButton } from 'components/styles/Button';
 import { Heading } from 'components/styles/Heading';
 import { Input, InputGroup, Label, TextArea } from 'components/styles/Input';
@@ -57,10 +59,15 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
     }
   }, [map, isAddingPin]); // eslint-disable-line
 
+  const isShowingTransitions = useTransition(isAddingPin, null, {
+    from: { opacity: 0, transform: 'translateY(110%)' },
+    enter: { opacity: 1, transform: 'translateY(0)' },
+    leave: { opacity: 0, transform: 'translateY(110%)' },
+  });
+
   function resetForm() {
     setIsAddingPin(false);
     setNewPinLatLng(null);
-    setStep(CREATE_PIN_STEPS.moveMarker);
     titleInput.resetValue();
     descriptionInput.resetValue();
   }
@@ -152,11 +159,14 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
     }
   }
 
-  return (
-    <S.Wrapper isShowing={isAddingPin}>
+  return isShowingTransitions.map(
+    ({ item, props, key }) =>
+      item && (
+        <BottomWrapper style={props} key={key}>
       <Heading size="sm">Create new pin</Heading>
       {renderStep(step)}
-    </S.Wrapper>
+        </BottomWrapper>
+      )
   );
 }
 
