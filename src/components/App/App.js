@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components/macro';
 import { theme } from 'utils/theme';
 import Auth from 'components/Auth';
+import Loader from 'components/Loader';
 import Map from 'components/Map';
-import SuspenseFallback from 'components/SuspenseFallback';
 import GlobalStyle from 'components/styles/GlobalStyle';
 
 const Home = lazy(() => import('pages/Home'));
@@ -20,7 +20,7 @@ function App() {
         <Router>
           <Map>
             <Auth>
-              <Suspense fallback={<SuspenseFallback />}>
+              <Suspense fallback={<Loader />}>
                 <Switch>
                   <Route exact path="/" component={Home} />
                   <Route exact path="/login" component={Login} />

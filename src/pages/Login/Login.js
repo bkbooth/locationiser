@@ -5,6 +5,7 @@ import { faSignIn, faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
 import { theme } from 'utils/theme';
 import { useTextInput } from 'utils/useTextInput';
 import { useAuth } from 'components/Auth';
+import Loader from 'components/Loader';
 import { getRandomLocation, setMapInteractive, useMap } from 'components/Map';
 import PageWrapper from 'components/PageWrapper';
 import { PrimaryButton } from 'components/styles/Button';
@@ -34,58 +35,52 @@ function Login({ history }) {
       .catch(err => setErrorMessage(err.message));
   }
 
-  return (
+  return auth.isLoading ? (
+    <Loader />
+  ) : auth.isAuthenticated ? (
+    <Redirect to="/" />
+  ) : (
     <PageWrapper>
-      {auth.isLoading ? (
-        <p>
-          <FontAwesomeIcon icon={faSpinnerThird} spin={true} /> Loading...
-        </p>
-      ) : auth.isAuthenticated ? (
-        <Redirect to="/" />
-      ) : (
-        <>
-          <Heading size="lg">Login to your account</Heading>
-          <form onSubmit={handleSubmit}>
-            {errorMessage && <Error>{errorMessage}</Error>}
-            <InputGroup>
-              <Label htmlFor="email">Email</Label>
-              <Input
-                {...emailInput}
-                type="email"
-                id="email"
-                name="email"
-                placeholder="eg. jsnow@stark.com"
-              />
-            </InputGroup>
-            <InputGroup>
-              <Label htmlFor="password">Password</Label>
-              <Input
-                {...passwordInput}
-                type="password"
-                id="password"
-                name="password"
-                placeholder="eg. iheartgh0st"
-              />
-            </InputGroup>
-            <InputGroup style={{ marginTop: theme.sizes.md, marginBottom: theme.sizes.md }}>
-              <PrimaryButton type="submit" disabled={auth.isAuthenticating}>
-                {auth.isAuthenticating ? (
-                  <>
-                    <FontAwesomeIcon icon={faSpinnerThird} spin={true} /> Logging in
-                  </>
-                ) : (
-                  <>
-                    <FontAwesomeIcon icon={faSignIn} /> Login
-                  </>
-                )}
-              </PrimaryButton>
-            </InputGroup>
-          </form>
-          <p>
-            Don't have an account? Please <Link to="/signup">signup</Link>.
-          </p>
-        </>
-      )}
+      <Heading size="lg">Login to your account</Heading>
+      <form onSubmit={handleSubmit}>
+        {errorMessage && <Error>{errorMessage}</Error>}
+        <InputGroup>
+          <Label htmlFor="email">Email</Label>
+          <Input
+            {...emailInput}
+            type="email"
+            id="email"
+            name="email"
+            placeholder="eg. jsnow@stark.com"
+          />
+        </InputGroup>
+        <InputGroup>
+          <Label htmlFor="password">Password</Label>
+          <Input
+            {...passwordInput}
+            type="password"
+            id="password"
+            name="password"
+            placeholder="eg. iheartgh0st"
+          />
+        </InputGroup>
+        <InputGroup style={{ marginTop: theme.sizes.md, marginBottom: theme.sizes.md }}>
+          <PrimaryButton type="submit" disabled={auth.isAuthenticating}>
+            {auth.isAuthenticating ? (
+              <>
+                <FontAwesomeIcon icon={faSpinnerThird} spin={true} /> Logging in
+              </>
+            ) : (
+              <>
+                <FontAwesomeIcon icon={faSignIn} /> Login
+              </>
+            )}
+          </PrimaryButton>
+        </InputGroup>
+      </form>
+      <p>
+        Don't have an account? Please <Link to="/signup">signup</Link>.
+      </p>
     </PageWrapper>
   );
 }
