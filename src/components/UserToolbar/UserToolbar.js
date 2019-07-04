@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTransition } from 'react-spring';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBars,
@@ -24,6 +25,12 @@ function UserToolbar() {
   useEffect(() => {
     if (map.isAddingPin) setIsCollapsed(true);
   }, [map.isAddingPin]);
+
+  const isCollapsedTransitions = useTransition(isCollapsed, null, {
+    from: { opacity: 0, transform: 'translateX(-76%)' },
+    enter: { opacity: 1, transform: 'translateX(0)' },
+    leave: { opacity: 0, transform: 'translateX(-76%)' },
+  });
 
   function toggleIsCollapsed() {
     setIsCollapsed(isCollapsed => !isCollapsed);
@@ -121,11 +128,11 @@ function UserToolbar() {
     );
   }
 
-  return (
-    <S.Wrapper isCollapsed={isCollapsed}>
+  return isCollapsedTransitions.map(({ item: isCollapsed, props, key }) => (
+    <S.Wrapper isCollapsed={isCollapsed} style={props} key={key}>
       {isCollapsed ? renderCollapsedToolbar() : renderFullToolbar()}
     </S.Wrapper>
-  );
+  ));
 }
 
 export default UserToolbar;

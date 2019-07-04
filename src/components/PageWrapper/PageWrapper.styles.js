@@ -53,7 +53,7 @@ export const Title = styled.h1`
 `;
 
 export const Logo = styled.img`
-  width: ${({ theme }) => theme.sizes.xl};
+  width: ${({ theme }) => theme.sizes.lg};
   height: auto;
   margin-right: ${({ theme }) => theme.sizes.sm};
 `;

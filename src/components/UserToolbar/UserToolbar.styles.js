@@ -1,13 +1,17 @@
 import styled from 'styled-components/macro';
+import { animated } from 'react-spring';
 
-export const Wrapper = styled.div`
-  position: relative;
+export const Wrapper = styled(animated.div)`
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: ${({ isCollapsed }) => (isCollapsed ? '60px' : '85%')};
+  z-index: ${({ isCollapsed }) => (isCollapsed ? 3 : 2)};
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: ${({ isCollapsed }) => (isCollapsed ? '60px' : '85%')};
-  height: 100%;
-  overflow-y: hidden;
   background: rgba(251, 251, 251, 0.7);
   box-shadow: ${({ theme }) => theme.sizes.nil} ${({ theme }) => theme.sizes.nil}
     ${({ theme }) => theme.sizes.xl} rgba(0, 0, 0, 0.3);
@@ -67,14 +71,18 @@ export const Title = styled.h1`
   display: flex;
   align-items: center;
   margin: ${({ theme }) => theme.sizes.nil};
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   letter-spacing: 0.05rem;
   text-shadow: ${({ theme }) => theme.sizes.xxs} ${({ theme }) => theme.sizes.xxs}
     ${({ theme }) => theme.sizes.xs} rgba(0, 0, 0, 0.4);
+
+  @media screen and (min-width: ${({ theme }) => theme.screens.sm}) {
+    font-size: 1.7rem;
+  }
 `;
 
 export const Logo = styled.img`
-  width: ${({ theme }) => theme.sizes.xl};
+  width: ${({ theme }) => theme.sizes.lg};
   height: auto;
   margin-right: ${({ theme }) => theme.sizes.sm};
 `;
