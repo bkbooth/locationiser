@@ -19,7 +19,9 @@ defmodule Locationiser.Locations do
 
   """
   def list_pins do
-    Repo.all(Pin)
+    Pin
+    |> order_pins_query()
+    |> Repo.all()
   end
 
   @doc """
@@ -34,6 +36,7 @@ defmodule Locationiser.Locations do
   def list_user_pins(%User{} = user) do
     Pin
     |> user_pins_query(user)
+    |> order_pins_query()
     |> Repo.all()
   end
 
@@ -146,6 +149,10 @@ defmodule Locationiser.Locations do
 
   defp put_user(changeset, user) do
     Ecto.Changeset.put_assoc(changeset, :user, user)
+  end
+
+  defp order_pins_query(query) do
+    from(p in query, order_by: [desc: p.inserted_at])
   end
 
   defp user_pins_query(query, %User{id: user_id}) do
