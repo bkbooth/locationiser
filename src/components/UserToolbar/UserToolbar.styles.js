@@ -1,7 +1,8 @@
+import React from 'react';
 import styled from 'styled-components/macro';
 import { animated } from 'react-spring';
 
-export const Wrapper = styled(animated.div)`
+export const Wrapper = styled(({ isCollapsed, ...props }) => <animated.div {...props} />)`
   position: absolute;
   left: 0;
   top: 0;
