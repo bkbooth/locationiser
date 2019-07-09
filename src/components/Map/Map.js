@@ -158,11 +158,7 @@ function Map({ children }) {
     >
       <S.LeafletMap id="leaflet-map" />
       <S.ContentWrapper>{children}</S.ContentWrapper>
-      <CreatePin
-        isAddingPin={isAddingPin}
-        setIsAddingPin={setIsAddingPin}
-        onSavePin={handleAddCreatedPin}
-      />
+      <CreatePin onSavePin={handleAddCreatedPin} />
     </MapContext.Provider>
   );
 }

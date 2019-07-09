@@ -22,8 +22,8 @@ import * as S from './CreatePin.styles';
 
 const CREATE_PIN_STEPS = { moveMarker: 0, enterDetails: 1 };
 
-function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
-  const { map } = useMap();
+function CreatePin({ onSavePin }) {
+  const { addPin, isAddingPin, stopAddingPin, map } = useMap();
   const [newPinLatLng, setNewPinLatLng] = useState(null);
   const [newPinMarker, setNewPinMarker] = useState(null);
   const [step, setStep] = useState(CREATE_PIN_STEPS.moveMarker);
@@ -36,7 +36,7 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
     map.on('click', event => {
       if (map.dragging.enabled()) {
         setNewPinLatLng(event.latlng);
-        setIsAddingPin(true);
+        addPin();
       }
     });
   }, [map]); // eslint-disable-line
@@ -68,7 +68,7 @@ function CreatePin({ isAddingPin, setIsAddingPin, onSavePin }) {
   });
 
   function resetForm() {
-    setIsAddingPin(false);
+    stopAddingPin();
     setNewPinLatLng(null);
     titleInput.resetValue();
     descriptionInput.resetValue();
