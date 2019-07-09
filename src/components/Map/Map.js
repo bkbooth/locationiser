@@ -8,6 +8,8 @@ import { defaultIcon } from './icons';
 import { MapContext } from './MapContext';
 import * as S from './Map.styles';
 
+const POPUP_OPEN_DELAY = 300;
+
 L.Marker.prototype.options.icon = defaultIcon;
 
 export function setMapInteractive(map, shouldBeInteractive) {
@@ -89,8 +91,7 @@ function Map({ children }) {
         maxWidth: 180,
         autoPanPaddingTopLeft: [90, 10],
         autoPanPaddingBottomRight: [10, 10],
-      })
-      .on('click', () => map.setView([pin.lat, pin.lng], pin.zoom || 16, { animate: true }));
+      });
   }
 
   useEffect(() => {
@@ -98,6 +99,18 @@ function Map({ children }) {
       pins.forEach(addMarkerForPin);
     }
   }, [map, pins]); // eslint-disable-line
+
+  useEffect(() => {
+    const handlePinClick = pin => () => {
+      map.setView([pin.lat, pin.lng], pin.zoom || 16, { animate: true });
+      setTimeout(() => pin.marker.openPopup(), POPUP_OPEN_DELAY);
+    };
+    if (map && pins.length) {
+      pins.forEach(pin =>
+        isAddingPin ? pin.marker.off('click') : pin.marker.on('click', handlePinClick(pin))
+      );
+    }
+  }, [isAddingPin, map, pins]);
 
   async function loadPins() {
     setIsLoading(true);
@@ -123,7 +136,7 @@ function Map({ children }) {
     const pin = pins.find(pin => pin.id === pinId);
     map.closePopup();
     map.setView([pin.lat, pin.lng], pin.zoom || 16, { animate: true });
-    setTimeout(() => pin.marker.openPopup(), 300);
+    setTimeout(() => pin.marker.openPopup(), POPUP_OPEN_DELAY);
   }
 
   function addPin() {
