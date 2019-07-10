@@ -5,6 +5,7 @@ export const MapContext = createContext({
   pins: [],
   isLoading: false,
   isLocating: false,
+  isAddingPin: false,
   loadPins: null,
   clearPins: null,
   locate: null,
