@@ -5,6 +5,7 @@ const headingCommon = css`
   text-transform: uppercase;
   color: ${({ theme }) => theme.colours.shade['400']};
   margin-top: ${({ theme }) => theme.sizes.nil};
+  font-weight: 400;
 `;
 
 const H1 = styled.h1`
