@@ -7,9 +7,9 @@ import { getRandomLocation, setMapInteractive, useMap } from 'components/Map';
 import PageWrapper from 'components/PageWrapper';
 import UserToolbar from 'components/UserToolbar';
 
-function Home({ location }) {
+function Home({ location, match }) {
   const { isAuthenticated, isLoading } = useAuth();
-  const { map, pins } = useMap();
+  const { map, pins, showPin } = useMap();
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -22,6 +22,17 @@ function Home({ location }) {
       map.setView([lat, lng], zoom);
     }
   }, [isAuthenticated, map, pins]);
+
+  const {
+    params: { pinId },
+  } = match;
+  useEffect(() => {
+    console.log({ pinId });
+    if (pinId && map && pins.length) {
+      const pin = pins.find(pin => pin.id === pinId);
+      showPin(pin);
+    }
+  }, [map, pins, pinId, showPin]);
 
   return (
     <>

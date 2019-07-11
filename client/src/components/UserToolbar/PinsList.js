@@ -6,12 +6,14 @@ import { useMap } from 'components/Map';
 import * as S from './PinsList.styles';
 
 function PinsList({ closeUserToolbar }) {
-  const { isLoading, pins, showPin } = useMap();
+  const { isLoading, pins, selectPin } = useMap();
 
-  function handlePinClick(e) {
-    e.preventDefault();
-    showPin(e.currentTarget.dataset.pinId);
-    closeUserToolbar();
+  function handlePinClick(pin) {
+    return e => {
+      e.preventDefault();
+      selectPin(pin);
+      closeUserToolbar();
+    };
   }
 
   return isLoading ? (
@@ -22,7 +24,7 @@ function PinsList({ closeUserToolbar }) {
     <S.PinList>
       {pins.map(pin => (
         <S.Pin key={pin.id}>
-          <S.UnstyledLink onClick={handlePinClick} data-pin-id={pin.id} href="#">
+          <S.UnstyledLink onClick={handlePinClick(pin)} href="#">
             <FontAwesomeIcon
               icon={faMapMarkerAlt}
               color={theme.colours.secondary['500']}

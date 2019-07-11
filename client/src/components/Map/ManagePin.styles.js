@@ -7,10 +7,12 @@ export const ButtonGroup = styled.div`
   margin-top: ${({ theme }) => theme.sizes.md};
 
   ${PrimaryButton}, ${WhiteButton} {
-    flex: 1;
+    flex-grow: 1;
+    flex-shrink: 0;
     margin-bottom: ${({ theme }) => theme.sizes.nil};
+    margin-left: ${({ theme }) => theme.sizes.sm};
     &:first-child {
-      margin-right: ${({ theme }) => theme.sizes.sm};
+      margin-left: ${({ theme }) => theme.sizes.nil};
     }
   }
 `;

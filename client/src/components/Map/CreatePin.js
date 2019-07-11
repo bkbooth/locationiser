@@ -18,7 +18,7 @@ import { Heading } from 'components/styles/Heading';
 import { Input, InputGroup, Label, TextArea } from 'components/styles/Input';
 import { newPinIcon } from './icons';
 import { useMap } from './MapContext';
-import * as S from './CreatePin.styles';
+import * as S from './ManagePin.styles';
 
 const CREATE_PIN_STEPS = { moveMarker: 0, enterDetails: 1 };
 

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import L from 'leaflet';
 import moment from 'moment';
 import { getPins } from 'api/pins';
-import CreatePin from './CreatePin';
 import { getRandomLocation } from './locations';
 import { defaultIcon } from './icons';
 import { MapContext } from './MapContext';
+import CreatePin from './CreatePin';
+import ManagePin from './ManagePin';
 import * as S from './Map.styles';
 
 const POPUP_OPEN_DELAY = 300;
@@ -44,9 +46,10 @@ function buildPopupContent(pin) {
   `;
 }
 
-function Map({ children }) {
+function Map({ children, history }) {
   const [map, setMap] = useState(null);
   const [pins, setPins] = useState([]);
+  const [selectedPin, setSelectedPin] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isLocating, setIsLocating] = useState(false);
   const [isAddingPin, setIsAddingPin] = useState(false);
@@ -91,7 +94,9 @@ function Map({ children }) {
         maxWidth: 180,
         autoPanPaddingTopLeft: [90, 10],
         autoPanPaddingBottomRight: [10, 10],
-      });
+      })
+      .on('popupopen', () => selectPin(pin));
+    // .on('popupclose', () => setSelectedPin());
   }
 
   useEffect(() => {
@@ -132,9 +137,21 @@ function Map({ children }) {
     map.locate({ setView: true });
   }
 
-  function showPin(pinId) {
-    const pin = pins.find(pin => pin.id === pinId);
-    map.closePopup();
+  function selectPin(pin = null) {
+    // const pin = pins.find(pin => pin.id === pinId);
+    // map.closePopup();
+    history.push(pin ? `/pin/${pin.id}` : '/');
+    if (pin) showPin(pin);
+    // if (pin) {
+    //   map.setView([pin.lat, pin.lng], pin.zoom || 16, { animate: true });
+    //   setTimeout(() => pin.marker.openPopup(), POPUP_OPEN_DELAY);
+    // } else {
+    //   history.push('/');
+    // }
+  }
+
+  function showPin(pin) {
+    setSelectedPin(pin);
     map.setView([pin.lat, pin.lng], pin.zoom || 16, { animate: true });
     setTimeout(() => pin.marker.openPopup(), POPUP_OPEN_DELAY);
   }
@@ -158,12 +175,14 @@ function Map({ children }) {
       value={{
         map,
         pins,
+        selectedPin,
         isLoading,
         isLocating,
         isAddingPin,
         loadPins,
         clearPins,
         locate,
+        selectPin,
         showPin,
         addPin,
         stopAddingPin,
@@ -172,8 +191,9 @@ function Map({ children }) {
       <S.LeafletMap id="leaflet-map" />
       <S.ContentWrapper>{children}</S.ContentWrapper>
       <CreatePin onSavePin={handleAddCreatedPin} />
+      <ManagePin />
     </MapContext.Provider>
   );
 }
 
-export default Map;
+export default withRouter(Map);
