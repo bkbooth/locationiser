@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinnerThird } from '@fortawesome/pro-solid-svg-icons';
 import { useAuth } from 'components/Auth';
@@ -7,7 +7,7 @@ import { getRandomLocation, setMapInteractive, useMap } from 'components/Map';
 import PageWrapper from 'components/PageWrapper';
 import UserToolbar from 'components/UserToolbar';
 
-function Home() {
+function Home({ location }) {
   const { isAuthenticated, isLoading } = useAuth();
   const { map, pins } = useMap();
 
@@ -34,10 +34,12 @@ function Home() {
       ) : isAuthenticated ? (
         <UserToolbar />
       ) : (
-        <Redirect to="/signup" />
+        <Redirect
+          to={{ pathname: '/signup', search: `?redirectTo=${location.pathname}${location.search}` }}
+        />
       )}
     </>
   );
 }
 
-export default Home;
+export default withRouter(Home);

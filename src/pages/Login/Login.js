@@ -13,7 +13,7 @@ import { Error } from 'components/styles/Error';
 import { Heading } from 'components/styles/Heading';
 import { Input, InputGroup, Label } from 'components/styles/Input';
 
-function Login({ history }) {
+function Login({ history, location }) {
   const auth = useAuth();
   const { map } = useMap();
   const emailInput = useTextInput('');
@@ -31,7 +31,7 @@ function Login({ history }) {
 
     auth
       .handleLogin(emailInput.value, passwordInput.value)
-      .then(() => history.push('/'))
+      .then(() => history.push(new URLSearchParams(location.search).get('redirectTo') || '/'))
       .catch(err => setErrorMessage(err.message));
   }
 
@@ -79,7 +79,8 @@ function Login({ history }) {
         </InputGroup>
       </form>
       <p>
-        Don't have an account? Please <Link to="/signup">signup</Link>.
+        Don't have an account? Please{' '}
+        <Link to={{ pathname: '/signup', search: location.search || null }}>signup</Link>.
       </p>
     </PageWrapper>
   );
