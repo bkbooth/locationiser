@@ -1,0 +1,1331 @@
+{
+	"info": {
+		"_postman_id": "6467ae88-9584-4ea5-9679-0febce308d9f",
+		"name": "Locationiser",
+		"description": "The public API for the locationiser service.\n\nNon-authenticated visitors can register users and authenticate.\n\nAuthenticated visitors can manage their user profile and created pins.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Register user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ef6cc7cc-efe4-4010-b13f-4fddc4a7ea79",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"returns a jwt auth token with a uuid sub\", () => {",
+									"    let res = pm.response.json();",
+									"    pm.expect(res.data.token).to.be.a('string');",
+									"    let [,payloadPart,] = res.data.token.split('.');",
+									"    let payload = JSON.parse(atob(payloadPart));",
+									"    pm.expect(payload.sub).to.match(/\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}/);",
+									"    ",
+									"    // Set the accessToken and created userId in the environment",
+									"    pm.environment.set(\"accessToken\", res.data.token);",
+									"    pm.environment.set(\"userId\", payload.sub);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user\": {\n\t\t\"name\": \"Foo Bar\",\n\t\t\"email\": \"foobar@example.com\",\n\t\t\"password\": \"password123\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						},
+						"description": "Registers a user with name, email & password"
+					},
+					"response": [
+						{
+							"name": "Register user success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": false
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"user\": {\n\t\t\"name\": \"Foo Bar\",\n\t\t\"email\": \"foobar@example.com\",\n\t\t\"password\": \"password123\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/users",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "411",
+									"name": "content-length",
+									"description": ""
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8",
+									"name": "content-type",
+									"description": ""
+								},
+								{
+									"key": "location",
+									"value": "/api/v1/users/e6734c6b-e6b1-4554-8e07-c65cd39d7b68",
+									"name": "location",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "List users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "10faaf6a-10ab-42e3-a2dd-0dd9133338f1",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"returns a list containing at least one user\", function () {",
+									"    let res = pm.response.json();",
+									"    pm.expect(res.data).to.not.be.empty;",
+									"    ",
+									"    let userId = pm.variables.get(\"userId\");",
+									"    let user = res.data.find(u => u.id === userId);",
+									"    pm.expect(user).to.exist;",
+									"    pm.expect(user.name).to.exist;",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4071d5e7-95f1-4fc2-93c4-bc8cfe4406da",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/users",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users"
+							]
+						},
+						"description": "Returns the list of users"
+					},
+					"response": [
+						{
+							"name": "List users success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/users",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "195",
+									"name": "content-length",
+									"description": ""
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8",
+									"name": "content-type",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": \"e6734c6b-e6b1-4554-8e07-c65cd39d7b68\",\n            \"name\": \"Foo Bar\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "3e958c94-88d4-45e3-8e85-4766b118e146",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"returns the specified user\", function () {",
+									"    let res = pm.response.json();",
+									"    let userId = pm.variables.get(\"userId\");",
+									"    pm.expect(res.data.id).to.eql(userId);",
+									"    pm.expect(res.data.name).to.exist;",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/users/{{userId}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{userId}}"
+							]
+						},
+						"description": "Gets a single user"
+					},
+					"response": [
+						{
+							"name": "Get user success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/users/{{userId}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "71",
+									"name": "content-length",
+									"description": ""
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8",
+									"name": "content-type",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": \"e6734c6b-e6b1-4554-8e07-c65cd39d7b68\",\n        \"name\": \"Foo Bar\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Authenticate user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ce1b72da-3d46-4cd6-b1eb-db0202b69465",
+								"exec": [
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"returns a jwt auth token with a uuid sub\", () => {",
+									"    let res = pm.response.json();",
+									"    pm.expect(res.data.token).to.be.a('string');",
+									"    let [,payloadPart,] = res.data.token.split('.');",
+									"    let payload = JSON.parse(atob(payloadPart));",
+									"    pm.expect(payload.sub).to.match(/\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}/);",
+									"    ",
+									"    // Set the accessToken and authenticated userId in the environment",
+									"    pm.environment.set(\"accessToken\", res.data.token);",
+									"    pm.environment.set(\"userId\", payload.sub);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"foobar@example.com\",\n\t\"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/auth/login",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Registers a user with name, email & password"
+					},
+					"response": [
+						{
+							"name": "Authenticate user success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": false
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"foobar@example.com\",\n\t\"password\": \"password123\"\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/auth/login",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "411",
+									"name": "content-length",
+									"description": ""
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8",
+									"name": "content-type",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get current user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecec5984-837c-401c-84b6-2a13a0886d7f",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"returns the specified user\", function () {",
+									"    let res = pm.response.json();",
+									"    let userId = pm.variables.get(\"userId\");",
+									"    pm.expect(res.data.id).to.eql(userId);",
+									"    pm.expect(res.data.name).to.exist;",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/user",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user"
+							]
+						},
+						"description": "Gets the currently authenticated user"
+					},
+					"response": [
+						{
+							"name": "Get current user success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/user",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "71"
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"id\": \"a92668ee-4444-45e3-8f32-46296ee09fbf\",\n        \"name\": \"Foo Bar\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecec5984-837c-401c-84b6-2a13a0886d7f",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"updates the specified user\", function () {",
+									"    let res = pm.response.json();",
+									"    let userId = pm.variables.get(\"userId\");",
+									"    pm.expect(res.data.id).to.eql(userId);",
+									"    ",
+									"    let body = JSON.parse(pm.request.body);",
+									"    pm.expect(res.data.name).to.eql(body.user.name);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"user\": {\n\t\t\"name\": \"Bar Baz\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/users/{{userId}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{userId}}"
+							]
+						},
+						"description": "Updates a user"
+					},
+					"response": [
+						{
+							"name": "Update user success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": false
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"user\": {\n\t\t\"name\": \"Bar Baz\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/users/{{userId}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "71",
+									"name": "content-length",
+									"description": ""
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8",
+									"name": "content-type",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n    \t\"id\": \"fca24023-fec3-4ae6-bdc6-11fee08f1de7\",\n        \"name\": \"Bar Baz\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "f075821f-bd5d-4ef7-afba-e4748a94e23e",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(204);",
+									"    pm.response.to.not.have.body();",
+									"});",
+									"",
+									"// Clear the accessToken and userId in the environment",
+									"pm.environment.unset(\"accessToken\");",
+									"pm.environment.unset(\"userId\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{accessToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/users/{{userId}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"{{userId}}"
+							]
+						},
+						"description": "Deletes a user"
+					},
+					"response": [
+						{
+							"name": "Delete user success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/users/{{userId}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"users",
+										"{{userId}}"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "0",
+									"name": "content-length",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"description": "These requests cover registering a new user and logging in, as well as listing users, getting an individual user and updating or deleting your own user account.",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "c26252f0-d5e1-4f92-8a3b-abf61d6dbab9",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "4a62de32-28e2-48b5-99da-27daa9870ac3",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Pins",
+			"item": [
+				{
+					"name": "Create pin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "a87f8094-20dd-4ab3-8464-79520ad0b0da",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", () => {",
+									"    pm.response.to.have.status(201);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"returns the created pin with uuid\", () => {",
+									"    let res = pm.response.json();",
+									"    let pin = res.data;",
+									"    pm.expect(pin.id).to.match(/\\w{8}-\\w{4}-\\w{4}-\\w{4}-\\w{12}/);",
+									"    pm.expect(pin.lat).to.exist;",
+									"    pm.expect(pin.lng).to.exist;",
+									"    pm.expect(pin.title).to.exist;",
+									"    pm.expect(pin.description).to.exist;",
+									"    ",
+									"    // Set the created pinId in the environment",
+									"    pm.environment.set(\"pinId\", pin.id);",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3b5c4a4f-91a1-4cd3-8b0e-a3caab9f6cbd",
+								"type": "text/javascript",
+								"exec": [
+									"let createUserRequest = {",
+									"    url: `${pm.variables.get(\"URL\")}/api/v1/users`,",
+									"    method: 'POST',",
+									"    header: 'Content-Type:application/json',",
+									"    body: {",
+									"        mode: 'raw',",
+									"        raw: JSON.stringify({",
+									"            user: {",
+									"                name: \"Bar Baz\",",
+									"                email: \"barbaz@example.com\",",
+									"                password: \"password123\"",
+									"            }",
+									"        })",
+									"        ",
+									"    }",
+									"};",
+									"pm.sendRequest(createUserRequest, function (err, res) {",
+									"    if (err) return;",
+									"    ",
+									"    res = res.json();",
+									"    let [,payloadPart,] = res.data.token.split('.');",
+									"    let payload = JSON.parse(atob(payloadPart));",
+									"    ",
+									"    // Set the accessToken and created userId in the environment",
+									"    pm.environment.set(\"accessToken\", res.data.token);",
+									"    pm.environment.set(\"userId\", payload.sub);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pin\": {\n\t\t\"lat\": \"-34.423015\",\n\t\t\"lng\": \"150.907125\",\n\t\t\"title\": \"South Beach Spot\",\n\t\t\"description\": \"We setup here for the day\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/pins",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pins"
+							]
+						},
+						"description": "Creates a pin owned by the current user"
+					},
+					"response": [
+						{
+							"name": "Create pin success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": false
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"pin\": {\n\t\t\"lat\": \"-34.423015\",\n\t\t\"lng\": \"150.907125\",\n\t\t\"title\": \"South Beach Spot\",\n\t\t\"description\": \"We setup here for the day\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/pins",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"pins"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "161",
+									"name": "content-length",
+									"description": ""
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8",
+									"name": "content-type",
+									"description": ""
+								},
+								{
+									"key": "location",
+									"value": "/api/v1/pins/dae117f2-ebcc-4c89-a7ad-8cb6b1974474",
+									"name": "location",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n    \t\"id\": \"dae117f2-ebcc-4c89-a7ad-8cb6b1974474\",\n    \t\"lat\": \"-34.423015\",\n        \"lng\": \"150.907125\",\n        \"title\": \"South Beach Spot\",\n        \"description\": \"We setup here for the day\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "List pins",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9d0e32cc-ffcd-43ec-a943-e63ec02deb11",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"returns a list containing at least one pin\", function () {",
+									"    let res = pm.response.json();",
+									"    pm.expect(res.data).to.not.be.empty;",
+									"    ",
+									"    let pinId = pm.variables.get(\"pinId\");",
+									"    let pin = res.data.find(p => p.id === pinId);",
+									"    pm.expect(pin).to.exist;",
+									"    pm.expect(pin.lat).to.exist;",
+									"    pm.expect(pin.lng).to.exist;",
+									"    pm.expect(pin.title).to.exist;",
+									"    pm.expect(pin.description).to.exist;",
+									"});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4071d5e7-95f1-4fc2-93c4-bc8cfe4406da",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/pins",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pins"
+							]
+						},
+						"description": "Returns the list of pins owned by the current user"
+					},
+					"response": [
+						{
+							"name": "List pins success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/pins",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"pins"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "163",
+									"name": "content-length",
+									"description": ""
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8",
+									"name": "content-type",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n        \t\"id\": \"dae117f2-ebcc-4c89-a7ad-8cb6b1974474\",\n        \t\"lat\": \"-34.423015\",\n            \"lng\": \"150.907125\",\n            \"title\": \"South Beach Spot\",\n            \"description\": \"We setup here for the day\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get pin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d99d241d-2d05-4eeb-ba01-e00f60fda2e7",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"returns the specified pin\", function () {",
+									"    let res = pm.response.json();",
+									"    let pinId = pm.variables.get(\"pinId\");",
+									"    pm.expect(res.data.id).to.eql(pinId);",
+									"    pm.expect(res.data.lat).to.exist;",
+									"    pm.expect(res.data.lng).to.exist;",
+									"    pm.expect(res.data.title).to.exist;",
+									"    pm.expect(res.data.description).to.exist;",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/pins/{{pinId}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pins",
+								"{{pinId}}"
+							]
+						},
+						"description": "Gets a single pin owned by the current user"
+					},
+					"response": [
+						{
+							"name": "Get pin success",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{URL}}/api/v1/pins/{{pinId}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"pins",
+										"{{pinId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "161",
+									"name": "content-length",
+									"description": ""
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8",
+									"name": "content-type",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n    \t\"id\": \"dae117f2-ebcc-4c89-a7ad-8cb6b1974474\",\n    \t\"lat\": \"-34.423015\",\n        \"lng\": \"150.907125\",\n        \"title\": \"South Beach Spot\",\n        \"description\": \"We setup here for the day\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update pin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fcd8bd0b-8a90-4b3f-9ee9-971361aedff0",
+								"type": "text/javascript",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.response.to.be.withBody;",
+									"    pm.response.to.be.json;",
+									"});",
+									"",
+									"pm.test(\"updates the specified pin\", function () {",
+									"    let res = pm.response.json();",
+									"    let pinId = pm.variables.get(\"pinId\");",
+									"    pm.expect(res.data.id).to.eql(pinId);",
+									"    ",
+									"    let body = JSON.parse(pm.request.body);",
+									"    pm.expect(res.data.lat).to.eql(body.pin.lat);",
+									"    pm.expect(res.data.lng).to.eql(body.pin.lng);",
+									"    pm.expect(res.data.description).to.eql(body.pin.description);",
+									"});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"pin\": {\n\t\t\"lat\": \"-34.426508\",\n\t\t\"lng\": \"150.904905\",\n\t\t\"description\": \"We ended up moving here\"\n\t}\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/pins/{{pinId}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pins",
+								"{{pinId}}"
+							]
+						},
+						"description": "Updates a pin owned by the current user"
+					},
+					"response": [
+						{
+							"name": "Update pin success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"disabled": false
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"pin\": {\n\t\t\"lat\": \"-34.426508\",\n\t\t\"lng\": \"150.904905\",\n\t\t\"description\": \"We ended up moving here\"\n\t}\n}"
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/pins/{{pinId}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"pins",
+										"{{pinId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "159",
+									"name": "content-length",
+									"description": ""
+								},
+								{
+									"key": "content-type",
+									"value": "application/json; charset=utf-8",
+									"name": "content-type",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n    \t\"id\": \"dae117f2-ebcc-4c89-a7ad-8cb6b1974474\",\n    \t\"lat\": \"-34.426508\",\n        \"lng\": \"150.904905\",\n        \"title\": \"South Beach Spot\",\n        \"description\": \"We ended up moving here\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete pin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1b60fd09-d49b-41d7-87d8-0fea468e8df3",
+								"exec": [
+									"pm.test(\"response is ok\", function () {",
+									"    pm.response.to.have.status(204);",
+									"    pm.response.to.not.have.body();",
+									"});",
+									"",
+									"// Clear the pinId in the environment",
+									"pm.environment.unset(\"pinId\");",
+									"",
+									"let deleteUserRequest = {",
+									"    url: `${pm.variables.get(\"URL\")}/api/v1/users/${pm.variables.get(\"userId\")}`,",
+									"    method: 'DELETE',",
+									"    header: `Authorization:Bearer ${pm.variables.get(\"accessToken\")}`",
+									"}",
+									"pm.sendRequest(deleteUserRequest, function (err, res) {",
+									"    // Clear the accessToken and userId in the environment",
+									"    pm.environment.unset(\"accessToken\");",
+									"    pm.environment.unset(\"userId\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/api/v1/pins/{{pinId}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"pins",
+								"{{pinId}}"
+							]
+						},
+						"description": "Deletes a pin owned by the current user"
+					},
+					"response": [
+						{
+							"name": "Delete pin success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": []
+								},
+								"url": {
+									"raw": "{{URL}}/api/v1/pins/{{pinId}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"pins",
+										"{{pinId}}"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "content-length",
+									"value": "0",
+									"name": "content-length",
+									"description": ""
+								}
+							],
+							"cookie": [],
+							"body": ""
+						}
+					]
+				}
+			],
+			"description": "These requests cover listing, creating, viewing, updating and deleting pins for the currently authenticated user.",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{accessToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "38af696f-f240-45d6-8e43-10eed28f8706",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "de90212b-fb8f-4360-89f7-6021740d4f50",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "1caf8d19-54f8-4380-9cbf-9709ce4238a2",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6439ebd2-0e51-4323-83c4-29915a9a4baf",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "7306e69a-2fa0-4244-9fb0-ee10a324ce33",
+			"key": "URL",
+			"value": "http://localhost:4000",
+			"type": "string"
+		},
+		{
+			"id": "ba49f427-9d61-4d24-9041-689172a0cca5",
+			"key": "authToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+			"type": "string"
+		},
+		{
+			"id": "53a21877-754c-4e56-b8ea-ca4d94ffe3e1",
+			"key": "userId",
+			"value": "e6734c6b-e6b1-4554-8e07-c65cd39d7b68",
+			"type": "string"
+		},
+		{
+			"id": "12ca710f-2d88-4b9b-beaf-5af105f699f0",
+			"key": "pinId",
+			"value": "dae117f2-ebcc-4c89-a7ad-8cb6b1974474",
+			"type": "string"
+		}
+	]
+}
