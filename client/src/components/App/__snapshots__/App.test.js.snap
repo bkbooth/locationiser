@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+.c2 {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
+  z-index: 3;
+  background: #fbfbfb;
+  padding: 20px;
+  border-radius: 5px 5px 0 0;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+}
+
+.c0 {
+  height: 100%;
+  z-index: 1;
+}
+
+.c1 {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  pointer-events: none;
+}
+
+.c1 > * {
+  pointer-events: auto;
+}
+
+@media screen and (min-width:146px) {
+  .c2 {
+    left: calc(50% - 72px);
+    width: 145px;
+  }
+}
+
+<div>
+  <div
+    class="c0"
+    id="leaflet-map"
+  />
+  <div
+    class="c1"
+  >
+    <div
+      class="c2"
+      style="opacity: 0; transform: translateY(110%);"
+      width="145"
+    >
+      <svg
+        aria-hidden="true"
+        class="svg-inline--fa fa-spinner-third fa-w-16 fa-spin fa-fw "
+        data-icon="spinner-third"
+        data-prefix="fas"
+        focusable="false"
+        role="img"
+        viewBox="0 0 512 512"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M456.433 371.72l-27.79-16.045c-7.192-4.152-10.052-13.136-6.487-20.636 25.82-54.328 23.566-118.602-6.768-171.03-30.265-52.529-84.802-86.621-144.76-91.424C262.35 71.922 256 64.953 256 56.649V24.56c0-9.31 7.916-16.609 17.204-15.96 81.795 5.717 156.412 51.902 197.611 123.408 41.301 71.385 43.99 159.096 8.042 232.792-4.082 8.369-14.361 11.575-22.424 6.92z"
+          fill="currentColor"
+        />
+      </svg>
+       Loading...
+    </div>
+  </div>
+</div>
+`;

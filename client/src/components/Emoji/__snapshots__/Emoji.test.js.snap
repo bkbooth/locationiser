@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders a waving emoji 1`] = `
+<div>
+  <span
+    aria-label="waving hand"
+    role="img"
+  >
+    👋
+  </span>
+</div>
+`;
