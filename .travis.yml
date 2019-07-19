@@ -1,0 +1,23 @@
+language: elixir
+elixir:
+  - "1.9"
+otp_release:
+  - "22.0"
+
+services:
+  - postgresql
+
+before_install:
+  - nvm install 10
+
+install:
+  - sh -c 'cd api && mix deps.get'
+  - sh -c 'cd client && yarn install --frozen-lockfile'
+  - yarn install --frozen-lockfile
+
+before_script:
+  - sh -c 'cd api && mix ecto.create'
+
+script:
+  - yarn format:check
+  - yarn test
