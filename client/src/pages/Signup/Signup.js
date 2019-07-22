@@ -20,6 +20,7 @@ function Signup({ history, location }) {
   const emailInput = useTextInput('');
   const passwordInput = useTextInput('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [hasFocusedInput, setHasFocusedInput] = useState(false);
 
   useEffect(() => {
     const { lat, lng, zoom } = getRandomLocation();
@@ -35,6 +36,13 @@ function Signup({ history, location }) {
       .catch(err => setErrorMessage(err.message));
   }
 
+  function handleRefFocus(element) {
+    if (element && !hasFocusedInput) {
+      element.focus();
+      setHasFocusedInput(true);
+    }
+  }
+
   return auth.isLoading ? (
     <Loader />
   ) : auth.isAuthenticated ? (
@@ -46,7 +54,14 @@ function Signup({ history, location }) {
         {errorMessage && <Error>{errorMessage}</Error>}
         <InputGroup>
           <Label htmlFor="name">Name</Label>
-          <Input {...nameInput} type="text" id="name" name="name" placeholder="eg. Jon Snow" />
+          <Input
+            {...nameInput}
+            type="text"
+            id="name"
+            name="name"
+            placeholder="eg. Jon Snow"
+            ref={handleRefFocus}
+          />
         </InputGroup>
         <InputGroup>
           <Label htmlFor="email">Email</Label>

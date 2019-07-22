@@ -19,6 +19,7 @@ function Login({ history, location }) {
   const emailInput = useTextInput('');
   const passwordInput = useTextInput('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [hasFocusedInput, setHasFocusedInput] = useState(false);
 
   useEffect(() => {
     const { lat, lng, zoom } = getRandomLocation();
@@ -33,6 +34,13 @@ function Login({ history, location }) {
       .handleLogin(emailInput.value, passwordInput.value)
       .then(() => history.push(new URLSearchParams(location.search).get('redirectTo') || '/'))
       .catch(err => setErrorMessage(err.message));
+  }
+
+  function handleRefFocus(element) {
+    if (element && !hasFocusedInput) {
+      element.focus();
+      setHasFocusedInput(true);
+    }
   }
 
   return auth.isLoading ? (
@@ -52,6 +60,7 @@ function Login({ history, location }) {
             id="email"
             name="email"
             placeholder="eg. jsnow@stark.com"
+            ref={handleRefFocus}
           />
         </InputGroup>
         <InputGroup>

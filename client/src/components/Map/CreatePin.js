@@ -30,6 +30,7 @@ function CreatePin({ onSavePin }) {
   const [isSaving, setIsSaving] = useState(false);
   const titleInput = useTextInput('');
   const descriptionInput = useTextInput('');
+  const [hasFocusedInput, setHasFocusedInput] = useState(false);
 
   useEffect(() => {
     if (!map) return;
@@ -57,6 +58,7 @@ function CreatePin({ onSavePin }) {
       setNewPinMarker(marker);
       titleInput.resetValue();
       descriptionInput.resetValue();
+      setHasFocusedInput(false);
       setStep(CREATE_PIN_STEPS.moveMarker);
     }
   }, [map, isAddingPin]); // eslint-disable-line
@@ -72,6 +74,7 @@ function CreatePin({ onSavePin }) {
     setNewPinLatLng(null);
     titleInput.resetValue();
     descriptionInput.resetValue();
+    setHasFocusedInput(false);
   }
 
   async function handleSubmit(event) {
@@ -96,6 +99,13 @@ function CreatePin({ onSavePin }) {
   function handleCancel(event) {
     event.preventDefault();
     resetForm();
+  }
+
+  function handleRefFocus(element) {
+    if (element && !hasFocusedInput) {
+      element.focus();
+      setHasFocusedInput(true);
+    }
   }
 
   const isDisabled = isSaving || !(newPinMarker && titleInput.value);
@@ -124,7 +134,14 @@ function CreatePin({ onSavePin }) {
           <form onSubmit={handleSubmit}>
             <InputGroup>
               <Label htmlFor="title">Title</Label>
-              <Input {...titleInput} type="text" id="title" name="title" placeholder="eg. Home" />
+              <Input
+                {...titleInput}
+                type="text"
+                id="title"
+                name="title"
+                placeholder="eg. Home"
+                ref={handleRefFocus}
+              />
             </InputGroup>
             <InputGroup>
               <Label
