@@ -8,16 +8,20 @@ services:
   - postgresql
 
 before_install:
-  - nvm install 10
-
-install:
-  - sh -c 'cd api && mix local.rebar --force; mix local.hex --force; mix deps.get'
-  - sh -c 'cd client && yarn install --frozen-lockfile'
-  - yarn install --frozen-lockfile
+  - cd api
 
 before_script:
-  - sh -c 'cd api && mix ecto.create'
+  - mix ecto.create
 
 script:
-  - yarn format:check
-  - yarn test
+  - mix format --check-formatted
+  - mix test
+
+after_success:
+  - cd ..
+
+deploy:
+  provider: script
+  script: bash api/scripts/deploy.sh
+  on:
+    branch: master
