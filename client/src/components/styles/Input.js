@@ -21,6 +21,7 @@ export const Label = styled.label`
 const commonInputStyles = css`
   flex: 1;
   width: 100%;
+  min-width: 0;
   font-family: ${({ theme }) => theme.fonts.sans};
   font-size: 1rem;
   background: ${({ theme }) => theme.colours.shade['900']};
