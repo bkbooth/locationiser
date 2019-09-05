@@ -3,11 +3,11 @@ name: Elixir API CI
 on:
   push:
     paths:
+      - '.github/workflows/api.yml'
       - 'api/**'
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     container:
