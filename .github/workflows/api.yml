@@ -9,12 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    container:
-      image: elixir:1.9
-      env:
-        DATABASE_HOST: ${{ job.services.network }}
-        MIX_ENV: test
     
     services:
       postgresql:
@@ -22,8 +16,13 @@ jobs:
         ports:
           - 5432:5432
         env:
-          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+
+    container:
+      image: elixir:1.9
+      env:
+        DATABASE_HOST: ${{ job.services.network }}
+        MIX_ENV: test
 
     steps:
     - uses: actions/checkout@v1
