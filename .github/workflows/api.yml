@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: elixir:1.9-slim
+      image: elixir:1.9
     
     services:
       postgresql:
@@ -20,14 +20,14 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Setup dependencies
-      working-directory: api
+      working-directory: api/
       run: |
         mix local.rebar --force
         mix local.hex --force
         mix deps.get
         mix ecto.create
     - name: Run tests
-      working-directory: api
+      working-directory: api/
       run: |
         mix format --check-formatted
         mix test
