@@ -19,16 +19,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v1
-    - name: Change working directory
-      run: cd api/
-    - name: Install dependencies
+    - name: Setup dependencies
+      working-directory: api
       run: |
         mix local.rebar --force
         mix local.hex --force
         mix deps.get
-    - name: Setup database
-      run: mix ecto.create
-    - name: Check formatting
-      run: mix format --check-formatted
+        mix ecto.create
     - name: Run tests
-      run: mix test
+      working-directory: api
+      run: |
+        mix format --check-formatted
+        mix test
