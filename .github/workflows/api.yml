@@ -13,7 +13,7 @@ jobs:
     container:
       image: elixir:1.9
       env:
-        DATABASE_HOST: ${{ jobs.services.network }}
+        DATABASE_HOST: ${{ job.services.network }}
         MIX_ENV: test
     
     services:
