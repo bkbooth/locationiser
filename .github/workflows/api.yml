@@ -18,8 +18,6 @@ jobs:
     services:
       postgresql:
         image: postgres
-        ports:
-          - 5432:5432
         env:
           POSTGRES_PASSWORD: postgres
 
@@ -31,8 +29,6 @@ jobs:
         mix local.rebar --force
         mix local.hex --force
         mix deps.get
-        mix ecto.create
-        mix ecto.migrate
     - name: Setup database
       working-directory: api/
       run: |
