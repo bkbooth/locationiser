@@ -3,7 +3,7 @@ name: Elixir API CI
 on:
   push:
     paths:
-      - '.github/workflows/api.yml'
+      - '.github/workflows/api*'
       - 'api/*'
 
 jobs:
