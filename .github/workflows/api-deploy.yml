@@ -1,0 +1,21 @@
+name: Elixir API CD
+
+on:
+  push:
+    # branches:
+    #   - master
+    paths:
+      - '.github/workflows/api.yml'
+      - 'api/*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: Deploy to Gigalixir
+        working-directory: api/
+        shell: bash
+        run: api/scripts/deploy.sh
