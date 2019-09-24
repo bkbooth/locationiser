@@ -54,5 +54,4 @@ jobs:
       - name: Deploy to Gigalixir
         # if: github.ref == 'refs/heads/master'
         working-directory: api/
-        shell: bash
-        run: scripts/deploy.sh
+        run: ./scripts/deploy.sh
